@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Comprehensive Q&A</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width-device-width, initial-scale=1.0">
+        <title>Web Development Comprehensive Q&A</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        
+        <style>
+            /* تعريف اللون البنفسجي كـ Primary Color لـ Bootstrap */
+            :root {
+                --bs-primary: #6f42c1; /* البنفسجي */
+            }
+    
+            body {
+                background-color: #f8f9fa;
+            }
+    
+            .container {
+                padding-top: 30px;
+                padding-bottom: 30px;
+                max-width: 1000px;
+            }
+    
+            .topic-heading {
+                /* استخدام اللون البنفسجي للخط السفلي والنص */
+                border-bottom: 3px solid var(--bs-primary);
+                color: var(--bs-primary) !important;
+                padding-bottom: 5px;
+                margin-top: 40px;
+                text-align: left;
+                direction: ltr;
+            }
+    
+            .level-heading {
+                margin-top: 20px;
+                color: #6c757d; /* لون رمادي فرعي */
+                font-size: 1.5rem;
+                text-align: left;
+                direction: ltr;
+            }
+    
+            .accordion-item {
+                border-radius: 0.5rem;
+                overflow: hidden;
+                margin-bottom: 10px;
+            }
+    
+            .accordion-button {
+                background-color: #e9ecef;
+                font-weight: bold;
+                text-align: right;
+                direction: rtl;
+            }
+    
+            .accordion-body {
+                background-color: #fff;
+                text-align: right;
+            }
+    
+            code {
+                /* لون الكود المخصص */
+                color: #b44e81; 
+                background-color: #f8f9fa;
+                padding: 2px 4px;
+                border-radius: 4px;
+            }
+            
+            /* ضمان تطبيق اللون البنفسجي على كلاس Bootstrap الرئيسي */
+            .text-primary {
+                color: var(--bs-primary) !important;
+            }
+        </style>
+    </head>
+    <body>
+
+<div class="container">
+    <h1 class="text-center mb-5 text-primary">📚 Web Development Comprehensive Q&A</h1>
+
+    <div class="accordion" id="webDevAccordion">
+
+        <h1 class="topic-heading text-primary">🌟 I. HTML Questions (Essential + Advanced)</h1>
+
+        <h2 class="level-heading">✔ Basics</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-1" aria-expanded="false" aria-controls="c-html-1">1. ما هو HTML؟</button>
+            </h3>
+            <div id="c-html-1" class="accordion-collapse collapse" aria-labelledby="h-html-1" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p><strong>HTML</strong> (HyperText Markup Language) هي لغة ترميز لإنشاء صفحات الويب. تحدد هيكل الصفحة والمحتوى.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-2" aria-expanded="false" aria-controls="c-html-2">2. ما الفرق بين &lt;div&gt; و &lt;span&gt;؟</button>
+            </h3>
+            <div id="c-html-2" class="accordion-collapse collapse" aria-labelledby="h-html-2" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>&lt;div&gt;</code></strong>: عنصر <strong>Block-level</strong> يستخدم لتقسيم الصفحة.</li>
+                        <li><strong><code>&lt;span&gt;</code></strong>: عنصر <strong>Inline</strong> يستخدم لتنسيق النصوص داخل العناصر.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-3" aria-expanded="false" aria-controls="c-html-3">3. ما هو Semantic HTML؟ ولماذا مهم؟</button>
+            </h3>
+            <div id="c-html-3" class="accordion-collapse collapse" aria-labelledby="h-html-3" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p><strong>HTML معنوي (Semantic)</strong> يعطي معنى للمحتوى مثل <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>. مهم للـ SEO، الـ accessibility، وفهم المحتوى للمتصفحات والأدوات المساعدة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-4" aria-expanded="false" aria-controls="c-html-4">4. اذكري بعض الـ semantic tags الجديدة في HTML5؟</button>
+            </h3>
+            <div id="c-html-4" class="accordion-collapse collapse" aria-labelledby="h-html-4" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p><code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-5" aria-expanded="false" aria-controls="c-html-5">5. ما الفرق بين &lt;section&gt; و &lt;article&gt;؟</button>
+            </h3>
+            <div id="c-html-5" class="accordion-collapse collapse" aria-labelledby="h-html-5" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>&lt;section&gt;</code></strong>: قسم عام في الصفحة (عادةً له عنوان).</li>
+                        <li><strong><code>&lt;article&gt;</code></strong>: محتوى مستقل بذاته يمكن إعادة استخدامه أو توزيعه (مثل مشاركة مدونة).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-6" aria-expanded="false" aria-controls="c-html-6">6. ما هو الـ DOM؟</button>
+            </h3>
+            <div id="c-html-6" class="accordion-collapse collapse" aria-labelledby="h-html-6" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p><strong>Document Object Model</strong>، تمثيل شجري لعناصر HTML يمكن التفاعل معها وتعديلها عبر JavaScript.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-7" aria-expanded="false" aria-controls="c-html-7">7. ما هو الـ DOCTYPE؟</button>
+            </h3>
+            <div id="c-html-7" class="accordion-collapse collapse" aria-labelledby="h-html-7" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يحدد إصدار HTML المستخدم (عادةً <code>&lt;!DOCTYPE html&gt;</code> لـ HTML5) للمتصفح لتفسير الصفحة بشكل صحيح.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-8" aria-expanded="false" aria-controls="c-html-8">8. ما هو الـ attribute؟</button>
+            </h3>
+            <div id="c-html-8" class="accordion-collapse collapse" aria-labelledby="h-html-8" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>خاصية تضيف معلومات إضافية للعنصر، وتأتي على شكل <code>name="value"</code>. مثال: <code>src</code>, <code>href</code>, <code>alt</code>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-9" aria-expanded="false" aria-controls="c-html-9">9. ما الفرق بين Block elements و Inline elements؟</button>
+            </h3>
+            <div id="c-html-9" class="accordion-collapse collapse" aria-labelledby="h-html-9" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>Block</strong>: تشغل كامل عرض الصفحة وتبدأ سطراً جديداً (<code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>).</li>
+                        <li><strong>Inline</strong>: تشغل فقط مساحة المحتوى وتستمر في نفس السطر (<code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-10" aria-expanded="false" aria-controls="c-html-10">10. ما الفرق بين id و class؟</button>
+            </h3>
+            <div id="c-html-10" class="accordion-collapse collapse" aria-labelledby="h-html-10" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>id</code></strong>: معرف فريد للعنصر (يجب أن يستخدم لمرة واحدة فقط في الصفحة).</li>
+                        <li><strong><code>class</code></strong>: مجموعة عناصر يمكن أن تتشارك نفس النمط أو السلوك.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-11">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-11" aria-expanded="false" aria-controls="c-html-11">11. هل ينفع الـ id يتكرر؟</button>
+            </h3>
+            <div id="c-html-11" class="accordion-collapse collapse" aria-labelledby="h-html-11" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p><strong>لا</strong>، يجب أن يكون فريداً لكل عنصر في الصفحة وفقاً لمعايير HTML.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-12">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-12" aria-expanded="false" aria-controls="c-html-12">12. ما هي الـ meta tags؟</button>
+            </h3>
+            <div id="c-html-12" class="accordion-collapse collapse" aria-labelledby="h-html-12" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>توفر معلومات وصفية (Metadata) عن الصفحة للمتصفحات ومحركات البحث، وتوضع داخل <code>&lt;head&gt;</code>. مثال: <code>charset</code>، <code>description</code>، <code>viewport</code>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-13">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-13" aria-expanded="false" aria-controls="c-html-13">13. ما وظيفة &lt;meta viewport&gt;؟</button>
+            </h3>
+            <div id="c-html-13" class="accordion-collapse collapse" aria-labelledby="h-html-13" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تجعل الصفحة **متجاوبة (Responsive)** وتتكيف مع أحجام الأجهزة المختلفة، وهي أساسية في تطوير الويب الحديث:</p>
+                    <pre><code dir="ltr">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-14">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-14" aria-expanded="false" aria-controls="c-html-14">14. ما هو الفرق بين &lt;script&gt; في الـ head والـ body؟</button>
+            </h3>
+            <div id="c-html-14" class="accordion-collapse collapse" aria-labelledby="h-html-14" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>&lt;head&gt;</code></strong>: يحمل الكود قبل تحميل الصفحة. يمكن أن **يؤخر عرض الصفحة** لأنه يوقف بناء الـ DOM.</li>
+                        <li><strong>نهاية الـ <code>&lt;body&gt;</code></strong>: يحمل الكود بعد تحميل الـ DOM، مما يضمن أن الـ JS يمكنه التفاعل مع العناصر، ويؤدي إلى **أداء أسرع** في العرض الأولي.</li>
+                        <li><strong>الحل</strong>: يمكن استخدام <code>defer</code> أو <code>async</code> في الـ <code>&lt;head&gt;</code> لتجنب التأخير.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Intermediate</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-15">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-15" aria-expanded="false" aria-controls="c-html-15">15. ما الفرق بين &lt;img alt=""&gt; وبدونه؟</button>
+            </h3>
+            <div id="c-html-15" class="accordion-collapse collapse" aria-labelledby="h-html-15" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>بدون <code>alt</code></strong> ← صعوبة الوصول للمكفوفين، و SEO ضعيف.</li>
+                        <li><strong><code>alt</code></strong> ← نص بديل عند فشل تحميل الصورة، مهم للـ **accessibility** (إمكانية الوصول).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-16">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-16" aria-expanded="false" aria-controls="c-html-16">16. ما الفرق بين &lt;link&gt; و &lt;script&gt;؟</button>
+            </h3>
+            <div id="c-html-16" class="accordion-collapse collapse" aria-labelledby="h-html-16" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>&lt;link&gt;</code></strong>: استدعاء ملفات خارجية مثل **CSS**.</li>
+                        <li><strong><code>&lt;script&gt;</code></strong>: استدعاء ملفات **JS**.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-17">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-17" aria-expanded="false" aria-controls="c-html-17">17. ما الذي يفعله الـ defer والـ async؟</button>
+            </h3>
+            <div id="c-html-17" class="accordion-collapse collapse" aria-labelledby="h-html-17" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>defer</code></strong>: يحمل الملف بشكل غير متزامن، وينفذه **بالترتيب** بعد تحميل الـ DOM بالكامل.</li>
+                        <li><strong><code>async</code></strong>: يحمل الملف وينفذه بشكل غير متزامن **بمجرد الانتهاء من التحميل**، ولا يلتزم بالترتيب.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-18">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-18" aria-expanded="false" aria-controls="c-html-18">18. ما هو الـ localStorage والـ sessionStorage؟</button>
+            </h3>
+            <div id="c-html-18" class="accordion-collapse collapse" aria-labelledby="h-html-18" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>كلاهما لتخزين بيانات على متصفح المستخدم (Web Storage API):</p>
+                    <ul>
+                        <li><strong><code>localStorage</code></strong>: تخزين **دائم** (يبقى حتى يتم حذفه يدوياً).</li>
+                        <li><strong><code>sessionStorage</code></strong>: تخزين **مؤقت** للـ Session فقط (يُحذف عند إغلاق التبويب/المتصفح).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-19">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-19" aria-expanded="false" aria-controls="c-html-19">19. ما الفرق بين form GET و POST؟</button>
+            </h3>
+            <div id="c-html-19" class="accordion-collapse collapse" aria-labelledby="h-html-19" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>GET</code></strong>: يرسل البيانات في **URL** (عبر query parameters). مناسب للاستعلامات والبحث. أقل أماناً.</li>
+                        <li><strong><code>POST</code></strong>: يرسل البيانات في **Body** الطلب. مناسب لإرسال البيانات الحساسة أو الكبيرة (مثل النماذج). أكثر أماناً.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-20">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-20" aria-expanded="false" aria-controls="c-html-20">20. ما هو الـ iframe؟</button>
+            </h3>
+            <div id="c-html-20" class="accordion-collapse collapse" aria-labelledby="h-html-20" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يستخدم لـ **تضمين صفحة ويب داخل صفحة ويب أخرى**. مثال: تضمين خريطة من Google Maps.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-21">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-21" aria-expanded="false" aria-controls="c-html-21">21. ما فائدة الـ accessibility (ARIA attributes)؟</button>
+            </h3>
+            <div id="c-html-21" class="accordion-collapse collapse" aria-labelledby="h-html-21" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تحسين وصول المستخدمين ذوي الإعاقة (مثل المكفوفين) إلى محتوى الويب، خاصة عند استخدام **قارئات الشاشة (Screen Readers)**. تضيف الـ ARIA Attributes معلومات إضافية عن دور العنصر وحالته.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Advanced</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-22">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-22" aria-expanded="false" aria-controls="c-html-22">22. ما هو Shadow DOM؟</button>
+            </h3>
+            <div id="c-html-22" class="accordion-collapse collapse" aria-labelledby="h-html-22" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p><strong>DOM مستقل للعناصر</strong>، يستخدم في **Web Components** لعزل الـ CSS وJS الخاصين بالمكون، مما يمنع تعارض الأنماط مع باقي الصفحة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-23">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-23" aria-expanded="false" aria-controls="c-html-23">23. ما هو Web Components؟</button>
+            </h3>
+            <div id="c-html-23" class="accordion-collapse collapse" aria-labelledby="h-html-23" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>مجموعة من تقنيات الويب (Shadow DOM، Templates، Custom Elements) تسمح بإنشاء **عناصر HTML مخصصة وقابلة لإعادة الاستخدام**.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-24">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-24" aria-expanded="false" aria-controls="c-html-24">24. ما هو الـ template tag؟</button>
+            </h3>
+            <div id="c-html-24" class="accordion-collapse collapse" aria-labelledby="h-html-24" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>عنصر <code>&lt;template&gt;</code> يحتوي على محتوى HTML **لا يعرضه المتصفح** إلا عند استدعائه وتفعيله عبر JavaScript. يستخدم كقوالب (Templates) قابلة للاستنساخ.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-html-25">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-html-25" aria-expanded="false" aria-controls="c-html-25">25. ما فائدة الـ picture و srcset؟</button>
+            </h3>
+            <div id="c-html-25" class="accordion-collapse collapse" aria-labelledby="h-html-25" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>لعرض صور مختلفة حسب حجم الشاشة (Responsive Images)، مما يحسن الأداء. <code>&lt;picture&gt;</code> يسمح بتحديد أكثر من مصدر بناءً على Media Query. <code>srcset</code> يسمح بتحديد مصادر صور مختلفة بناءً على دقة الشاشة أو حجمها.</p>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="topic-heading text-primary">🌟 II. CSS Questions</h1>
+
+        <h2 class="level-heading">✔ Basics</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-1" aria-expanded="false" aria-controls="c-css-1">1. ما الفرق بين inline و internal و external CSS؟</button>
+            </h3>
+            <div id="c-css-1" class="accordion-collapse collapse" aria-labelledby="h-css-1" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>inline</strong>: <code>style</code> مباشرة على العنصر.</li>
+                        <li><strong>internal</strong>: داخل <code>&lt;style&gt;</code> في <code>&lt;head&gt;</code>.</li>
+                        <li><strong>external</strong>: ملف CSS خارجي.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-2" aria-expanded="false" aria-controls="c-css-2">2. ما هو الـ specificity؟</button>
+            </h3>
+            <div id="c-css-2" class="accordion-collapse collapse" aria-labelledby="h-css-2" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>أولوية تطبيق القواعد عند التعارض. كلما زادت الـ specificity، زادت أولوية القاعدة. الترتيب (من الأعلى للأدنى): **Inline** > **ID** > **Class/Attribute/Pseudo-class** > **Element/Pseudo-element**.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-3" aria-expanded="false" aria-controls="c-css-3">3. ما هو الـ cascade؟</button>
+            </h3>
+            <div id="c-css-3" class="accordion-collapse collapse" aria-labelledby="h-css-3" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي الآلية التي يحدد بها المتصفح النمط النهائي للعنصر، بناءً على **Specificity** (الأولوية) و **Source Order** (ترتيب الظهور) و **Importance** (أهمية القواعد مثل <code>!important</code>).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-4" aria-expanded="false" aria-controls="c-css-4">4. ما هو Box Model؟</button>
+            </h3>
+            <div id="c-css-4" class="accordion-collapse collapse" aria-labelledby="h-css-4" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تمثيل لكل عنصر HTML كصندوق مستطيل يتكون من: **محتوى** + **padding** + **border** + **margin**.</p>
+                    [Image of CSS Box Model showing content, padding, border, and margin layers]
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-5" aria-expanded="false" aria-controls="c-css-5">5. ما الفرق بين margin و padding؟</button>
+            </h3>
+            <div id="c-css-5" class="accordion-collapse collapse" aria-labelledby="h-css-5" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>margin</code></strong>: المسافة **خارج** العنصر (المسافة بين العناصر).</li>
+                        <li><strong><code>padding</code></strong>: المسافة **داخل** العنصر (المسافة بين المحتوى والحدود/Border).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-6" aria-expanded="false" aria-controls="c-css-6">6. ما هو display؟ وما الفروق بين أنواعه (block, inline, inline-block, flex, grid)؟</button>
+            </h3>
+            <div id="c-css-6" class="accordion-collapse collapse" aria-labelledby="h-css-6" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تحدد كيفية عرض العنصر وسلوكه:</p>
+                    <ul>
+                        <li><strong><code>block</code></strong>: عنصر كامل العرض، يبدأ سطراً جديداً.</li>
+                        <li><strong><code>inline</code></strong>: جزء من السطر، يأخذ عرض محتواه فقط.</li>
+                        <li><strong><code>inline-block</code></strong>: مثل <code>inline</code> لكن يمكن تعيين <code>width/height</code> له.</li>
+                        <li><strong><code>flex</code></strong>: لتطبيق تخطيط مرن (Flexbox) أحادي البعد.</li>
+                        <li><strong><code>grid</code></strong>: لتطبيق تخطيط شبكي (Grid) ثنائي البعد.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-7" aria-expanded="false" aria-controls="c-css-7">7. ما الفرق بين position (static, relative, absolute, fixed, sticky)؟</button>
+            </h3>
+            <div id="c-css-7" class="accordion-collapse collapse" aria-labelledby="h-css-7" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>static</code></strong>: الوضع الافتراضي (لا يتأثر بـ top, left, إلخ).</li>
+                        <li><strong><code>relative</code></strong>: بالنسبة لمكانه الأصلي.</li>
+                        <li><strong><code>absolute</code></strong>: بالنسبة لأقرب عنصر أب له <code>position</code> **ليس** <code>static</code>.</li>
+                        <li><strong><code>fixed</code></strong>: ثابت على الشاشة ولا يتأثر بالتمرير.</li>
+                        <li><strong><code>sticky</code></strong>: يتصرف كـ <code>relative</code> حتى يصل إلى نقطة معينة في التمرير، ثم يصبح كـ <code>fixed</code>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-8" aria-expanded="false" aria-controls="c-css-8">8. ماذا يفعل z-index؟</button>
+            </h3>
+            <div id="c-css-8" class="accordion-collapse collapse" aria-labelledby="h-css-8" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يحدد **ترتيب تكديس العناصر على المحور z** (أمام/خلف). يعمل فقط على العناصر ذات <code>position</code> محدد (غير <code>static</code>).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-9" aria-expanded="false" aria-controls="c-css-9">9. ما الفرق بين rem و em و px؟</button>
+            </h3>
+            <div id="c-css-9" class="accordion-collapse collapse" aria-labelledby="h-css-9" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>px</code></strong>: قيمة ثابتة (مطلقة).</li>
+                        <li><strong><code>em</code></strong>: قيمة نسبية، تعتمد على حجم خط **العنصر الأب**.</li>
+                        <li><strong><code>rem</code></strong>: قيمة نسبية، تعتمد على حجم خط **العنصر الجذر (<code>&lt;html&gt;</code>)**. الأفضل لسهولة التحكم بالـ accessibility.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-10" aria-expanded="false" aria-controls="c-css-10">10. كيف تعمل الـ media query؟</button>
+            </h3>
+            <div id="c-css-10" class="accordion-collapse collapse" aria-labelledby="h-css-10" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تسمح بتطبيق مجموعات مختلفة من قواعد CSS بناءً على خصائص الجهاز (مثل العرض، الارتفاع، الاتجاه). تستخدم لتصميم الصفحات المتجاوبة.</p>
+                    <pre><code dir="ltr">@media (max-width: 768px) {
+    body { font-size: 14px; }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Flexbox</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-11">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-11" aria-expanded="false" aria-controls="c-css-11">11. ما وظيفة justify-content, align-items, flex-direction, flex-wrap, align-content؟</button>
+            </h3>
+            <div id="c-css-11" class="accordion-collapse collapse" aria-labelledby="h-css-11" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>justify-content</code></strong>: محاذاة العناصر على المحور الأفقي (الرئيسي).</li>
+                        <li><strong><code>align-items</code></strong>: محاذاة العناصر على المحور العمودي (المتقاطع).</li>
+                        <li><strong><code>flex-direction</code></strong>: تحديد اتجاه العناصر (<code>row</code> / <code>column</code>).</li>
+                        <li><strong><code>flex-wrap</code></strong>: التفاف العناصر لسطر جديد عند نفاد المساحة.</li>
+                        <li><strong><code>align-content</code></strong>: محاذاة عدة صفوف (Rows) في حاوية Flex متعددة الأسطر.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-12">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-12" aria-expanded="false" aria-controls="c-css-12">12. ما الفرق بين flex:1 و flex: auto؟</button>
+            </h3>
+            <div id="c-css-12" class="accordion-collapse collapse" aria-labelledby="h-css-12" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>flex: 1</code></strong> (اختصار لـ <code>flex-grow: 1; flex-shrink: 1; flex-basis: 0%</code>): يملأ المساحة المتاحة بالتساوي مع العناصر الأخرى.</li>
+                        <li><strong><code>flex: auto</code></strong> (اختصار لـ <code>flex-grow: 1; flex-shrink: 1; flex-basis: auto</code>): يعتمد على حجم العنصر الأساسي (<code>flex-basis: auto</code>) مع القدرة على التوسع أو التقلص.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Grid</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-13">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-13" aria-expanded="false" aria-controls="c-css-13">13. ما الفرق بين grid-template-rows و columns؟</button>
+            </h3>
+            <div id="c-css-13" class="accordion-collapse collapse" aria-labelledby="h-css-13" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>grid-template-rows</code></strong>: تحديد ارتفاع الصفوف في الشبكة.</li>
+                        <li><strong><code>grid-template-columns</code></strong>: تحديد عرض الأعمدة في الشبكة.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-14">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-14" aria-expanded="false" aria-controls="c-css-14">14. ما هي الـ fr unit؟</button>
+            </h3>
+            <div id="c-css-14" class="accordion-collapse collapse" aria-labelledby="h-css-14" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي وحدة **Fraction** (كسر) في Grid، تمثل جزءاً من المساحة المتبقية داخل حاوية Grid. مثال: <code>1fr 2fr</code> يعني العمود الثاني ضعف عرض العمود الأول.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-15">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-15" aria-expanded="false" aria-controls="c-css-15">15. ما هو minmax()؟</button>
+            </h3>
+            <div id="c-css-15" class="accordion-collapse collapse" aria-labelledby="h-css-15" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تستخدم في Grid لتحديد **الحد الأدنى والأقصى لحجم** الصف أو العمود. تسمح بالمرونة مع ضمان حجم أساسي.</p>
+                    <pre><code dir="ltr">grid-template-columns: minmax(100px, 1fr);</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-16">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-16" aria-expanded="false" aria-controls="c-css-16">16. ما الفرق بين repeat() و auto-fit و auto-fill؟</button>
+            </h3>
+            <div id="c-css-16" class="accordion-collapse collapse" aria-labelledby="h-css-16" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>repeat()</code></strong>: تكرار القيم لعدد محدد من الصفوف/الأعمدة.</li>
+                        <li><strong><code>auto-fill</code></strong>: تعبئة تلقائية بأكبر عدد ممكن من الأعمدة، ولا يتم توسيع الأعمدة لتناسب العرض المتاح.</li>
+                        <li><strong><code>auto-fit</code></strong>: تعبئة تلقائية بأكبر عدد ممكن من الأعمدة، ويتم **توسيع الأعمدة** لملء المساحة المتبقية.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Advanced</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-17">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-17" aria-expanded="false" aria-controls="c-css-17">17. ما هو الـ specificity hierarchy؟</button>
+            </h3>
+            <div id="c-css-17" class="accordion-collapse collapse" aria-labelledby="h-css-17" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>الترتيب الهرمي لتحديد أولوية الأنماط (من الأعلى للأدنى):</p>
+                    <p><strong>Inline Style</strong> (1,0,0,0) > **ID Selector** (0,1,0,0) > **Class, Attribute, Pseudo-class** (0,0,1,0) > **Element, Pseudo-element** (0,0,0,1)</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-18">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-18" aria-expanded="false" aria-controls="c-css-18">18. ما الفرق بين before و after؟</button>
+            </h3>
+            <div id="c-css-18" class="accordion-collapse collapse" aria-labelledby="h-css-18" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هما **عناصر وهمية (Pseudo-elements)** تُستخدم لإضافة محتوى أو تنسيق قبل (<code>::before</code>) أو بعد (<code>::after</code>) محتوى العنصر الفعلي، ويجب استخدام الخاصية <code>content</code> معهما.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-19">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-19" aria-expanded="false" aria-controls="c-css-19">19. ما هو calc()؟</button>
+            </h3>
+            <div id="c-css-19" class="accordion-collapse collapse" aria-labelledby="h-css-19" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>دالة تسمح بإجراء **عمليات حسابية ديناميكية** لتعيين قيم الخصائص في CSS، ويمكن خلط وحدات قياس مختلفة في العملية الحسابية.</p>
+                    <pre><code dir="ltr">width: calc(100% - 50px);</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-20">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-20" aria-expanded="false" aria-controls="c-css-20">20. ما هو clip-path؟</button>
+            </h3>
+            <div id="c-css-20" class="accordion-collapse collapse" aria-labelledby="h-css-20" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تستخدم لقص العنصر أو جعله يأخذ **شكلاً محدداً** (مثل دائرة، مضلع، أو مسار SVG)، مما يسمح بإنشاء أشكال معقدة دون الحاجة لصور.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-css-21">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-css-21" aria-expanded="false" aria-controls="c-css-21">21. ما الفرق بين transitions و animations؟</button>
+            </h3>
+            <div id="c-css-21" class="accordion-collapse collapse" aria-labelledby="h-css-21" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>Transitions</strong>: تغير **تدريجي ومحدود** عند حدوث تغيير في خاصية واحدة (مثال: عند تحريك الماوس فوق العنصر).</li>
+                        <li><strong>Animations</strong>: حركة **متكاملة ومعقدة** يتم تحديد إطاراتها الرئيسية (Keyframes) وتعمل بشكل مستقل أو عند الطلب.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="topic-heading text-primary">🌟 III. Bootstrap</h1>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-boot-1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-boot-1" aria-expanded="false" aria-controls="c-boot-1">1. ما هو Bootstrap ولماذا نستخدمه؟</button>
+            </h3>
+            <div id="c-boot-1" class="accordion-collapse collapse" aria-labelledby="h-boot-1" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p><strong>Bootstrap</strong> هو إطار عمل (Framework) مبني على CSS و JS لتصميم واجهات متجاوبة بسرعة. نستخدمه لتقليل وقت كتابة الكود ووجود مكونات جاهزة (buttons, modals, forms, navbar).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-boot-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-boot-2" aria-expanded="false" aria-controls="c-boot-2">2. ما هو نظام الـ grid في Bootstrap؟</button>
+            </h3>
+            <div id="c-boot-2" class="accordion-collapse collapse" aria-labelledby="h-boot-2" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يعتمد على نظام **12 عموداً** (12-column grid) لتقسيم الصفحة بسهولة باستخدام كلاسات <code>.row</code> و <code>.col</code> لضمان التجاوب على مختلف الأجهزة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-boot-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-boot-3" aria-expanded="false" aria-controls="c-boot-3">3. ما الفرق بين col, col-sm, col-md, col-lg؟</button>
+            </h3>
+            <div id="c-boot-3" class="accordion-collapse collapse" aria-labelledby="h-boot-3" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>col</code></strong>: افتراضي لجميع الشاشات.</li>
+                        <li><strong><code>col-sm</code></strong>: للشاشات ≥ 576px.</li>
+                        <li><strong><code>col-md</code></strong>: للشاشات ≥ 768px.</li>
+                        <li><strong><code>col-lg</code></strong>: للشاشات ≥ 992px.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-boot-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-boot-4" aria-expanded="false" aria-controls="c-boot-4">4. ما هي breakpoints الخاصة بـ Bootstrap؟</button>
+            </h3>
+            <div id="c-boot-4" class="accordion-collapse collapse" aria-labelledby="h-boot-4" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr dir="ltr"><th>Size</th><th>Class Suffix</th><th>Min Width</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr dir="ltr"><td>Extra small</td><td>None</td><td>&lt;576px</td></tr>
+                            <tr dir="ltr"><td>Small</td><td><code>-sm</code></td><td>≥576px</td></tr>
+                            <tr dir="ltr"><td>Medium</td><td><code>-md</code></td><td>≥768px</td></tr>
+                            <tr dir="ltr"><td>Large</td><td><code>-lg</code></td><td>≥992px</td></tr>
+                            <tr dir="ltr"><td>Extra large</td><td><code>-xl</code></td><td>≥1200px</td></tr>
+                            <tr dir="ltr"><td>XXL</td><td><code>-xxl</code></td><td>≥1400px</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-boot-5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-boot-5" aria-expanded="false" aria-controls="c-boot-5">5. ما هو container و container-fluid؟</button>
+            </h3>
+            <div id="c-boot-5" class="accordion-collapse collapse" aria-labelledby="h-boot-5" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>.container</code></strong>: عرض ثابت (Fixed width) يقل ويتغير عند نقاط التوقف.</li>
+                        <li><strong><code>.container-fluid</code></strong>: عرض كامل الشاشة بنسبة 100%.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-boot-6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-boot-6" aria-expanded="false" aria-controls="c-boot-6">6. كيف تعمل المودال في Bootstrap؟</button>
+            </h3>
+            <div id="c-boot-6" class="accordion-collapse collapse" aria-labelledby="h-boot-6" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تستخدم <code>data-bs-toggle="modal"</code> و <code>data-bs-target="#..."</code> على زر الفتح، لربطه بـ <code>&lt;div class="modal" id="..."&gt;</code> الذي يحتوي على محتوى النافذة المنبثقة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-boot-7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-boot-7" aria-expanded="false" aria-controls="c-boot-7">7. كيف تعمل الـ navbar الجاهزة؟</button>
+            </h3>
+            <div id="c-boot-7" class="accordion-collapse collapse" aria-labelledby="h-boot-7" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تستخدم <code>&lt;nav class="navbar navbar-expand-lg ..."&gt;</code> وتحتوي على <code>.navbar-brand</code> للعناوين و <code>.navbar-nav</code> لقوائم الروابط، وتعتمد على JS لعمل زر القائمة المنسدلة في الشاشات الصغيرة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-boot-8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-boot-8" aria-expanded="false" aria-controls="c-boot-8">8. ما هو spacing system (m-1, p-3…)؟</button>
+            </h3>
+            <div id="c-boot-8" class="accordion-collapse collapse" aria-labelledby="h-boot-8" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>نظام كلاسات مساعدة (Utility classes) لتحديد الهوامش (Margin) والمسافات الداخلية (Padding) بسرعة:</p>
+                    <ul>
+                        <li><strong><code>m</code></strong> = margin, <strong><code>p</code></strong> = padding.</li>
+                        <li>الأرقام (0-5) تمثل الحجم.</li>
+                        <li>يمكن تحديد الاتجاه (<code>t</code>: top, <code>b</code>: bottom, <code>x</code>: left/right, <code>y</code>: top/bottom).</li>
+                        <li>مثال: <code>class="m-3 p-2"</code>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-boot-9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-boot-9" aria-expanded="false" aria-controls="c-boot-9">9. كيف تعمل ألوان النصوص والخلفيات (bg-primary, text-danger)؟</button>
+            </h3>
+            <div id="c-boot-9" class="accordion-collapse collapse" aria-labelledby="h-boot-9" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تعتمد على المتغيرات اللونية الافتراضية للـ Theme:</p>
+                    <ul>
+                        <li><strong><code>text-primary</code></strong>: لون أساسي (عادة أزرق).</li>
+                        <li><strong><code>text-danger</code></strong>: لون الخطر (أحمر).</li>
+                        <li><strong><code>bg-success</code></strong>: خلفية النجاح (أخضر).</li>
+                        <li><strong><code>bg-light</code></strong>: خلفية فاتحة (رمادي فاتح).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="topic-heading text-primary">🌟 IV. Tailwind CSS</h1>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-tailwind-1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-tailwind-1" aria-expanded="false" aria-controls="c-tailwind-1">1. ما هو Tailwind؟</button>
+            </h3>
+            <div id="c-tailwind-1" class="accordion-collapse collapse" aria-labelledby="h-tailwind-1" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>إطار عمل **Utility-first** لتصميم CSS، حيث يُستخدم لتطبيق الأنماط مباشرة عبر كلاسات HTML بدلاً من كتابة كود CSS جديد في ملفات منفصلة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-tailwind-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-tailwind-2" aria-expanded="false" aria-controls="c-tailwind-2">2. لماذا يعتبر Utility-first؟</button>
+            </h3>
+            <div id="c-tailwind-2" class="accordion-collapse collapse" aria-labelledby="h-tailwind-2" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>لأن كل كلاس يمثل خاصية CSS واحدة (Utility) فقط، مما يوفر مرونة عالية لتصميم واجهات مخصصة دون قيود المكونات الجاهزة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-tailwind-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-tailwind-3" aria-expanded="false" aria-controls="c-tailwind-3">3. ما الفرق بين Tailwind و Bootstrap؟</button>
+            </h3>
+            <div id="c-tailwind-3" class="accordion-collapse collapse" aria-labelledby="h-tailwind-3" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>Bootstrap</strong>: يعتمد على **المكونات الجاهزة** (Buttons, Modals, Navbars).</li>
+                        <li><strong>Tailwind</strong>: يعتمد على **Utility Classes** لتوفير مرونة لتصميم مخصص بالكامل.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-tailwind-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-tailwind-4" aria-expanded="false" aria-controls="c-tailwind-4">4. ما هي فكرة الـ classes زي: flex, items-center, justify-between, bg-blue-500, text-xl؟</button>
+            </h3>
+            <div id="c-tailwind-4" class="accordion-collapse collapse" aria-labelledby="h-tailwind-4" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>flex</code></strong>: تفعيل Flexbox.</li>
+                        <li><strong><code>items-center</code></strong>: محاذاة عمودي (<code>align-items: center;</code>).</li>
+                        <li><strong><code>justify-between</code></strong>: توزيع العناصر أفقياً (<code>justify-content: space-between;</code>).</li>
+                        <li><strong><code>bg-blue-500</code></strong>: خلفية زرقاء بدرجة 500.</li>
+                        <li><strong><code>text-xl</code></strong>: حجم نص كبير.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-tailwind-5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-tailwind-5" aria-expanded="false" aria-controls="c-tailwind-5">5. كيف تعمل responsive classes في Tailwind؟</button>
+            </h3>
+            <div id="c-tailwind-5" class="accordion-collapse collapse" aria-labelledby="h-tailwind-5" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تستخدم بادئات (Prefixes) مثل <code>sm:</code>، <code>md:</code>، <code>lg:</code>، <code>xl:</code> لتطبيق الكلاسات بدءاً من نقطة التوقف المحددة وما فوق.</p>
+                    <pre><code dir="ltr">&lt;div class="text-sm md:text-lg lg:text-xl"&gt;...&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-tailwind-6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-tailwind-6" aria-expanded="false" aria-controls="c-tailwind-6">6. ما هي الـ arbitrary values؟</button>
+            </h3>
+            <div id="c-tailwind-6" class="accordion-collapse collapse" aria-labelledby="h-tailwind-6" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تسمح بتعيين قيم مخصصة مباشرة في الكلاس باستخدام الأقواس المعقوفة (Brackets) <code>[]</code> بدلاً من القيم المعرفة مسبقاً.</p>
+                    <pre><code dir="ltr">&lt;div class="mt-[18px] bg-[#1da1f2]"&gt;...&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-tailwind-7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-tailwind-7" aria-expanded="false" aria-controls="c-tailwind-7">7. كيف نستخدم animation في Tailwind؟</button>
+            </h3>
+            <div id="c-tailwind-7" class="accordion-collapse collapse" aria-labelledby="h-tailwind-7" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يحتوي على كلاسات حركية جاهزة مثل <code>animate-spin</code>، <code>animate-ping</code>، <code>animate-bounce</code>. ويمكن تخصيص Keyframes في ملف <code>tailwind.config.js</code>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-tailwind-8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-tailwind-8" aria-expanded="false" aria-controls="c-tailwind-8">8. ما هو الـ config file؟</button>
+            </h3>
+            <div id="c-tailwind-8" class="accordion-collapse collapse" aria-labelledby="h-tailwind-8" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>ملف **<code>tailwind.config.js</code>**، يُستخدم لتخصيص إعدادات Tailwind الافتراضية، مثل إضافة ألوان مخصصة، تغيير قيم المسافات، أو تحديد نقاط التوقف (Breakpoints) الخاصة بك.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-tailwind-9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-tailwind-9" aria-expanded="false" aria-controls="c-tailwind-9">9. ماذا تعني dark: وأسلوب الـ dark mode؟</button>
+            </h3>
+            <div id="c-tailwind-9" class="accordion-collapse collapse" aria-labelledby="h-tailwind-9" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>بادئة <code>dark:</code> تسمح بتطبيق كلاسات معينة فقط عندما يكون وضع الليل (Dark Mode) مفعلاً في نظام التشغيل أو داخل التطبيق.</p>
+                    <pre><code dir="ltr">&lt;div class="bg-white dark:bg-black"&gt;...&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-tailwind-10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-tailwind-10" aria-expanded="false" aria-controls="c-tailwind-10">10. كيف تنشئ component جاهز باستخدام @apply؟</button>
+            </h3>
+            <div id="c-tailwind-10" class="accordion-collapse collapse" aria-labelledby="h-tailwind-10" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يُستخدم في ملف CSS لدمج عدة كلاسات Utility في كلاس واحد مخصص، لإنشاء Component قابل لإعادة الاستخدام بسهولة.</p>
+                    <pre><code dir="ltr">.btn {
+  @apply bg-blue-500 text-white py-2 px-4 rounded;
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="topic-heading text-primary">🌟 V. SASS / SCSS</h1>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-1" aria-expanded="false" aria-controls="c-sass-1">1. ما الفرق بين SASS و SCSS؟</button>
+            </h3>
+            <div id="c-sass-1" class="accordion-collapse collapse" aria-labelledby="h-sass-1" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>SASS</strong>: صيغة قديمة، تعتمد على المسافات البادئة (Indentation) بدلاً من الأقواس المعقوفة <code>{}</code> والفواصل المنقوطة <code>;</code>.</li>
+                        <li><strong>SCSS</strong>: الصيغة الأكثر شيوعاً. هي superset من CSS، وتستخدم نفس الأقواس المعقوفة والفواصل المنقوطة.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-2" aria-expanded="false" aria-controls="c-sass-2">2. ما هي الـ variables؟</button>
+            </h3>
+            <div id="c-sass-2" class="accordion-collapse collapse" aria-labelledby="h-sass-2" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تسمح بتخزين القيم (مثل الألوان، الخطوط، أحجام المسافات) واستخدامها في أماكن متعددة. تبدأ بعلامة الدولار <code>$</code>.</p>
+                    <pre><code dir="ltr">$primary-color: #333;
+body { color: $primary-color; }</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-3" aria-expanded="false" aria-controls="c-sass-3">3. ما هي الـ mixins؟</button>
+            </h3>
+            <div id="c-sass-3" class="accordion-collapse collapse" aria-labelledby="h-sass-3" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي **دوال** (Functions) قابلة لإعادة الاستخدام تحتوي على مجموعة من الخصائص، وتُدرج في قواعد CSS باستخدام <code>@include</code>. تستخدم لتقليل تكرار الكود.</p>
+                    <pre><code dir="ltr">@mixin center { display: flex; justify-content: center; }
+.box { @include center; }</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-4" aria-expanded="false" aria-controls="c-sass-4">4. ما هي الـ functions في SASS؟</button>
+            </h3>
+            <div id="c-sass-4" class="accordion-collapse collapse" aria-labelledby="h-sass-4" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تُستخدم لإجراء عمليات حسابية أو معالجة للبيانات وإرجاع **قيمة واحدة**. تستخدم لتعيين قيم الخصائص.</p>
+                    <pre><code dir="ltr">@function double($n) { @return $n * 2; }
+.box { width: double(50px); }</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-5" aria-expanded="false" aria-controls="c-sass-5">5. ما هي الـ nested rules؟</button>
+            </h3>
+            <div id="c-sass-5" class="accordion-collapse collapse" aria-labelledby="h-sass-5" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>كتابة المحددات (Selectors) داخل بعضها البعض لتقليل التكرار ولجعل هيكل CSS يتبع هيكل HTML. يجب استخدامها بعناية لتجنب التعقيد.</p>
+                    <pre><code dir="ltr">nav {
+  ul { 
+    margin: 0; 
+    li { display: inline; } 
+  }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-6" aria-expanded="false" aria-controls="c-sass-6">6. ما هي الـ extends؟</button>
+            </h3>
+            <div id="c-sass-6" class="accordion-collapse collapse" aria-labelledby="h-sass-6" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تسمح **لمحدد واحد بمشاركة أنماط محدد آخر**. تستخدم لإنشاء أنماط أساسية تُسمى **Placeholders** (تبدأ بـ <code>%</code>) لا تظهر في الناتج النهائي لـ CSS إلا إذا تم استدعاؤها.</p>
+                    <pre><code dir="ltr">%btn-base { padding: 10px; }
+.button { @extend %btn-base; }</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-7" aria-expanded="false" aria-controls="c-sass-7">7. ما وظيفة Partial files؟</button>
+            </h3>
+            <div id="c-sass-7" class="accordion-collapse collapse" aria-labelledby="h-sass-7" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>ملفات تبدأ بـ <code>_</code> (مثل <code>_variables.scss</code>). لا تتحول مباشرة إلى ملف CSS منفصل عند التجميع، بل يتم استدعاؤها ودمجها في الملف الرئيسي باستخدام <code>@use</code> أو <code>@import</code>. تستخدم لتنظيم الكود.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-8" aria-expanded="false" aria-controls="c-sass-8">8. يعني إيه @import و @use و @forward؟</button>
+            </h3>
+            <div id="c-sass-8" class="accordion-collapse collapse" aria-labelledby="h-sass-8" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>@import</code></strong>: الطريقة القديمة لاستدعاء الملفات (تم إهمالها).</li>
+                        <li><strong><code>@use</code></strong>: الطريقة الجديدة. تستدعي وحدة (Module) وتجعل متغيراتها ووظائفها متاحة تحت Namespace (مثل <code>variables.$primary</code>).</li>
+                        <li><strong><code>@forward</code></strong>: تستخدم لإعادة تصدير (Re-export) ملفات من Module إلى Module آخر.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-9" aria-expanded="false" aria-controls="c-sass-9">9. ليه use أحسن من import؟</button>
+            </h3>
+            <div id="c-sass-9" class="accordion-collapse collapse" aria-labelledby="h-sass-9" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>لأنها توفر **Namespace** (نطاق اسم)، مما يحمي المتغيرات والـ mixins من التعارض إذا كانت تحمل نفس الاسم في ملفات مختلفة، كما أنها أسرع في عملية التجميع (Compilation).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-10" aria-expanded="false" aria-controls="c-sass-10">10. ما معنى Modules في SASS؟</button>
+            </h3>
+            <div id="c-sass-10" class="accordion-collapse collapse" aria-labelledby="h-sass-10" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي تنظيم الكود على شكل ملفات مستقلة (Partials) يتم استدعاؤها عبر <code>@use</code>، حيث يتم التعامل مع كل ملف كوحدة مستقلة أو Module يحوي منطقاً معيناً (مثل الألوان أو التخطيطات).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-sass-12">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-sass-12" aria-expanded="false" aria-controls="c-sass-12">12. إزاي أعمل loop في SASS باستخدام @each؟</button>
+            </h3>
+            <div id="c-sass-12" class="accordion-collapse collapse" aria-labelledby="h-sass-12" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يسمح بتكرار مجموعة من القواعد لإنشاء كلاسات متعددة بناءً على قائمة (List) أو خريطة (Map) معينة، مما يوفر وقتاً كبيراً في كتابة الأنماط المتشابهة.</p>
+                    <pre><code dir="ltr">@each $color in (red, green, blue) {
+    .text-#{$color} { color: $color; }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="topic-heading text-primary">🌟 VI. JavaScript</h1>
+
+        <h2 class="level-heading">✔ Basics</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-1" aria-expanded="false" aria-controls="c-js-1">1. ما الفرق بين var و let و const؟</button>
+            </h3>
+            <div id="c-js-1" class="accordion-collapse collapse" aria-labelledby="h-js-1" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>var</code></strong>: وظيفي النطاق (Function-scoped)، يمكن إعادة تعريفه وتعديله، يتعرض للـ **Hoisting**.</li>
+                        <li><strong><code>let</code></strong>: نطاق كتلي (Block-scoped)، يمكن تعديله ولكن لا يمكن إعادة تعريفه.</li>
+                        <li><strong><code>const</code></strong>: نطاق كتلي (Block-scoped)، ثابت، لا يمكن إعادة تعريفه ولا تعديله (إلا خصائص الكائنات).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-2" aria-expanded="false" aria-controls="c-js-2">2. ما هو hoisting؟</button>
+            </h3>
+            <div id="c-js-2" class="accordion-collapse collapse" aria-labelledby="h-js-2" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>آلية في JavaScript تقوم فيها برفع التعريفات (للـ <code>var</code> و <code>function</code>) إلى **أعلى النطاق (Scope)** الخاص بها قبل تنفيذ أي كود. تبقى التهيئة (Initialization) في مكانها.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-3" aria-expanded="false" aria-controls="c-js-3">3. ما الفرق بين == و ===؟</button>
+            </h3>
+            <div id="c-js-3" class="accordion-collapse collapse" aria-labelledby="h-js-3" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>==</code></strong>: يقارن **بالقيمة فقط**، ويقوم بتحويل النوع (Type Coercion) إذا كانا مختلفين.</li>
+                        <li><strong><code>===</code></strong>: يقارن **بالقيمة والنوع معاً**، لا يقوم بالتحويل. (يفضل استخدامه دائماً).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-4" aria-expanded="false" aria-controls="c-js-4">4. ما هي الـ primitive types؟</button>
+            </h3>
+            <div id="c-js-4" class="accordion-collapse collapse" aria-labelledby="h-js-4" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>الأنواع البدائية (التي لا تُخزن كـ Object): <strong>string, number, boolean, null, undefined, symbol, bigint</strong>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-5" aria-expanded="false" aria-controls="c-js-5">5. ما هي الـ reference types؟</button>
+            </h3>
+            <div id="c-js-5" class="accordion-collapse collapse" aria-labelledby="h-js-5" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>الأنواع المرجعية (التي تُخزن كـ Object وتمرر بالمرجع): <strong>objects, arrays, functions</strong>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-6" aria-expanded="false" aria-controls="c-js-6">6. ما الفرق بين null و undefined؟</button>
+            </h3>
+            <div id="c-js-6" class="accordion-collapse collapse" aria-labelledby="h-js-6" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>null</code></strong>: **قيمة تعيينها أنت** للمتغير للإشارة إلى "لا قيمة متعمدة". نوعه هو <code>object</code>.</li>
+                        <li><strong><code>undefined</code></strong>: يعني أن المتغير **لم يتم تعيين قيمة له بعد**. نوعه هو <code>undefined</code>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-7" aria-expanded="false" aria-controls="c-js-7">7. ما هو الـ scope؟</button>
+            </h3>
+            <div id="c-js-7" class="accordion-collapse collapse" aria-labelledby="h-js-7" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>نطاق رؤية المتغيرات وإمكانية الوصول إليها. الأنواع الرئيسية هي: **Global** (نطاق عالمي)، **Function** (نطاق وظيفي)، **Block** (نطاق كتلي لـ <code>let</code> و <code>const</code>).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-8" aria-expanded="false" aria-controls="c-js-8">8. ما هو closure؟</button>
+            </h3>
+            <div id="c-js-8" class="accordion-collapse collapse" aria-labelledby="h-js-8" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي قدرة الدالة على **تذكر والوصول إلى المتغيرات** من نطاقها الخارجي (Lexical Environment) حتى بعد انتهاء تنفيذ الدالة الخارجية.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-9" aria-expanded="false" aria-controls="c-js-9">9. ما هو callback function؟</button>
+            </h3>
+            <div id="c-js-9" class="accordion-collapse collapse" aria-labelledby="h-js-9" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>دالة تُمرر كمعامل (Argument) لدالة أخرى، ومن المتوقع أن تُنفذ **لاحقاً** عند اكتمال حدث أو عملية معينة (كعملية غير متزامنة).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-10" aria-expanded="false" aria-controls="c-js-10">10. ما هي arrow functions؟</button>
+            </h3>
+            <div id="c-js-10" class="accordion-collapse collapse" aria-labelledby="h-js-10" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>صيغة مختصرة (Shorter syntax) لكتابة الدوال في ES6. ميزتها الأساسية أنها **لا تحتوي على <code>this</code> الخاص بها**، بل تأخذ <code>this</code> من السياق الأب المحيط (Lexical <code>this</code>).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-11">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-11" aria-expanded="false" aria-controls="c-js-11">11. ما الفرق بين function declaration و function expression؟</button>
+            </h3>
+            <div id="c-js-11" class="accordion-collapse collapse" aria-labelledby="h-js-11" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>Declaration</strong>: (<code>function foo() {}</code>) - تتعرض للـ **Hoisting**، ويمكن استدعاؤها قبل تعريفها.</li>
+                        <li><strong>Expression</strong>: (<code>const foo = function() {}</code>) - لا تتعرض للـ Hoisting، يجب تعريفها قبل الاستدعاء.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-12">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-12" aria-expanded="false" aria-controls="c-js-12">12. ما هو this؟</button>
+            </h3>
+            <div id="c-js-12" class="accordion-collapse collapse" aria-labelledby="h-js-12" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>كلمة مفتاحية (Keyword) تشير إلى **سياق تنفيذ الدالة الحالي (Execution Context)**. قيمة <code>this</code> تتحدد بناءً على كيفية استدعاء الدالة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-13">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-13" aria-expanded="false" aria-controls="c-js-13">13. ما الفرق بين bind و call و apply؟</button>
+            </h3>
+            <div id="c-js-13" class="accordion-collapse collapse" aria-labelledby="h-js-13" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تستخدم لتعيين قيمة <code>this</code> لدالة معينة:</p>
+                    <ul>
+                        <li><strong><code>call</code></strong>: ينفذ الدالة **فوراً**، وتُمرر الوسائط (Arguments) بشكل فردي.</li>
+                        <li><strong><code>apply</code></strong>: ينفذ الدالة **فوراً**، وتُمرر الوسائط كمصفوفة (Array).</li>
+                        <li><strong><code>bind</code></strong>: ينشئ **نسخة جديدة من الدالة** مرتبطة بـ <code>this</code> المحدد، ولا ينفذها فوراً.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Arrays & Objects</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-14">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-14" aria-expanded="false" aria-controls="c-js-14">14. ما الفرق بين map, filter, reduce؟</button>
+            </h3>
+            <div id="c-js-14" class="accordion-collapse collapse" aria-labelledby="h-js-14" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>map</code></strong>: تحويل كل عنصر في المصفوفة وإرجاع **مصفوفة جديدة بنفس الطول**.</li>
+                        <li><strong><code>filter</code></strong>: تصفية العناصر بناءً على شرط وإرجاع **مصفوفة جديدة بطول يساوي أو أقل** من الأصل.</li>
+                        <li><strong><code>reduce</code></strong>: دمج عناصر المصفوفة في **قيمة واحدة** (سواء كانت عدداً، مصفوفة، أو كائن).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-15">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-15" aria-expanded="false" aria-controls="c-js-15">15. ما الفرق بين forEach و map؟</button>
+            </h3>
+            <div id="c-js-15" class="accordion-collapse collapse" aria-labelledby="h-js-15" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>forEach</code></strong>: لتنفيذ دالة على كل عنصر، **لا يرجع قيمة** (يُستخدم للآثار الجانبية).</li>
+                        <li><strong><code>map</code></strong>: لتنفيذ دالة على كل عنصر، **يرجع مصفوفة جديدة**.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-16">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-16" aria-expanded="false" aria-controls="c-js-16">16. كيفية نسخ object بدون مشاكل reference؟</button>
+            </h3>
+            <div id="c-js-16" class="accordion-collapse collapse" aria-labelledby="h-js-16" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>لإنشاء نسخة سطحية (Shallow Copy) يمكن استخدام عامل النشر (Spread Operator):</p>
+                    <pre><code dir="ltr">const newObj = { ...oldObj };</code></pre>
+                    <p>لإنشاء نسخة عميقة (Deep Copy) يمكن استخدام <code>JSON.parse(JSON.stringify(oldObj))</code> أو مكتبات متخصصة مثل Lodash.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Async</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-17">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-17" aria-expanded="false" aria-controls="c-js-17">17. ما هو الـ Event Loop؟</button>
+            </h3>
+            <div id="c-js-17" class="accordion-collapse collapse" aria-labelledby="h-js-17" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي الآلية التي تسمح لـ JavaScript (التي تعمل كخيط واحد) بأداء العمليات غير المتزامنة (Async) عن طريق إدارة **Call Stack** و **Callback Queue**.</p>
+                    [Image of JavaScript Event Loop diagram]
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-18">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-18" aria-expanded="false" aria-controls="c-js-18">18. ما الفرق بين synchronous و asynchronous؟</button>
+            </h3>
+            <div id="c-js-18" class="accordion-collapse collapse" aria-labelledby="h-js-18" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>Synchronous</strong>: تنفيذ تسلسلي، يتم حظر الكود حتى اكتمال العملية.</li>
+                        <li><strong>Asynchronous</strong>: تنفيذ غير تسلسلي، تستمر بقية التعليمات في العمل بينما يتم انتظار نتيجة العملية غير المتزامنة.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-19">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-19" aria-expanded="false" aria-controls="c-js-19">19. ما هو Promise؟</button>
+            </h3>
+            <div id="c-js-19" class="accordion-collapse collapse" aria-labelledby="h-js-19" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>كائن يمثل نتيجة عملية غير متزامنة قد تكتمل في المستقبل (إما بنجاح <code>resolved</code> أو بفشل <code>rejected</code>).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-20">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-20" aria-expanded="false" aria-controls="c-js-20">20. ما الفرق بين async و await؟</button>
+            </h3>
+            <div id="c-js-20" class="accordion-collapse collapse" aria-labelledby="h-js-20" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>async</code></strong>: كلمة مفتاحية تُوضع قبل تعريف الدالة، وتجعل الدالة تُرجع Promise بشكل تلقائي.</li>
+                        <li><strong><code>await</code></strong>: كلمة مفتاحية تُستخدم **فقط داخل دوال <code>async</code>**، وتجعل الكود ينتظر (بشكل غير حاصر) حتى يتم حل Promise.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-js-21">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-js-21" aria-expanded="false" aria-controls="c-js-21">21. ما هو fetch API؟</button>
+            </h3>
+            <div id="c-js-21" class="accordion-collapse collapse" aria-labelledby="h-js-21" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>واجهة برمجة تطبيقات حديثة لجلب الموارد عبر الشبكة (مثل طلبات HTTP). تعتمد على **Promises** لإدارة العمليات غير المتزامنة.</p>
+                    <pre><code dir="ltr">fetch(url)
+    .then(res => res.json())
+    .then(data => console.log(data));</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="topic-heading text-primary">🌟 VII. TypeScript</h1>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ts-1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ts-1" aria-expanded="false" aria-controls="c-ts-1">1. ما هو TypeScript؟</button>
+            </h3>
+            <div id="c-ts-1" class="accordion-collapse collapse" aria-labelledby="h-ts-1" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي **Superset من JavaScript** تضيف نظام أنواع ثابت (Static Typing) وميزات OOP. تُحول إلى JavaScript (Transpiled) قبل التشغيل في المتصفح. تكتشف الأخطاء في وقت الترجمة (Compile-Time).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ts-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ts-2" aria-expanded="false" aria-controls="c-ts-2">2. ما الفرق بين any و unknown؟</button>
+            </h3>
+            <div id="c-ts-2" class="accordion-collapse collapse" aria-labelledby="h-ts-2" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>any</code></strong>: أي قيمة، **لا تحقق Type Checking**.</li>
+                        <li><strong><code>unknown</code></strong>: أي قيمة، لكن **يجب فحص النوع يدوياً** (Type Narrowing) قبل استخدامها، مما يجعلها أكثر أماناً.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ts-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ts-3" aria-expanded="false" aria-controls="c-ts-3">3. ما الفرق بين type و interface؟</button>
+            </h3>
+            <div id="c-ts-3" class="accordion-collapse collapse" aria-labelledby="h-ts-3" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>interface</code></strong>: تستخدم لتعريف شكل **الكائنات (Objects)** والـ Classes، ويمكنها إجراء **Merge** (دمج).</li>
+                        <li><strong><code>type</code></strong>: أكثر مرونة، تستخدم لتعريف الأنواع البدائية (Primitives)، والـ **Union/Intersection Types**، ولا يمكنها إجراء Merge.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ts-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ts-4" aria-expanded="false" aria-controls="c-ts-4">4. ما هو union type؟</button>
+            </h3>
+            <div id="c-ts-4" class="accordion-collapse collapse" aria-labelledby="h-ts-4" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يسمح للمتغير بأخذ قيمة من **عدة أنواع مختلفة** محددة، باستخدام العلامة <code>|</code>.</p>
+                    <pre><code dir="ltr">let value: string | number;</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ts-5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ts-5" aria-expanded="false" aria-controls="c-ts-5">5. ما هي الـ generics؟</button>
+            </h3>
+            <div id="c-ts-5" class="accordion-collapse collapse" aria-labelledby="h-ts-5" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تسمح بإنشاء مكونات (مثل الدوال أو الـ Classes) يمكنها العمل مع **أي نوع من البيانات مع الحفاظ على فحص النوع**، دون الحاجة لتحديد نوع محدد مسبقاً.</p>
+                    <pre><code dir="ltr">function identity&lt;T&gt;(arg: T): T { return arg; }</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ts-6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ts-6" aria-expanded="false" aria-controls="c-ts-6">6. ما هو enum؟</button>
+            </h3>
+            <div id="c-ts-6" class="accordion-collapse collapse" aria-labelledby="h-ts-6" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يسمح بتعريف **مجموعة من الثوابت المسماة**. يوفر طريقة لتمثيل مجموعة من القيم المتعلقة ببعضها بطريقة أكثر قابلية للقراءة.</p>
+                    <pre><code dir="ltr">enum Color { Red, Green, Blue }</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ts-7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ts-7" aria-expanded="false" aria-controls="c-ts-7">7. ما هو readonly؟</button>
+            </h3>
+            <div id="c-ts-7" class="accordion-collapse collapse" aria-labelledby="h-ts-7" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>كلمة مفتاحية تُستخدم لحماية خاصية (Property) من التغيير **بعد إنشائها**. يمكن تعيينها مرة واحدة فقط.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ts-9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ts-9" aria-expanded="false" aria-controls="c-ts-9">9. ما هي الفرق بين public، private، protected؟</button>
+            </h3>
+            <div id="c-ts-9" class="accordion-collapse collapse" aria-labelledby="h-ts-9" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تُستخدم كمُعدلات وصول (Access Modifiers) في الـ Classes:</p>
+                    <ul>
+                        <li><strong><code>public</code></strong>: الوصول متاح للجميع.</li>
+                        <li><strong><code>private</code></strong>: الوصول متاح **فقط داخل الـ Class** الذي تم تعريفه فيه.</li>
+                        <li><strong><code>protected</code></strong>: الوصول متاح **داخل الـ Class** وأيضاً **داخل الـ Subclasses (الفروع)**.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ts-11">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ts-11" aria-expanded="false" aria-controls="c-ts-11">11. كيف تعمل الـ type inference؟</button>
+            </h3>
+            <div id="c-ts-11" class="accordion-collapse collapse" aria-labelledby="h-ts-11" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي قدرة TypeScript على **تحديد نوع المتغير تلقائياً** بناءً على القيمة الأولية التي تم تعيينها له، دون الحاجة لتحديد النوع بشكل صريح.</p>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="topic-heading text-primary">🌟 VIII. jQuery</h1>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-jq-1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-jq-1" aria-expanded="false" aria-controls="c-jq-1">1. ما هو jQuery؟</button>
+            </h3>
+            <div id="c-jq-1" class="accordion-collapse collapse" aria-labelledby="h-jq-1" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>مكتبة JavaScript (Library) تهدف إلى تبسيط **DOM manipulation, AJAX calls, and animations**. تستخدم الشعار الشهير <code>$</code>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-jq-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-jq-2" aria-expanded="false" aria-controls="c-jq-2">2. ما الفرق بين hide() و remove()؟</button>
+            </h3>
+            <div id="c-jq-2" class="accordion-collapse collapse" aria-labelledby="h-jq-2" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>hide()</code></strong>: يخفي العنصر عن طريق تعيين <code>display: none;</code>، ويبقى العنصر في الـ DOM.</li>
+                        <li><strong><code>remove()</code></strong>: يحذف العنصر **تماما** من شجرة الـ DOM.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-jq-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-jq-3" aria-expanded="false" aria-controls="c-jq-3">3. ما هو AJAX في jQuery؟</button>
+            </h3>
+            <div id="c-jq-3" class="accordion-collapse collapse" aria-labelledby="h-jq-3" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي مجموعة من الوظائف (مثل <code>$.ajax()</code>، <code>$.get()</code>، <code>$.post()</code>) لتسهيل إرسال **طلبات HTTP غير المتزامنة** لتبادل البيانات مع السيرفر دون إعادة تحميل الصفحة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-jq-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-jq-4" aria-expanded="false" aria-controls="c-jq-4">4. كيف تعمل select للعنصر؟</button>
+            </h3>
+            <div id="c-jq-4" class="accordion-collapse collapse" aria-labelledby="h-jq-4" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>باستخدام علامة <code>$</code> مع محددات CSS داخل الأقواس. مثال:</p>
+                    <ul>
+                        <li>للعنصر بـ ID: <code>$("#id")</code>.</li>
+                        <li>للعنصر بـ Class: <code>$(".class")</code>.</li>
+                        <li>للعنصر بـ Tag: <code>$("tag")</code>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-jq-5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-jq-5" aria-expanded="false" aria-controls="c-jq-5">5. ما الفرق بين document.ready و window.onload؟</button>
+            </h3>
+            <div id="c-jq-5" class="accordion-collapse collapse" aria-labelledby="h-jq-5" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>document.ready</code></strong>: ينفذ الكود بعد تحميل **DOM فقط** (أسرع).</li>
+                        <li><strong><code>window.onload</code></strong>: ينفذ الكود بعد تحميل **كل محتويات الصفحة** (الـ DOM والصور والملفات الخارجية).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-jq-6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-jq-6" aria-expanded="false" aria-controls="c-jq-6">6. لماذا انخفض استخدام jQuery؟</button>
+            </h3>
+            <div id="c-jq-6" class="accordion-collapse collapse" aria-labelledby="h-jq-6" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>بسبب تطور JavaScript الأصلي (Vanilla JS) ودعم المتصفحات لـ DOM API، وظهور Frameworks الحديثة (مثل React, Angular, Vue) التي توفر آليات أسهل لإدارة الـ DOM.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-jq-7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-jq-7" aria-expanded="false" aria-controls="c-jq-7">7. ما الفرق بين on() و click()؟</button>
+            </h3>
+            <div id="c-jq-7" class="accordion-collapse collapse" aria-labelledby="h-jq-7" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>click()</code></strong>: يربط الدالة بالعنصر المحدد مباشرة.</li>
+                        <li><strong><code>on('click', ...)</code></strong>: أكثر مرونة، يسمح بـ **Event Delegation** (ربط الحدث بعنصر أب للأداء) والعناصر المضافة حديثاً للـ DOM.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-jq-8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-jq-8" aria-expanded="false" aria-controls="c-jq-8">8. كيف تعمل fadeIn و fadeOut؟</button>
+            </h3>
+            <div id="c-jq-8" class="accordion-collapse collapse" aria-labelledby="h-jq-8" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>دوال جاهزة في jQuery تستخدم لتغيير خاصية **الشفافية (Opacity)** للعنصر تدريجياً، إما لإظهاره (FadeIn) أو لإخفائه (FadeOut).</p>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="topic-heading text-primary">🌟 IX. Angular (Most Important - Extensive Q&A)</h1>
+
+        <h2 class="level-heading">✔ Basics</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-1" aria-expanded="false" aria-controls="c-ang-1">1. ما هو Angular؟</button>
+            </h3>
+            <div id="c-ang-1" class="accordion-collapse collapse" aria-labelledby="h-ang-1" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>إطار عمل (Framework) متكامل لبناء تطبيقات الصفحة الواحدة (SPA) وتطبيقات المؤسسات، يعتمد على **TypeScript**.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-2" aria-expanded="false" aria-controls="c-ang-2">2. ما الفرق بين SPA و MPA؟</button>
+            </h3>
+            <div id="c-ang-2" class="accordion-collapse collapse" aria-labelledby="h-ang-2" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>SPA (Single Page Application)</strong>: صفحة واحدة تتغير ديناميكياً عبر JS، دون إعادة تحميل كاملة. (مثل Angular, React).</li>
+                        <li><strong>MPA (Multi-Page Application)</strong>: عدة صفحات، كل عملية انتقال تتطلب إعادة تحميل كاملة للصفحة.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-3" aria-expanded="false" aria-controls="c-ang-3">3. ما هو الـ Component؟</button>
+            </h3>
+            <div id="c-ang-3" class="accordion-collapse collapse" aria-labelledby="h-ang-3" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>الوحدة الأساسية في بناء واجهة المستخدم (UI)، وهي عبارة عن مزيج من HTML (Template), CSS (Style), و TypeScript (Logic).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-4" aria-expanded="false" aria-controls="c-ang-4">4. مما يتكون الـ component؟</button>
+            </h3>
+            <div id="c-ang-4" class="accordion-collapse collapse" aria-labelledby="h-ang-4" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يتكون من 4 أجزاء رئيسية:</p>
+                    <ul>
+                        <li><strong>Selector</strong> (يحدد كيفية استدعائه في HTML).</li>
+                        <li><strong>Template</strong> (كود HTML الخاص به).</li>
+                        <li><strong>Style</strong> (كود CSS الخاص به).</li>
+                        <li><strong>Class</strong> (ملف TypeScript الذي يحتوي على المنطق والبيانات).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-5" aria-expanded="false" aria-controls="c-ang-5">5. ما هي الـ Modules؟</button>
+            </h3>
+            <div id="c-ang-5" class="accordion-collapse collapse" aria-labelledby="h-ang-5" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>آلية لتنظيم التطبيق في مجموعات وظيفية متماسكة (مثل <code>AppModule</code>، <code>AdminModule</code>). تُجمع بداخلها الـ Components، Services، Directives.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-6" aria-expanded="false" aria-controls="c-ang-6">6. ما هو الـ Data Binding وأنواعه؟</button>
+            </h3>
+            <div id="c-ang-6" class="accordion-collapse collapse" aria-labelledby="h-ang-6" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>ربط البيانات بين الـ Component Class (TS) والـ Template (HTML):</p>
+                    <ul>
+                        <li><strong>Interpolation</strong>: <code>{{ value }}</code> (من TS إلى HTML).</li>
+                        <li><strong>Property binding</strong>: <code>[property]="prop"</code> (من TS إلى خاصية عنصر).</li>
+                        <li><strong>Event binding</strong>: <code>(click)="func()"</code> (من HTML إلى TS).</li>
+                        <li><strong>Two-way binding</strong>: <code>[(ngModel)]="prop"</code> (دمج الـ Property والـ Event Binding).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-7" aria-expanded="false" aria-controls="c-ang-7">7. ما هو الـ Directive؟</button>
+            </h3>
+            <div id="c-ang-7" class="accordion-collapse collapse" aria-labelledby="h-ang-7" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>تعليمات تُطبق على عناصر الـ DOM لتغيير سلوكها أو مظهرها أو هيكلها.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-8" aria-expanded="false" aria-controls="c-ang-8">8. أنواع الـ directives؟</button>
+            </h3>
+            <div id="c-ang-8" class="accordion-collapse collapse" aria-labelledby="h-ang-8" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>Component</strong>: ديريكتيف خاص يستخدم لإدارة واجهة المستخدم (وهي الـ Components نفسها).</li>
+                        <li><strong>Structural</strong>: تغير هيكل الـ DOM (تضيف/تحذف العناصر). مثال: <code>*ngIf</code>.</li>
+                        <li><strong>Attribute</strong>: تغير مظهر أو سلوك العنصر دون تغيير هيكله. مثال: <code>[ngClass]</code>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Structural Directives</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-9" aria-expanded="false" aria-controls="c-ang-9">9. Explain: *ngIf, *ngFor, *ngSwitch.</button>
+            </h3>
+            <div id="c-ang-9" class="accordion-collapse collapse" aria-labelledby="h-ang-9" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>*ngIf</code></strong>: ديريكتيف شرطي، يعرض العنصر إذا كان الشرط صحيحاً ويحذفه من الـ DOM إذا كان خاطئاً.</li>
+                        <li><strong><code>*ngFor</code></strong>: ديريكتيف تكراري، يقوم بتكرار قالب HTML لإنشاء مجموعة من العناصر (Loop).</li>
+                        <li><strong><code>*ngSwitch</code></strong>: ديريكتيف اختيار متعدد، يعرض عنصراً واحداً من مجموعة بناءً على قيمة متغيرة.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Attribute Directives</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-10" aria-expanded="false" aria-controls="c-ang-10">10. Explain: ngClass, ngStyle.</button>
+            </h3>
+            <div id="c-ang-10" class="accordion-collapse collapse" aria-labelledby="h-ang-10" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>[ngClass]</code></strong>: لإضافة/حذف مجموعة من Classes بشكل ديناميكي بناءً على متغير أو شرط.</li>
+                        <li><strong><code>[ngStyle]</code></strong>: لتعديل خاصية Style واحدة أو مجموعة من الخصائص مباشرة في العنصر بشكل ديناميكي.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Services</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-11">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-11" aria-expanded="false" aria-controls="c-ang-11">11. ما هو الـ service؟</button>
+            </h3>
+            <div id="c-ang-11" class="accordion-collapse collapse" aria-labelledby="h-ang-11" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>كلاس يستخدم لتجميع المنطق القابل لإعادة الاستخدام في التطبيق (مثل جلب البيانات، المصادقة، التخزين المؤقت)، ويتم حقنه في الـ Components.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-12">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-12" aria-expanded="false" aria-controls="c-ang-12">12. ما هو Dependency Injection؟</button>
+            </h3>
+            <div id="c-ang-12" class="accordion-collapse collapse" aria-labelledby="h-ang-12" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هو نمط تصميم يقوم فيه Angular بـ **حقن** (توفير) كائنات الخدمات (Services) إلى الـ Components والـ Services الأخرى عندما يتم طلبها في الدالة البانية (Constructor). هذا يسهل الاختبار والصيانة.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Lifecycle Hooks</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-13">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-13" aria-expanded="false" aria-controls="c-ang-13">13. اذكري أهم Lifecycle hooks؟</button>
+            </h3>
+            <div id="c-ang-13" class="accordion-collapse collapse" aria-labelledby="h-ang-13" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p><code>ngOnInit</code>, <code>ngOnChanges</code>, <code>ngDoCheck</code>, <code>ngAfterViewInit</code>, <code>ngOnDestroy</code>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-14">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-14" aria-expanded="false" aria-controls="c-ang-14">14. دور ngOnInit؟</button>
+            </h3>
+            <div id="c-ang-14" class="accordion-collapse collapse" aria-labelledby="h-ang-14" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يتم تنفيذه **مرة واحدة** بعد إنشاء المكون وتعيين الـ **Input Properties** لأول مرة. المكان المفضل لإجراء عمليات جلب البيانات (Data Fetching) الأولية.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-15">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-15" aria-expanded="false" aria-controls="c-ang-15">15. دور ngOnChanges؟</button>
+            </h3>
+            <div id="c-ang-15" class="accordion-collapse collapse" aria-labelledby="h-ang-15" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>يتم تنفيذه عند تغيير أي من الـ **Input Properties** الخاصة بالمكون. يستقبل كائناً يحتوي على القيم القديمة والجديدة.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Routing</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-16">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-16" aria-expanded="false" aria-controls="c-ang-16">16. ما هو RouterModule؟</button>
+            </h3>
+            <div id="c-ang-16" class="accordion-collapse collapse" aria-labelledby="h-ang-16" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>وحدة Angular المسؤولة عن إدارة **التنقل** بين الـ Components المختلفة في التطبيق (SPA)، وعرض الـ Component المناسب بناءً على عنوان URL.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-17">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-17" aria-expanded="false" aria-controls="c-ang-17">17. ما هو lazy loading؟</button>
+            </h3>
+            <div id="c-ang-17" class="accordion-collapse collapse" aria-labelledby="h-ang-17" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>آلية يتم فيها تحميل Module معين **فقط عند زيارة مساره**. تقلل من حجم ملف التطبيق الأولي، مما يسرع من وقت التحميل.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-18">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-18" aria-expanded="false" aria-controls="c-ang-18">18. ما الفرق بين routerLink و navigate()؟</button>
+            </h3>
+            <div id="c-ang-18" class="accordion-collapse collapse" aria-labelledby="h-ang-18" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>routerLink</code></strong>: ديريكتيف يُستخدم في الـ **Template** لتوفير روابط مباشرة.</li>
+                        <li><strong><code>navigate()</code></strong>: Method يُستخدم في الـ **TypeScript Class** (عبر <code>Router</code> Service) للتنقل برمجياً.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Forms</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-19">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-19" aria-expanded="false" aria-controls="c-ang-19">19. ما الفرق بين Template-driven و Reactive forms؟</button>
+            </h3>
+            <div id="c-ang-19" class="accordion-collapse collapse" aria-labelledby="h-ang-19" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>Template-driven</strong>: سهل، يتم بناء المنطق في الـ **Template** باستخدام <code>ngModel</code>. مناسب للنماذج البسيطة.</li>
+                        <li><strong>Reactive</strong>: أكثر مرونة وقوة، يتم بناء النموذج في الـ **TypeScript Class** باستخدام <code>FormGroup/FormControl</code>. مناسب للنماذج المعقدة والاختبار.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-20">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-20" aria-expanded="false" aria-controls="c-ang-20">20. ما هي الـ FormGroup و FormControl؟</button>
+            </h3>
+            <div id="c-ang-20" class="accordion-collapse collapse" aria-labelledby="h-ang-20" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>FormControl</code></strong>: يمثل **عنصر إدخال واحد** في النموذج (Input).</li>
+                        <li><strong><code>FormGroup</code></strong>: يمثل **مجموعة من الـ <code>FormControls</code>**، ويستخدم لتعقب قيمة النموذج ككل وحالته (Valid/Invalid).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-21">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-21" aria-expanded="false" aria-controls="c-ang-21">21. ما هي Validators؟</button>
+            </h3>
+            <div id="c-ang-21" class="accordion-collapse collapse" aria-labelledby="h-ang-21" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>دوال تستخدم للتحقق من **صحة بيانات الإدخال** في النماذج (مثل <code>required</code>، <code>minLength</code>، <code>email</code>)، وتُستخدم لإرجاع خطأ إذا كانت القيمة غير صالحة.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ HTTP</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-22">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-22" aria-expanded="false" aria-controls="c-ang-22">22. كيف تستخدمي HttpClient؟</button>
+            </h3>
+            <div id="c-ang-22" class="accordion-collapse collapse" aria-labelledby="h-ang-22" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي خدمة Angular لإرسال طلبات HTTP (GET, POST, PUT, DELETE) إلى خادم الـ API. تتطلب استدعاءها في الدالة البانية ويتم التعامل مع استجاباتها عبر **RxJS Observables**.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-23">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-23" aria-expanded="false" aria-controls="c-ang-23">23. ما هو interceptor؟</button>
+            </h3>
+            <div id="c-ang-23" class="accordion-collapse collapse" aria-labelledby="h-ang-23" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>آلية تسمح بـ **تعديل طلبات HTTP الصادرة والواردة بشكل مركزي** (مثل إضافة رمز المصادقة (Token) لكل طلب، أو معالجة الأخطاء). يعمل كـ **Middleware** لـ HTTP.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ RxJS</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-24">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-24" aria-expanded="false" aria-controls="c-ang-24">24. ما هو Observable؟</button>
+            </h3>
+            <div id="c-ang-24" class="accordion-collapse collapse" aria-labelledby="h-ang-24" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>كائن يمثل **stream من البيانات** غير المتزامنة التي يمكن إصدارها بمرور الوقت. يتطلب **Subscription** للاستماع إلى البيانات، ويجب إلغاء الـ Subscription لمنع تسرب الذاكرة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-25">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-25" aria-expanded="false" aria-controls="c-ang-25">25. ما الفرق بين Subject و BehaviorSubject؟</button>
+            </h3>
+            <div id="c-ang-25" class="accordion-collapse collapse" aria-labelledby="h-ang-25" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>Subject</code></strong>: يبث القيم للمشتركين الذين اشتركوا **بعد** إصدار القيمة.</li>
+                        <li><strong><code>BehaviorSubject</code></strong>: يبث القيم للمشتركين الذين اشتركوا **بعد** إصدار القيمة، ولكنه أيضاً **يحتفظ بالقيمة الأخيرة** ويصدرها فوراً عند الاشتراك.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-26">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-26" aria-expanded="false" aria-controls="c-ang-26">26. ما هو switchMap و mergeMap؟</button>
+            </h3>
+            <div id="c-ang-26" class="accordion-collapse collapse" aria-labelledby="h-ang-26" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هما **Operators** تستخدم للتعامل مع **Nested Observables** (ملاحظات متداخلة):</p>
+                    <ul>
+                        <li><strong><code>switchMap</code></strong>: يلغي الطلب (Observable) السابق ويتحول إلى الطلب الجديد. مثالي لـ **Auto-complete Search**.</li>
+                        <li><strong><code>mergeMap</code></strong>: ينفذ جميع الطلبات بالتوازي ويحتفظ بالنتائج دون إلغاء الطلبات السابقة.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Angular Signals (New)</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-27">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-27" aria-expanded="false" aria-controls="c-ang-27">27. ما هو signal؟</button>
+            </h3>
+            <div id="c-ang-27" class="accordion-collapse collapse" aria-labelledby="h-ang-27" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>هي آلية جديدة لإدارة **الحالة التفاعلية (Reactive State)** في Angular. يتم تعريفها كدالة بدون وسائط، وعندما تتغير قيمتها، تقوم بإخطار الـ Components أو الـ Effects التي تستمع إليها.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-28">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-28" aria-expanded="false" aria-controls="c-ang-28">28. ما الفرق بين signal و BehaviorSubject؟</button>
+            </h3>
+            <div id="c-ang-28" class="accordion-collapse collapse" aria-labelledby="h-ang-28" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>signal</code></strong>: أخف، وأبسط في التعامل، ولا تحتاج لإدارة الـ Subscriptions (مما يقلل من تسرب الذاكرة).</li>
+                        <li><strong><code>BehaviorSubject</code></strong>: جزء من RxJS، يتطلب إدارة الـ Subscriptions يدوياً.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-29">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-29" aria-expanded="false" aria-controls="c-ang-29">29. ما معنى computed()؟</button>
+            </h3>
+            <div id="c-ang-29" class="accordion-collapse collapse" aria-labelledby="h-ang-29" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>دالة تُستخدم لإنشاء **قيمة مشتقة (Derived Value)** من واحد أو أكثر من الـ Signals الأخرى. يتم إعادة حسابها فقط عندما تتغير الـ Signals التي تعتمد عليها.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-30">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-30" aria-expanded="false" aria-controls="c-ang-30">30. ما معنى effect()؟</button>
+            </h3>
+            <div id="c-ang-30" class="accordion-collapse collapse" aria-labelledby="h-ang-30" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>دالة تُستخدم لتنفيذ **آثار جانبية (Side Effects)**، مثل تحديث الـ DOM يدوياً أو إجراء Log، عندما تتغير قيمة أي Signal يتم الوصول إليها داخلها.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="level-heading">✔ Advanced</h2>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-31">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-31" aria-expanded="false" aria-controls="c-ang-31">31. ما هو Change Detection؟</button>
+            </h3>
+            <div id="c-ang-31" class="accordion-collapse collapse" aria-labelledby="h-ang-31" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>نظام Angular لمراقبة **تغييرات البيانات** في الـ Components وتحديث الـ DOM بناءً على تلك التغييرات لضمان تزامن العرض مع الحالة.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-32">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-32" aria-expanded="false" aria-controls="c-ang-32">32. ما الفرق بين Default و OnPush؟</button>
+            </h3>
+            <div id="c-ang-32" class="accordion-collapse collapse" aria-labelledby="h-ang-32" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>Default Strategy</strong>: يفحص Angular جميع الـ Components في كل مرة يحدث فيها تغيير في التطبيق.</li>
+                        <li><strong>OnPush Strategy</strong>: يفحص Angular الـ Component **فقط** إذا تغيرت إحدى الـ Input Properties (بمرجع جديد) أو حدث Event محلي (أفضل للأداء).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-33">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-33" aria-expanded="false" aria-controls="c-ang-33">33. ما هو ViewChild؟</button>
+            </h3>
+            <div id="c-ang-33" class="accordion-collapse collapse" aria-labelledby="h-ang-33" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>ديكوريتور (Decorator) يُستخدم للوصول إلى **عناصر الـ DOM المحلية** أو Component/Directive آخر داخل قالب الـ Component الحالي (View).</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-34">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-34" aria-expanded="false" aria-controls="c-ang-34">34. ما هو ContentChild؟</button>
+            </h3>
+            <div id="c-ang-34" class="accordion-collapse collapse" aria-labelledby="h-ang-34" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>ديكوريتور يُستخدم للوصول إلى **عناصر Projected Content**، أي العناصر التي يتم تمريرها إلى الـ Component من الخارج عبر <code>&lt;ng-content&gt;</code>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-35">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-35" aria-expanded="false" aria-controls="c-ang-35">35. ما هو Pipe؟</button>
+            </h3>
+            <div id="c-ang-35" class="accordion-collapse collapse" aria-labelledby="h-ang-35" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>دالة تُستخدم لـ **تحويل وتنسيق البيانات** في قالب HTML مباشرة، دون تغيير البيانات الأصلية في الكلاس. مثال: <code>date</code>، <code>currency</code>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-36">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-36" aria-expanded="false" aria-controls="c-ang-36">36. ما الفرق بين pure و impure pipe؟</button>
+            </h3>
+            <div id="c-ang-36" class="accordion-collapse collapse" aria-labelledby="h-ang-36" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>Pure Pipe</strong>: ينفذ فقط عند تغيير قيمة الإدخال (Primitive) أو عند تغيير مرجع كائن الإدخال (Reference). (أفضل أداء).</li>
+                        <li><strong>Impure Pipe</strong>: ينفذ في كل مرة يحدث فيها Change Detection، حتى لو لم تتغير قيمة الإدخال (يمكن أن يؤثر على الأداء).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-37">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-37" aria-expanded="false" aria-controls="c-ang-37">37. ما هو HostListener و HostBinding؟</button>
+            </h3>
+            <div id="c-ang-37" class="accordion-collapse collapse" aria-labelledby="h-ang-37" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong><code>@HostListener</code></strong>: يُستخدم لـ **مراقبة أحداث (Events)** عنصر الـ Host (العنصر الذي تم تطبيق الـ Directive/Component عليه).</li>
+                        <li><strong><code>@HostBinding</code></strong>: يُستخدم لـ **ربط قيمة خاصية** من الكلاس بخاصية في عنصر الـ Host (مثل <code>class</code> أو <code>style</code>).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-38">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-38" aria-expanded="false" aria-controls="c-ang-38">38. كيف تنشئ Directive مخصصة؟</button>
+            </h3>
+            <div id="c-ang-38" class="accordion-collapse collapse" aria-labelledby="h-ang-38" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>باستخدام الديكوريتور <code>@Directive</code> وتحديد <code>selector</code>، واستخدام <code>ElementRef</code> للوصول إلى العنصر:</p>
+                    <pre><code dir="ltr">@Directive({ selector: '[appHighlight]' })
+export class HighlightDirective {
+  constructor(private el: ElementRef) { 
+    this.el.nativeElement.style.color = 'red'; 
+  }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="h-ang-39">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-ang-39" aria-expanded="false" aria-controls="c-ang-39">39. كيف تنشئ Pipe مخصصة؟</button>
+            </h3>
+            <div id="c-ang-39" class="accordion-collapse collapse" aria-labelledby="h-ang-39" data-bs-parent="#webDevAccordion">
+                <div class="accordion-body">
+                    <p>باستخدام الديكوريتور <code>@Pipe</code> وتنفيذ الواجهة <code>PipeTransform</code> التي تحتوي على دالة <code>transform</code>:</p>
+                    <pre><code dir="ltr">@Pipe({ name: 'reverse' })
+export class ReversePipe implements PipeTransform {
+  transform(value: string) { 
+    return value.split('').reverse().join(''); 
+  }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+    </div> </div> 
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
