@@ -297,11 +297,33 @@ pre code { background: none; border: none; padding: 0; font-size: .83rem; color:
 footer { text-align: center; padding: 24px; font-size: .8rem; color: var(--text3); border-top: 1px solid var(--border); background: rgba(255, 255, 255, .72); }
 footer strong { color: var(--accent); }
 
+/* ════════════════════════════════════════
+   RESPONSIVE DESIGN CONTROLS (FIXED & TESTED)
+════════════════════════════════════════ */
 @media (max-width: 900px) {
-  .overview, .workspace { grid-template-columns: 1fr; }
-  .topic-sidebar { position: static; }
-  .topic-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
-  .topic-tab { flex: 0 0 auto; width: auto; }
+  .overview { grid-template-columns: 1fr; gap: 16px; }
+  .workspace { grid-template-columns: 1fr; gap: 20px; }
+  .topic-sidebar { position: static; width: 100%; padding: 10px; margin-bottom: 4px; }
+  .topic-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+  .topic-tab { flex: 0 0 auto; width: auto; font-size: .82rem; padding: 8px 12px; }
+  .sidebar-title { padding-bottom: 6px; }
+}
+
+@media (max-width: 600px) {
+  header { padding: 10px 14px; gap: 8px; }
+  .progress-wrap { width: 100%; justify-content: space-between; margin-top: 4px; }
+  .container { padding: 12px 10px 60px; }
+  .overview-copy { padding: 18px; }
+  .overview h1 { font-size: 1.5rem; }
+  .stats-bar { grid-template-columns: 1fr; gap: 8px; padding: 10px; }
+  .stat-item { padding: 10px; text-align: center; }
+  .q-header { padding: 12px 10px; gap: 8px; }
+  .q-title { font-size: .85rem; }
+  .q-body-inner { font-size: .85rem; padding: 12px; }
+  pre { padding: 10px; }
+  pre code { font-size: .75rem; }
+  .topic-heading { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .topic-badge { align-self: flex-start; margin-top: 4px; }
 }
 </style>
 </head>
@@ -309,7 +331,7 @@ footer strong { color: var(--accent); }
 
 <!-- HEADER -->
 <header>
-  <div class="logo"><span class="brand-mark">QA</span><span>Web Dev Engine v2.0</span></div>
+  <div class="logo"><span class="brand-mark">QA</span><span>Web Dev Engine</span></div>
   <div class="header-right">
     <div class="progress-wrap">
       <span>Mastery Progress</span>
@@ -327,7 +349,7 @@ footer strong { color: var(--accent); }
     <div class="overview-copy">
       <span class="eyebrow">Comprehensive Interview Syllabus</span>
       <h1>Your Complete Tech Evaluation Engine</h1>
-      <p>Every conceptual milestone, structural pattern, framework feature, and optimization workflow in your custom curriculum—fully interactive.</p>
+      <p>Every conceptual milestone, structural pattern, framework feature, hydration strategy, and optimization workflow in your custom curriculum—fully interactive.</p>
     </div>
     <div class="stats-bar">
       <div class="stat-item">
@@ -635,25 +657,19 @@ const DATA = [
       { q: 'What does effect mean?', a: 'An operation block executing side effects autonomously whenever its tracked signal values update.' },
       { q: 'Signals vs Observables', a: 'Signals optimize state management within templates. Observables manage asynchronous data pipeline flows, streaming events, and timing operators.' }
     ]},
-    { label: 'Advanced Angular Architecture', qs: [
-      { q: 'What is Change Detection?', a: 'The framework process synchronization engine mapping TypeScript data models to updating component view nodes.' },
-      { q: 'What is the difference between Default and OnPush?', a: '<ul><li><code>Default</code>: Strategy checking every template node on any event trigger.</li><li><code>OnPush</code>: Performance strategy checking components only when <code>@Input</code> references change, an Observable emits, or an event listener fires.</li></ul>' },
-      { q: 'Change Detection Cycle', a: 'The framework tracks execution zones to evaluate component trees, updating dirty nodes and stabilizing the layout.' },
-      { q: 'Standalone Components', a: 'A modern design flag (<code>standalone: true</code>) eliminating the boilerplate of <code>NgModules</code> by letting components manage their own dependencies directly.' },
-      { q: 'ViewEncapsulation', a: 'Controls how component style scopes are isolated, supporting Emulated strategies, shadow root boundaries, or global overrides.' },
-      { q: 'What is ViewChild', a: 'A selector decorator that grabs a reference handle targeting a local template element or child component inside the view layer.' },
-      { q: 'What is ContentChild', a: 'A decorator grabbing references targeting elements projected into the component using <code>&lt;ng-content&gt;</code>.' },
-      { q: 'What is a Pipe?', a: 'A transformation tool inside view layouts formatting raw input expressions on screen (e.g., <code>| date</code>).' },
-      { q: 'What is the difference between pure and impure pipe?', a: 'Pure pipes evaluate strictly when input reference coordinates mutate. Impure pipes evaluate on every single change detection sweep, introducing rendering overhead.' },
-      { q: 'What are HostListener and HostBinding?', a: '<ul><li><code>HostBinding</code>: Binds a class property to attributes of the hosting element node.</li><li><code>HostListener</code>: Subscribes to events fired by the hosting element container.</li></ul>' },
-      { q: 'How to create a Custom Directive?', a: 'Declare a class decorated with <code>@Directive</code>, specify a selector attribute, and inject <code>ElementRef</code> to handle styling or behavioral modifications.' },
-      { q: 'How to create a Custom Pipe?', a: 'Implement a class decorated with <code>@Pipe</code> that satisfies the <code>PipeTransform</code> contract interface, defining transformation logic inside the <code>transform()</code> method.' }
-    ]},
-    { label: 'Angular Guards Syllabi', qs: [
-      { q: 'What is a Guard?', a: 'A routing security interface determining if a user navigation attempt is permitted to access a specific route.' },
-      { q: 'What are the types of Guards? (canActivate – canDeactivate – canLoad – canMatch – resolve)', a: 'Routing lifecycle filters: <ul><li><code>canActivate</code>: Controls route entry permissions.</li><li><code>canDeactivate</code>: Checks if a user can navigate away from a view.</li><li><code>canLoad</code>: Blocks module asset downloads until authorized.</li><li><code>canMatch</code>: Controls route matching rules.</li><li><code>resolve</code>: Pre-fetches data before a view initializes.</li></ul>' },
-      { q: 'What is the difference between canActivate and canLoad?', a: '<code>canActivate</code> allows module scripts to load even if access is blocked later. <code>canLoad</code> blocks lazy-loaded source files from downloading entirely if the guard fails, protecting network bandwidth.' },
-      { q: 'How does AuthGuard work?', a: 'Intercepts route activation by evaluating a token validation service, routing unauthorized sessions away to login screens.' }
+    { label: 'Advanced Architecture & Hydration Strategies', qs: [
+      { q: 'What is Hydration in Angular?', a: 'Hydration is the process by which Angular restores a server-side rendered (SSR) HTML application on the client. Instead of destroying and re-rendering the fully static HTML coming from the server, Angular scans the DOM nodes, hooks up internal framework event listeners, and binds the existing structure directly to the reactive client-side application state.' },
+      { q: 'What is Incremental Hydration?', a: 'Incremental Hydration is an advanced rendering strategy where the framework breaks the hydration bundle down into smaller chunks, postponing hydration for certain components until specific client triggers are met (e.g., when a component enters the viewport or when the user hovers/clicks it). This vastly improves Initial Input Delay (FID) and Core Web Vitals by downloading and booting up JS progressively.' },
+      { q: 'What is Change Detection and how does its hierarchy function?', a: 'Change Detection is Angular\'s template synchronization mechanism tracking state modifications. It functions down a 1-dimensional hierarchical component tree branch layout starting from the <code>Root View</code> down through structural node leaves. It uses **Zone.js** to catch async callbacks (clicks, promises) to scan modifications, or bypasses checks entirely on unmutated branches when optimized via the **OnPush** strategy.' },
+      { q: 'What is the difference between Default and OnPush Change Detection?', a: '<ul><li><code>Default</code>: The framework checks the template layout boundaries of every component in the active tree structure during every single tick cycle.</li><li><code>OnPush</code>: Skips checking the component branch entirely unless its explicit <code>@Input()</code> reference modifies, an active stream Observable fires, or a local template bound UI event handler executes.</li></ul>' },
+      { q: 'What are Standalone Components?', a: 'A modern architecture declaration flag (<code>standalone: true</code>) eliminating the boilerplate dependency requirements of <code>NgModules</code>, enabling components to import cross-functional directives and structural sub-templates directly.' },
+      { q: 'What is ViewEncapsulation?', a: 'Controls style scoping parameters inside view layouts: supports Emulated strategies (shadow selectors mapped by attributes), Native Shadow DOM isolation boundaries, or None (styles leak globally).' },
+      { q: 'What is the difference between ViewChild and ContentChild?', a: '<ul><li><code>ViewChild</code>: Queries reference target elements or custom child components sitting inside the local view layout template.</li><li><code>ContentChild</code>: Queries reference target element selectors projected dynamically inside the component boundary layout by using <code>&lt;ng-content&gt;</code> templates.</li></ul>' },
+      { q: 'What is the difference between a pure and impure pipe?', a: 'Pure pipes evaluate transformation expressions strictly when their argument data references mutate. Impure pipes invoke evaluations on every single change detection engine loop check, which can introduce noticeable overhead.' },
+      { q: 'What are HostListener and HostBinding?', a: '<ul><li><code>HostBinding</code>: Dynamically maps class variable parameters directly to attribute properties of the active hosting wrapper element node.</li><li><code>HostListener</code>: Subscribes class method triggers to execute upon detecting specific event dispatches fired by the host element block.</li></ul>' },
+      { q: 'How do you create a custom Pipe?', a: 'Generate a standard class annotated with the <code>@Pipe</code> decorator metadata block, hook up the <code>PipeTransform</code> declaration contract interface, and write the custom evaluation output code logic inside its mandatory <code>transform()</code> block.' },
+      { q: 'What is a Router Guard and what are its core types?', a: 'A route interception interface checking access properties. Standard types include: <code>canActivate</code> (entry controls), <code>canDeactivate</code> (unsaved changes boundary checks), and <code>canLoad / canMatch</code> (blocks asset bundles from downloading unless verified).' },
+      { q: 'What is the structural difference between canActivate and canLoad?', a: '<code>canActivate</code> lets structural feature bundle assets download over the network even if the user route access fails. <code>canLoad</code> completely blocks lazy-loaded feature script files from even downloading down the pipeline if the verification check fails, saving valuable bandwidth.' }
     ]}
   ]
 }
