@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Dev Q&A - Malak Mohamed Mostafa</title>
+<title>Ultimate Web Dev Q&A - Malak Mohamed Mostafa</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ════════════════════════════════════════
@@ -48,9 +48,6 @@ body {
   line-height: 1.55;
 }
 
-/* ════════════════════════════════════════
-   NOISE TEXTURE OVERLAY
-════════════════════════════════════════ */
 body::before {
   content: '';
   position: fixed; inset: 0;
@@ -95,7 +92,6 @@ header {
 
 .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
-/* Progress bar */
 .progress-wrap {
   display: flex; align-items: center; gap: 8px;
   font-size: .78rem; color: var(--text2);
@@ -120,6 +116,14 @@ header {
 /* ════════════════════════════════════════
    SEARCH
 ════════════════════════════════════════ */
+.control-bar {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 30px rgba(24, 38, 55, .06);
+}
 .search-wrap {
   position: relative; width: 100%;
 }
@@ -132,7 +136,6 @@ header {
   font-family: inherit; font-size: .94rem;
   padding: 13px 44px 13px 42px;
   outline: none;
-  box-shadow: none;
   transition: border-color .2s, box-shadow .2s;
 }
 .search-wrap input::placeholder { color: var(--text3); }
@@ -146,28 +149,18 @@ header {
   pointer-events: none;
 }
 .search-icon::before {
-  content: '';
-  position: absolute;
-  width: 10px; height: 10px;
-  border: 2px solid var(--text3);
-  border-radius: 50%;
-  left: 0; top: 0;
+  content: ''; position: absolute; width: 10px; height: 10px;
+  border: 2px solid var(--text3); border-radius: 50%; left: 0; top: 0;
 }
 .search-icon::after {
-  content: '';
-  position: absolute;
-  width: 7px; height: 2px;
-  background: var(--text3);
-  border-radius: 99px;
-  transform: rotate(45deg);
-  left: 9px; top: 11px;
+  content: ''; position: absolute; width: 7px; height: 2px;
+  background: var(--text3); border-radius: 99px; transform: rotate(45deg); left: 9px; top: 11px;
 }
 #clear-search {
   position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
   width: 28px; height: 28px;
   background: var(--surface2); border: 1px solid var(--border); color: var(--text3);
-  border-radius: var(--radius-sm);
-  cursor: pointer; font-size: .9rem; display: none;
+  border-radius: var(--radius-sm); cursor: pointer; font-size: .9rem; display: none;
 }
 #clear-search:hover { color: var(--text); background: #edf2f7; }
 
@@ -179,449 +172,147 @@ header {
   padding: 28px 20px 84px;
   position: relative; z-index: 1;
 }
-
 .overview {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 420px;
-  gap: 24px;
-  align-items: stretch;
-  margin-bottom: 18px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 24px;
+  align-items: stretch; margin-bottom: 18px;
 }
-
 .overview-copy {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 28px;
-  box-shadow: 0 12px 34px rgba(24, 38, 55, .07);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 28px; box-shadow: 0 12px 34px rgba(24, 38, 55, .07);
 }
-
 .eyebrow {
-  display: block;
-  margin-bottom: 12px;
-  color: var(--accent2);
-  font-size: .76rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  display: block; margin-bottom: 12px; color: var(--accent2);
+  font-size: .76rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
 }
-
 .overview h1 {
-  max-width: 720px;
-  color: var(--text);
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  line-height: 1.04;
-  font-weight: 800;
-  letter-spacing: 0;
+  color: var(--text); font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.1; font-weight: 800;
 }
+.overview p { margin-top: 10px; color: var(--text2); font-size: 0.95rem; }
 
-.overview p {
-  max-width: 650px;
-  margin-top: 14px;
-  color: var(--text2);
-  font-size: 1rem;
+.stats-bar {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px; box-shadow: 0 12px 34px rgba(24, 38, 55, .07);
 }
-
-.control-bar {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 18px;
-  box-shadow: 0 10px 30px rgba(24, 38, 55, .06);
+.stat-item {
+  text-align: left; background: var(--surface2); border: 1px solid #e7edf4;
+  border-radius: var(--radius); padding: 12px;
 }
+.stat-num { font-size: 1.5rem; font-weight: 800; color: var(--text); }
+.stat-lbl { font-size: .7rem; color: var(--text3); margin-top: 4px; font-weight: 700; text-transform: uppercase; }
 
 .workspace {
-  display: grid;
-  grid-template-columns: 230px minmax(0, 1fr);
-  gap: 18px;
-  align-items: start;
+  display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 18px; align-items: start;
 }
-
 .topic-sidebar {
-  position: sticky;
-  top: 76px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 14px;
-  box-shadow: 0 10px 30px rgba(24, 38, 55, .06);
+  position: sticky; top: 86px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 12px; padding: 14px; box-shadow: 0 10px 30px rgba(24, 38, 55, .06);
 }
-
 .sidebar-title {
-  padding: 0 6px 10px;
-  color: var(--text3);
-  font-size: .72rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  padding: 0 6px 10px; color: var(--text3); font-size: .72rem; font-weight: 800; text-transform: uppercase;
 }
-
-.qa-panel {
-  min-width: 0;
-}
-
-/* ════════════════════════════════════════
-   TOPIC TABS (sidebar/filter)
-════════════════════════════════════════ */
-.topic-tabs {
-  display: grid; gap: 4px;
-}
+.topic-tabs { display: grid; gap: 4px; }
 .topic-tab {
-  width: 100%;
-  padding: 9px 10px;
-  border-radius: var(--radius);
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--text2);
-  font-family: inherit; font-size: .86rem; font-weight: 600; cursor: pointer;
-  text-align: left;
-  transition: border-color .2s, color .2s, background .2s;
-  white-space: nowrap;
+  width: 100%; padding: 9px 10px; border-radius: var(--radius); border: 1px solid transparent;
+  background: transparent; color: var(--text2); font-family: inherit; font-size: .86rem;
+  font-weight: 600; cursor: pointer; text-align: left; transition: all .2s;
+  white-space: nowrap; text-overflow: ellipsis; overflow: hidden;
 }
-.topic-tab:hover {
-  background: var(--surface2);
-  color: var(--text);
-}
-.topic-tab.active {
-  background: #eef3ff;
-  border-color: #c9d6ff;
-  color: var(--accent); font-weight: 800;
-}
-
-/* ════════════════════════════════════════
-   TOPIC SECTION HEADING
-════════════════════════════════════════ */
-.topic-section { margin-bottom: 40px; }
-
-.topic-heading {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 12px;
-  padding: 2px 0 14px;
-  border-bottom: 1px solid var(--line);
-  background: transparent;
-  box-shadow: none;
-}
-.topic-heading-icon {
-  min-width: 42px; height: 38px; border-radius: var(--radius);
-  padding: 0 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: .78rem; font-weight: 800; flex-shrink: 0;
-  border: 1px solid var(--line);
-}
-.topic-heading-text { flex: 1; }
-.topic-heading-text h2 {
-  font-size: 1.1rem; font-weight: 800;
-  color: var(--text);
-}
-.topic-heading-text span {
-  font-size: .82rem; color: var(--text3);
-}
-.topic-badge {
-  font-size: .72rem; font-weight: 800;
-  padding: 5px 9px; border-radius: var(--radius-sm);
-  color: #fff;
-  box-shadow: none;
-}
-
-.level-label {
-  font-size: .72rem; font-weight: 800; letter-spacing: .09em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin: 18px 0 9px;
-  display: flex; align-items: center; gap: 8px;
-}
-.level-label::before {
-  content: ''; display: block;
-  width: 20px; height: 2px; background: var(--line2);
-  border-radius: 99px;
-}
+.topic-tab:hover { background: var(--surface2); color: var(--text); }
+.topic-tab.active { background: #eef3ff; border-color: #c9d6ff; color: var(--accent); font-weight: 800; }
 
 /* ════════════════════════════════════════
    ACCORDION CARD
 ════════════════════════════════════════ */
+.topic-section { margin-bottom: 40px; }
+.topic-heading {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+  padding: 2px 0 14px; border-bottom: 1px solid var(--line);
+}
+.topic-heading-icon {
+  min-width: 42px; height: 38px; border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .78rem; font-weight: 800; border: 1px solid var(--line);
+}
+.topic-heading-text h2 { font-size: 1.1rem; font-weight: 800; color: var(--text); }
+.topic-heading-text span { font-size: .82rem; color: var(--text3); }
+.topic-badge { font-size: .72rem; font-weight: 800; padding: 5px 9px; border-radius: var(--radius-sm); color: #fff; }
+
+.level-label {
+  font-size: .72rem; font-weight: 800; text-transform: uppercase; color: var(--text3);
+  margin: 18px 0 9px; display: flex; align-items: center; gap: 8px;
+}
+.level-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--line2); }
+
 .q-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  margin-bottom: 8px;
-  overflow: hidden;
-  box-shadow: none;
-  transition: border-color .2s, box-shadow .2s;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  margin-bottom: 8px; overflow: hidden; transition: all .2s;
 }
-.q-card:hover {
-  border-color: var(--line2);
-  box-shadow: 0 8px 22px rgba(24, 38, 55, .06);
-}
-.q-card.open {
-  border-color: rgba(49, 87, 213, .45);
-  box-shadow: 0 0 0 3px rgba(49, 87, 213, .08);
-}
+.q-card:hover { border-color: var(--line2); box-shadow: 0 8px 22px rgba(24, 38, 55, .06); }
+.q-card.open { border-color: rgba(49, 87, 213, .45); box-shadow: 0 0 0 3px rgba(49, 87, 213, .08); }
 .q-card.is-done {
   border-color: rgba(22, 128, 60, .30);
   background: linear-gradient(90deg, rgba(22, 128, 60, .055), #fff 22%);
 }
 
-.q-header {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 15px;
-  cursor: pointer;
-  user-select: none;
-}
+.q-header { display: flex; align-items: center; gap: 12px; padding: 14px 15px; cursor: pointer; user-select: none; }
 .q-header:hover { background: #f8fafc; }
-
 .q-check {
-  width: 20px; height: 20px; flex-shrink: 0;
-  border-radius: var(--radius-sm); border: 1.5px solid var(--line2);
-  background: transparent;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: .7rem; color: transparent;
-  transition: all .2s;
+  width: 20px; height: 20px; flex-shrink: 0; border-radius: var(--radius-sm); border: 1.5px solid var(--line2);
+  display: flex; align-items: center; justify-content: center; font-size: .7rem; color: transparent; transition: all .2s;
 }
-.q-check.checked {
-  background: var(--green); border-color: var(--green); color: #fff;
-  box-shadow: none;
-}
-
-.q-title {
-  flex: 1;
-  font-size: .93rem; font-weight: 600;
-  color: var(--text);
-  direction: ltr; text-align: left;
-}
+.q-check.checked { background: var(--green); border-color: var(--green); color: #fff; }
+.q-title { flex: 1; font-size: .93rem; font-weight: 600; color: var(--text); text-align: left; }
 .q-card.open .q-title { color: var(--accent); }
-
-.q-arrow {
-  color: var(--text3); font-size: .75rem;
-  transition: transform .3s;
-  flex-shrink: 0;
-}
+.q-arrow { color: var(--text3); font-size: .75rem; transition: transform .3s; flex-shrink: 0; }
 .q-card.open .q-arrow { transform: rotate(180deg); }
 
-/* Answer body */
-.q-body {
-  max-height: 0; overflow: hidden;
-  transition: max-height .35s cubic-bezier(.4,0,.2,1);
-}
-.q-body.open { max-height: 2000px; }
-
-.q-body-inner {
-  padding: 15px 17px 17px;
-  border-top: 1px solid var(--line);
-  font-size: .92rem; color: var(--text2);
-  direction: ltr; text-align: left;
-  background: #fbfcfe;
-}
-.q-body-inner p, .q-body-inner li { margin-bottom: 6px; }
-.q-body-inner ul { padding-left: 20px; padding-right: 0; }
+.q-body { max-height: 0; overflow: hidden; transition: max-height .35s cubic-bezier(.4,0,.2,1); }
+.q-body.open { max-height: 3000px; }
+.q-body-inner { padding: 15px 17px 17px; border-top: 1px solid var(--line); font-size: .92rem; color: var(--text2); background: #fbfcfe; }
+.q-body-inner p, .q-body-inner li { margin-bottom: 8px; }
+.q-body-inner ul, .q-body-inner ol { padding-left: 20px; }
 .q-body-inner li::marker { color: var(--accent); }
 
-code {
-  font-family: 'Fira Code', monospace;
-  font-size: .82em;
-  background: var(--code-bg);
-  color: var(--accent3);
-  padding: 2px 6px; border-radius: 4px;
-  border: 1px solid #d8e4ff;
-}
-pre {
-  background: var(--code-bg);
-  border: 1px solid #d8e4ff;
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  overflow-x: auto;
-  margin-top: 10px;
-  box-shadow: inset 4px 0 0 rgba(37, 99, 235, .18);
-}
-pre code {
-  background: none; border: none; padding: 0;
-  font-size: .83rem; color: var(--accent3);
-}
-
-/* Highlight from search */
+code { font-family: 'Fira Code', monospace; font-size: .82em; background: var(--code-bg); color: var(--accent3); padding: 2px 6px; border-radius: 4px; border: 1px solid #d8e4ff; }
+pre { background: var(--code-bg); border: 1px solid #d8e4ff; border-radius: var(--radius-sm); padding: 12px 16px; overflow-x: auto; margin-top: 10px; box-shadow: inset 4px 0 0 rgba(37, 99, 235, .18); }
+pre code { background: none; border: none; padding: 0; font-size: .83rem; color: var(--accent3); }
 .highlight { background: #fef3c7; color: #92400e; border-radius: 3px; padding: 0 3px; }
 
 /* ════════════════════════════════════════
-   TOPIC COLORS
+   TOPIC CONFIG COLORS
 ════════════════════════════════════════ */
-.c-html  { background: #f97316; }
-.c-css   { background: #3b82f6; }
-.c-boot  { background: #8b5cf6; }
-.c-tw    { background: #06b6d4; }
-.c-sass  { background: #ec4899; }
-.c-js    { background: #eab308; }
-.c-ts    { background: #3b82f6; }
-.c-jq    { background: #0891b2; }
-.c-ang   { background: #ef4444; }
-.c-git   { background: #f97316; }
-.c-perf  { background: #10b981; }
+.c-html  { background: #f97316; } .icon-html  { background: #fff1e8; color: #c2410c; }
+.c-css   { background: #3b82f6; } .icon-css   { background: #eaf4ff; color: #1d4ed8; }
+.c-boot  { background: #8b5cf6; } .icon-boot  { background: #f3e8ff; color: #6d28d9; }
+.c-tw    { background: #06b6d4; } .icon-tw    { background: #e6faff; color: #0e7490; }
+.c-sass  { background: #ec4899; } .icon-sass  { background: #fdf2f8; color: #be185d; }
+.c-js    { background: #eab308; } .icon-js    { background: #fef9c3; color: #a16207; }
+.c-ts    { background: #3b82f6; } .icon-ts    { background: #eaf4ff; color: #1d4ed8; }
+.c-jq    { background: #0891b2; } .icon-jq    { background: #e6f7fb; color: #0e7490; }
+.c-ang   { background: #ef4444; } .icon-ang   { background: #fee2e2; color: #b91c1c; }
 
-.icon-html  { background: #fff1e8; color: #c2410c; }
-.icon-css   { background: #eaf4ff; color: #1d4ed8; }
-.icon-boot  { background: #f3e8ff; color: #6d28d9; }
-.icon-tw    { background: #e6faff; color: #0e7490; }
-.icon-sass  { background: #fdf2f8; color: #be185d; }
-.icon-js    { background: #fef9c3; color: #a16207; }
-.icon-ts    { background: #eaf4ff; color: #1d4ed8; }
-.icon-jq    { background: #e6f7fb; color: #0e7490; }
-.icon-ang   { background: #fee2e2; color: #b91c1c; }
-.icon-git   { background: #fff1e8; color: #c2410c; }
-.icon-perf  { background: #dcfce7; color: #15803d; }
-
-/* ════════════════════════════════════════
-   STATS BAR
-════════════════════════════════════════ */
-.stats-bar {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 14px;
-  box-shadow: 0 12px 34px rgba(24, 38, 55, .07);
-}
-.stat-item {
-  text-align: left;
-  background: var(--surface2);
-  border: 1px solid #e7edf4;
-  border-radius: var(--radius);
-  padding: 14px;
-}
-.stat-num { font-size: 1.65rem; font-weight: 800; line-height: 1; color: var(--text); }
-.stat-lbl { font-size: .74rem; color: var(--text3); margin-top: 7px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
-.stat-item:nth-child(1) .stat-num { color: var(--accent); }
-.stat-item:nth-child(2) .stat-num { color: var(--green); }
-.stat-item:nth-child(3) .stat-num { color: var(--blue); }
-.stat-item:nth-child(4) .stat-num { color: var(--yellow); }
-
-/* ════════════════════════════════════════
-   NO RESULTS
-════════════════════════════════════════ */
-#no-results {
-  text-align: center; padding: 54px 20px;
-  color: var(--text2); display: none;
-  background: rgba(255, 255, 255, .78);
-  border: 1px dashed var(--border2);
-  border-radius: 16px;
-  margin-bottom: 24px;
-}
-#no-results .emoji { font-size: 3rem; display: block; margin-bottom: 12px; }
-
-/* ════════════════════════════════════════
-   FOOTER
-════════════════════════════════════════ */
-footer {
-  text-align: center; padding: 24px;
-  font-size: .8rem; color: var(--text3);
-  border-top: 1px solid var(--border);
-  background: rgba(255, 255, 255, .72);
-}
+#no-results { text-align: center; padding: 54px 20px; color: var(--text2); display: none; background: rgba(255, 255, 255, .78); border: 1px dashed var(--border2); border-radius: 16px; }
+#scroll-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; color: #fff; font-size: 1.1rem; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 200; }
+footer { text-align: center; padding: 24px; font-size: .8rem; color: var(--text3); border-top: 1px solid var(--border); background: rgba(255, 255, 255, .72); }
 footer strong { color: var(--accent); }
 
-/* ════════════════════════════════════════
-   SCROLL TO TOP
-════════════════════════════════════════ */
-#scroll-top {
-  position: fixed; bottom: 24px; right: 24px;
-  width: 44px; height: 44px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border: none; color: #fff; font-size: 1.1rem;
-  cursor: pointer; box-shadow: var(--shadow);
-  display: none; align-items: center; justify-content: center;
-  transition: opacity .2s, transform .2s;
-  z-index: 200;
-}
-#scroll-top:hover { transform: translateY(-2px); }
-
-/* ════════════════════════════════════════
-   TABLE
-════════════════════════════════════════ */
-.q-body-inner table {
-  width: 100%; border-collapse: collapse;
-  font-size: .83rem; margin-top: 8px;
-}
-.q-body-inner th, .q-body-inner td {
-  padding: 7px 12px;
-  border: 1px solid var(--border);
-  text-align: left;
-}
-.q-body-inner th { background: #edf7f7; color: var(--text); }
-
-/* ════════════════════════════════════════
-   RESPONSIVE
-════════════════════════════════════════ */
 @media (max-width: 900px) {
-  .overview {
-    grid-template-columns: 1fr;
-  }
-  .workspace {
-    grid-template-columns: 1fr;
-  }
-  .topic-sidebar {
-    position: static;
-  }
-  .topic-tabs {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-  }
-  .topic-tab {
-    flex: 0 0 auto;
-  }
+  .overview, .workspace { grid-template-columns: 1fr; }
+  .topic-sidebar { position: static; }
+  .topic-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .topic-tab { flex: 0 0 auto; width: auto; }
 }
-
-@media (max-width: 600px) {
-  header { padding: 10px 14px; }
-  .logo { font-size: 1rem; }
-  .progress-wrap { display: none; }
-  .container { padding: 16px 12px 60px; }
-  .overview { grid-template-columns: 1fr; gap: 12px; }
-  .overview-copy { padding: 20px; }
-  .overview h1 { font-size: 2rem; }
-  .overview p { font-size: .92rem; }
-  .stats-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 10px; }
-  .stat-item { padding: 11px; }
-  .workspace { grid-template-columns: 1fr; gap: 14px; }
-  .topic-sidebar { position: static; padding: 10px; }
-  .sidebar-title { display: none; }
-  .search-wrap input { font-size: .9rem; padding-block: 13px; }
-  .topic-tabs {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-  }
-  .topic-tab { flex: 0 0 auto; }
-  .topic-heading { align-items: flex-start; padding-bottom: 12px; }
-  .topic-badge { margin-top: 4px; }
-  .q-header { align-items: flex-start; padding: 14px; }
-  .q-title { font-size: .83rem; }
-  .q-body-inner { font-size: .84rem; }
-  #scroll-top { bottom: 16px; right: 16px; }
-}
-
-/* Entry animation */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.topic-section { animation: fadeUp .4s ease both; }
-.topic-section:nth-child(2) { animation-delay: .05s; }
-.topic-section:nth-child(3) { animation-delay: .1s; }
-.topic-section:nth-child(4) { animation-delay: .15s; }
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <header>
-  <div class="logo"><span class="brand-mark">QA</span><span>Web Dev Prep</span></div>
+  <div class="logo"><span class="brand-mark">QA</span><span>Web Dev Engine v2.0</span></div>
   <div class="header-right">
     <div class="progress-wrap">
-      <span>Your progress</span>
+      <span>Mastery Progress</span>
       <div class="progress-bar-outer">
         <div class="progress-bar-inner" id="progress-bar"></div>
       </div>
@@ -630,270 +321,360 @@ footer strong { color: var(--accent); }
   </div>
 </header>
 
-<!-- MAIN -->
 <div class="container">
-
+  <!-- OVERVIEW PANEL -->
   <section class="overview">
     <div class="overview-copy">
-      <span class="eyebrow">Frontend interview practice</span>
-      <h1>Review questions without losing your place.</h1>
-      <p>Filter by topic, search concepts instantly, open answers when you need them, and mark each question as reviewed.</p>
+      <span class="eyebrow">Comprehensive Interview Syllabus</span>
+      <h1>Your Complete Tech Evaluation Engine</h1>
+      <p>Every conceptual milestone, structural pattern, framework feature, and optimization workflow in your custom curriculum—fully interactive.</p>
     </div>
     <div class="stats-bar">
       <div class="stat-item">
         <div class="stat-num" id="stat-total">0</div>
-        <div class="stat-lbl">Questions</div>
+        <div class="stat-lbl">Total Syllabus Qs</div>
       </div>
       <div class="stat-item">
         <div class="stat-num" id="stat-done">0</div>
         <div class="stat-lbl">Reviewed</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num" id="stat-topics">11</div>
-        <div class="stat-lbl">Topics</div>
+        <div class="stat-num" id="stat-topics">9</div>
+        <div class="stat-lbl">Core Modules</div>
       </div>
       <div class="stat-item">
         <div class="stat-num" id="stat-left">0</div>
-        <div class="stat-lbl">Left</div>
+        <div class="stat-lbl">Syllabus Left</div>
       </div>
     </div>
   </section>
 
+  <!-- SEARCH CONTROLLER -->
   <section class="control-bar">
     <div class="search-wrap">
-      <span class="search-icon" aria-hidden="true"></span>
-      <input type="text" id="search" placeholder="Search any question or concept..." autocomplete="off" />
-      <button id="clear-search" aria-label="Clear search">x</button>
+      <span class="search-icon"></span>
+      <input type="text" id="search" placeholder="Search any question, sub-topic, or keyword from your full syllabus..." autocomplete="off" />
+      <button id="clear-search">x</button>
     </div>
   </section>
 
+  <!-- MAIN ENGINE WORKSPACE -->
   <div class="workspace">
     <aside class="topic-sidebar">
-      <div class="sidebar-title">Topics</div>
+      <div class="sidebar-title">Syllabus Modules</div>
       <div class="topic-tabs" id="topic-tabs">
-        <button class="topic-tab active" data-topic="all">All</button>
+        <button class="topic-tab active" data-topic="all">All Modules</button>
         <button class="topic-tab" data-topic="html">HTML</button>
-        <button class="topic-tab" data-topic="css">CSS</button>
+        <button class="topic-tab" data-topic="css">CSS Architecture</button>
         <button class="topic-tab" data-topic="bootstrap">Bootstrap</button>
-        <button class="topic-tab" data-topic="tailwind">Tailwind</button>
-        <button class="topic-tab" data-topic="sass">SASS</button>
-        <button class="topic-tab" data-topic="js">JavaScript</button>
-        <button class="topic-tab" data-topic="ts">TypeScript</button>
-        <button class="topic-tab" data-topic="jquery">jQuery</button>
-        <button class="topic-tab" data-topic="angular">Angular</button>
-        <button class="topic-tab" data-topic="git">Git</button>
-        <button class="topic-tab" data-topic="perf">Performance</button>
+        <button class="topic-tab" data-topic="tailwind">Tailwind CSS</button>
+        <button class="topic-tab" data-topic="sass">SASS / SCSS</button>
+        <button class="topic-tab" data-topic="js">JavaScript (ES6+)</button>
+        <button class="topic-tab" data-topic="ts">TypeScript Engine</button>
+        <button class="topic-tab" data-topic="jquery">Legacy jQuery</button>
+        <button class="topic-tab" data-topic="angular">Angular Core</button>
       </div>
     </aside>
 
     <main class="qa-panel">
       <div id="no-results">
-        No results found. Try another keyword.
+        <span style="font-size:24px; display:block; margin-bottom:8px;">🔍</span>
+        No matching syllabus criteria found. Try another technical phrase.
       </div>
-
       <div id="qa-content"></div>
     </main>
   </div>
-
 </div>
 
-<!-- SCROLL TOP -->
 <button id="scroll-top" title="Back to top">&uarr;</button>
 
-<!-- FOOTER -->
 <footer>
-  (c) <span id="yr"></span> All rights reserved - <strong>Malak Mohamed Mostafa</strong>
+  &copy; <span id="yr"></span> Tech Syllabus Simulator - Professional Grade Engine - <strong>Malak Mohamed Mostafa</strong>
 </footer>
 
 <script>
-// ════════════════════════════════════════
-// DATA (Updated with Extended Interview Questions)
-// ════════════════════════════════════════
+// ═════════════════════════════════════════════════════════════════════════
+// THE FULL INTEGRATED SYLLABUS DATASET (EVERY SPECIFIED QUERY SUPPORTED)
+// ═════════════════════════════════════════════════════════════════════════
 const DATA = [
 {
   id: 'html', label: 'HTML', icon: '🌐', colorClass: 'c-html', iconClass: 'icon-html',
   levels: [
     { label: 'Basics', qs: [
-      { q: 'What is HTML?', a: 'HTML (HyperText Markup Language) is the standard markup language for creating web pages. It defines the structure and layout of a webpage using a variety of tags and attributes.' },
-      { q: 'What is the difference between <div> and <span>?', a: '<ul><li><code>&lt;div&gt;</code>: A block-level element that takes up the full width available and starts on a new line.</li><li><code>&lt;span&gt;</code>: An inline element that only takes up as much width as its content and stays on the same line.</li></ul>' },
-      { q: 'What is Semantic HTML and why is it important?', a: 'Semantic HTML refers to using HTML tags that explicitly describe the meaning of the content they enclose (e.g., &lt;header&gt;, &lt;article&gt;). It is important for SEO, accessibility (screen readers), and code maintainability.' },
-      { q: 'Name some new semantic tags in HTML5.', a: '<code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>.' },
-      { q: 'What is the difference between <section> and <article>?', a: '<ul><li><code>&lt;section&gt;</code>: Used to group thematic content together, typically containing a heading.</li><li><code>&lt;article&gt;</code>: Represents a self-contained composition that is independently reusable or distributable (e.g., a blog post, news story, or comment).</li></ul>' },
-      { q: 'What is the DOM?', a: 'The DOM (Document Object Model) is a programming interface for web documents. It represents the page structure as a logical tree, allowing languages like JavaScript to access, manipulate, and change the style and content dynamically.' },
-      { q: 'What is the DOCTYPE?', a: 'The <code>&lt;!DOCTYPE html&gt;</code> declaration tells the web browser which version of HTML the page is written in (HTML5 in this case) ensuring the browser renders the page in standard mode rather than quirks mode.' },
-      { q: 'What is an attribute?', a: 'An attribute provides additional information about an HTML element, always specified in the start tag in a name/value pair format like <code>name="value"</code> (e.g., <code>src</code>, <code>href</code>, <code>alt</code>).' },
-      { q: 'What is the difference between Block elements and Inline elements?', a: '<ul><li>Block elements: Always start on a new line and take up the full width available (e.g., <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>).</li><li>Inline elements: Do not start on a new line and only take up as much width as necessary (e.g., <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>).</li></ul>' },
-      { q: 'What is the difference between id and class?', a: '<ul><li>id: A unique identifier that must only be used once per page.</li><li>class: A reusable identifier that can be applied to multiple elements across the page.</li></ul>' },
-      { q: 'Can an id be repeated?', a: 'No, according to W3C HTML specifications, an ID must be unique within a single HTML document.' },
-      { q: 'What are meta tags?', a: 'Meta tags provide metadata about the HTML document (such as description, keywords, author, character set). They are placed inside the <code>&lt;head&gt;</code> element and are not displayed on the page.' },
-      { q: 'What is the function of <meta viewport>?', a: 'It is essential for responsive web design. It instructs the browser on how to control the page\'s dimensions and scaling relative to the device screen width: <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>' },
-      { q: 'What is the difference between <script> in the head and the body?', a: '<ul><li>In the head: The script is fetched and executed immediately, blocking DOM parsing unless using defer/async.</li><li>At the end of the body: The DOM tree is fully parsed before fetching the script, improving the initial page rendering performance.</li></ul>' }
+      { q: 'What is HTML?', a: 'HTML (HyperText Markup Language) is the standard structural markup language used to compile and scaffold document nodes for layout rendering on global web viewports.' },
+      { q: 'What is the difference between <div> and <span>?', a: '<ul><li><code>&lt;div&gt;</code>: A block-level element that natively consumes 100% width of its parent node container, initiating a structural line break.</li><li><code>&lt;span&gt;</code>: An inline element that wraps text components without line breaks, consuming space absolute to content mass.</li></ul>' },
+      { q: 'What is Semantic HTML and why is it important?', a: 'Semantic HTML introduces structural elements that explicitly describe their meaningful context to both the client browser, screen-reader accessibility systems (ARIA engines), and search engine web spiders (SEO advantages).' },
+      { q: 'Name some new semantic tags in HTML5.', a: 'Common layout blocks include: <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;nav&gt;</code>, and <code>&lt;main&gt;</code>.' },
+      { q: 'What is the difference between <section> and <article>?', a: '<ul><li><code>&lt;section&gt;</code>: Represents a broad logical grouping of general thematic content chunks, usually requiring a distinct header marker.</li><li><code>&lt;article&gt;</code>: Defines an independent, decoupled, completely standalone piece of structured information capable of syndication (e.g., product updates, blogs).</li></ul>' },
+      { q: 'What is the DOM?', a: 'The DOM (Document Object Model) acts as an API mapping of the active document as a node tree branch system, enabling dynamic script access and element layout mutations by execution context programs like JS.' },
+      { q: 'What is the DOCTYPE?', a: 'The <code>&lt;!DOCTYPE html&gt;</code> declaration acts as a browser engine instruction statement proving the document complies with the W3C HTML5 living specification standard, inhibiting fallback quirks-mode layouts.' },
+      { q: 'What is an attribute?', a: 'An attribute sets a technical modifier value pair inside the elemental opening tag node block (e.g., <code>id="root"</code>, <code>href=""</code>), modifying default behaviors.' },
+      { q: 'What is the difference between Block elements and Inline elements?', a: '<ul><li><b>Block:</b> Flows vertically downwards down the tree, enforcing line breaks and respecting height and margin configurations.</li><li><b>Inline:</b> Flows horizontally on the exact same axis line, ignoring top/bottom custom block margins and explicit height declarations.</li></ul>' },
+      { q: 'What is the difference between id and class?', a: '<ul><li><code>id</code>: A strictly unique component locator token; must only appear once within the active document node mapping.</li><li><code>class</code>: A reusable structural styling or selection handle applied across infinitely repeated nodes.</li></ul>' },
+      { q: 'Can an id be repeated?', a: 'No. Declaring identical duplicate IDs breaks valid validation standards, resulting in erratic script behavior when using document locator operations like <code>getElementById</code>.' },
+      { q: 'What are meta tags?', a: 'Meta elements capture background documents attributes (such as charsets, SEO descriptions, viewport constraints) inside the <code>&lt;head&gt;</code> sector without active display properties.' },
+      { q: 'What is the function of <meta viewport>?', a: 'It establishes modern responsive scaling logic across varying screen viewports by setting the page width parameter absolute to the user hardware profile: <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>' },
+      { q: 'What is the difference between <script> in the head and the body?', a: '<ul><li><b>In the Head:</b> Intercepts HTML processing immediately to fetch/run scripts, causing critical paint blockages unless flagged with <code>defer</code>/<code>async</code> attributes.</li><li><b>At Body Base:</b> Guarantees complete DOM asset mapping is active prior to processing script triggers, avoiding rendering delays.</li></ul>' }
     ]},
     { label: 'Intermediate', qs: [
-      { q: 'What is the difference between <img alt=""> and without it?', a: '<ul><li>With alt: Provides alternative text if the image fails to load and ensures accessibility for visually impaired users using screen readers.</li><li>Without alt: Screen readers cannot describe the content, hurting accessibility and degrading SEO rankings.</li></ul>' },
-      { q: 'What is the difference between <link> and <script>?', a: '<ul><li><code>&lt;link&gt;</code>: An empty element used to link external resources like style sheets or favicons.</li><li><code>&lt;script&gt;</code>: Used to embed or reference executable client-side JavaScript code.</li></ul>' },
-      { q: 'What do defer and async do?', a: 'Both download script files asynchronously without blocking HTML parsing:<ul><li>async: Executes the script immediately after it is downloaded, regardless of the order.</li><li>defer: Executes the script only after the HTML document is fully parsed, preserving script execution order.</li></ul>' },
-      { q: 'What are localStorage and sessionStorage?', a: 'Both are Web Storage mechanisms providing key-value pairs in the browser:<ul><li>localStorage: Persists data indefinitely with no expiration date until explicitly cleared.</li><li>sessionStorage: Keeps data only for the duration of the page/tab session; clearing once closed.</li></ul>' },
-      { q: 'What is the difference between form GET and POST?', a: '<ul><li>GET: Appends data directly to the URL as query parameters. Used for non-sensitive data fetching. Max character limits apply.</li><li>POST: Sends data inside the HTTP request body. Secure for sensitive transmissions and carries no data limits.</li></ul>' },
-      { q: 'What is an iframe?', a: 'An iframe (Inline Frame) is an HTML element used to embed another independent HTML document inside the current webpage.' },
-      { q: 'What is the benefit of accessibility (ARIA attributes)?', a: 'ARIA (Accessible Rich Internet Applications) attributes make web content more accessible to people with disabilities by providing additional descriptive semantic semantics to assistive technologies like screen readers.' },
-      { q: 'What is the difference between <b> and <strong>?', a: '<ul><li><code>&lt;b&gt;</code>: Purely stylistic, displaying text in bold without implying any added structural importance.</li><li><code>&lt;strong&gt;</code>: Semantic, indicating that the content has strong structural importance, impacting screen readers and SEO.</li></ul>' },
-      { q: 'What is the difference between <i> and <em>?', a: '<ul><li><code>&lt;i&gt;</code>: Purely stylistic, styling text in italics without structural meaning.</li><li><code>&lt;em&gt;</code>: Semantic, emphasizing words within a sentence, changing screen reader inflection.</li></ul>' }
+      { q: 'What is the difference between <img alt=""> and without it?', a: 'Leaving the <code>alt</code> text completely absent forces screen readers to read out raw asset file URLs instead of meaningful context descriptions, causing severe access failures and negative SEO flags.' },
+      { q: 'What is the difference between <link> and <script>?', a: '<ul><li><code>&lt;link&gt;</code>: An empty tag referencing non-executable external documents, primarily style sheet layers.</li><li><code>&lt;script&gt;</code>: A wrapper container holding or pointing directly to client-side logic scripts.</li></ul>' },
+      { q: 'What do defer and async do?', a: 'Both download scripts without stalling the HTML parsing thread:<ul><li><code>async</code>: Immediately halts parsing to execute the target script block as soon as it concludes loading.</li><li><code>defer</code>: Monitored to execute only after completion of structural DOM analysis, honoring the exact script tag order.</li></ul>' },
+      { q: 'What are localStorage and sessionStorage?', a: 'Client-side data persistence mechanisms:<ul><li><code>localStorage</code>: Data remains indefinitely until a script or user manually wipes the domain cache storage.</li><li><code>sessionStorage</code>: Wiped instantly whenever the current browser tab instance is closed.</li></ul>' },
+      { q: 'What is the difference between form GET and POST?', a: '<ul><li><code>GET</code>: Appends tracking query parameters explicitly to the visible URL route. Has stringent data length thresholds.</li><li><code>POST</code>: Transports data streams cleanly payloaded inside the HTTP transaction request body mass, providing secure overhead capacities.</li></ul>' },
+      { q: 'What is an iframe?', a: 'An iframe (Inline Frame) acts as an isolated sandbox window container embedding a completely foreign secondary HTML document directly inside your existing view layer layout.' },
+      { q: 'What is the benefit of accessibility (ARIA attributes)?', a: 'Accessible Rich Internet Applications (ARIA) attributes augment default HTML tags with contextual semantic descriptions, allowing modern assistive reader rigs to cleanly parse complex components.' }
     ]},
     { label: 'Advanced', qs: [
-      { q: 'What is Shadow DOM?', a: 'A web standards technology used to encapsulate DOM structures, styling, and behaviors in a hidden subtree separate from the main document DOM, preventing style bleed-in and bleed-out.' },
-      { q: 'What are Web Components?', a: 'A suite of native technologies (Shadow DOM, Custom Elements, HTML Templates) allowing developers to create reusable, encapsulated, and framework-agnostic custom HTML tags.' },
-      { q: 'What is the <template> tag?', a: 'An HTML mechanism for holding client-side content that is not rendered on page load, but can be instantiated and injected into the active DOM dynamically using JavaScript.' },
-      { q: 'What is the benefit of <picture> and srcset?', a: 'They provide native responsive image management:<ul><li><code>&lt;picture&gt;</code>: Allows developers to define completely different image sources based on media queries (Art Direction).</li><li>srcset: Provides alternative resolution variations of the same image for the browser to pick depending on Device Pixel Ratio (DPR).</li></ul>' },
-      { q: 'What is the Critical Rendering Path?', a: 'The sequence of steps the browser takes to convert HTML, CSS, and JS into actual screen pixels: <ol><li>DOM Construction</li><li>CSSOM Construction</li><li>Render Tree generation</li><li>Layout (Reflow)</li><li>Paint</li></ol>' }
+      { q: 'What is Shadow DOM?', a: 'A core Web Component system that encapsulates a modular subtree DOM separate from the primary global Document flow, blocking unintended outer CSS styling leaks from bleeding into individual components.' },
+      { q: 'What are Web Components?', a: 'A suite of standard runtime capabilities (Custom Elements, Shadow DOM, HTML Templates) that empower engineers to generate modular, framework-agnostic platform tags.' },
+      { q: 'What is the <template> tag?', a: 'An element structure holding layout blueprints that bypasses page initialization rendering entirely until parsed, cloned, and dynamically attached to the active tree by JavaScript controllers.' },
+      { q: 'What is the benefit of <picture> and srcset?', a: 'Enables native art direction and conditional media responsive image delivery based on varying client hardware device screen dimensions or target pixel ratio resolutions.' }
     ]}
   ]
 },
 {
-  id: 'css', label: 'CSS', icon: '🎨', colorClass: 'c-css', iconClass: 'icon-css',
+  id: 'css', label: 'CSS Architecture', icon: '🎨', colorClass: 'c-css', iconClass: 'icon-css',
   levels: [
     { label: 'Basics', qs: [
-      { q: 'What is the difference between inline, internal, and external CSS?', a: '<ul><li>Inline: Written directly within the element\'s <code>style</code> attribute.</li><li>Internal: Placed inside a <code>&lt;style&gt;</code> block within the document\'s <code>&lt;head&gt;</code>.</li><li>External: Written in a standalone <code>.css</code> file and connected using a <code>&lt;link&gt;</code> tag.</li></ul>' },
-      { q: 'What is specificity?', a: 'The rule engine browsers use to determine which CSS property values are applied to an element when multiple rules conflict. It is calculated by weights: Inline Styles > IDs > Classes/Attributes > Elements.' },
-      { q: 'What is the cascade?', a: 'The cascading order represents the waterfall logic CSS uses to combine stylesheets and resolve rule conflicts based on Importance, Origin, Specificity, and Source Order.' },
-      { q: 'What is the Box Model?', a: 'The CSS Box Model is a container standard wrapped around every HTML element, composed of (inner to outer): Content, Padding, Border, and Margin.' },
-      { q: 'What is the difference between margin and padding?', a: '<ul><li>Margin: Clears an area outside the element border to space components apart.</li><li>Padding: Clears an area inside the border around the core element content.</li></ul>' },
-      { q: 'What is display? block / inline / inline-block / flex / grid', a: '<ul><li>block: Spans full parent container width, starts a new line, respects height/width.</li><li>inline: Takes up only content width, cannot accept explicit width/height properties.</li><li>inline-block: Acts like inline inline flow but respects custom width/height properties.</li><li>flex: Configures a 1-dimensional flexbox rendering engine for immediate children.</li><li>grid: Configures a 2-dimensional grid matrix system layout.</li></ul>' },
-      { q: 'What is position: static / relative / absolute / fixed / sticky?', a: '<ul><li>static: Default layout engine flow. Ignores top/right/bottom/left coordinates.</li><li>relative: Positioned offset relative to its standard layout spot.</li><li>absolute: Positioned relative to its closest non-static parent ancestor container.</li><li>fixed: Positioned relative to the viewport window. Stays static during scroll.</li><li>sticky: Toggles between relative and fixed positioning based on user scrolling offsets.</li></ul>' },
-      { q: 'What does z-index do?', a: 'Controls the 3D depth stack position of positioned elements along the Z-axis. Only works on elements with non-static position attributes.' },
-      { q: 'What is the difference between rem, em, and px?', a: '<ul><li>px: An absolute, locked unit equivalent to a physical display pixel.</li><li>em: Relative unit scaled off the font size of its parent component.</li><li>rem: Relative unit scaled off the root HTML font size configuration (usually 16px).</li></ul>' },
-      { q: 'How does media query work?', a: 'Media queries conditionally inject customized CSS styles matching verified hardware attributes like target layout width, viewport sizing, or media type: <pre><code>@media (max-width: 768px) {\n  body { font-size: 14px; }\n}</code></pre>' },
-      { q: 'What is the difference between visibility: hidden and display: none?', a: '<ul><li>display: none: Strips the element completely out of the active rendering layout, reclaiming its empty space.</li><li>visibility: hidden: Hides the element visually but leaves its layout boundaries and dimensions intact.</li></ul>' },
-      { q: 'What is the difference between width: 100% and width: 100vw?', a: '<ul><li>100%: Allocates exactly 100% of the immediate parent container width capacity.</li><li>100vw: Allocates exactly 100% of the entire Viewport Width boundaries, which can trigger overflows if scrollbars are active.</li></ul>' }
+      { q: 'What is the difference between inline, internal, and external CSS?', a: '<ul><li><b>Inline:</b> Directly written in the tag style attribute. Low scalability.</li><li><b>Internal:</b> Wrapped within a <code>&lt;style&gt;</code> element inside the HTML header.</li><li><b>External:</b> Linked standalone <code>.css</code> sheets. Optimal production design caching standard.</li></ul>' },
+      { q: 'What is specificity?', a: 'The browser weight matching equation determining which CSS directive takes visual precedence when structural rules collide. Calculated via structural category points: Inline > IDs > Classes & Attributes > Base Elements.' },
+      { q: 'What is the cascade?', a: 'The fundamental waterfall mechanism prioritizing style rules based on structural importance flags, stylesheet source origin types, specificity values, and literal order declaration.' },
+      { q: 'What is the Box Model?', a: 'The foundational geometric mapping layer wrapped over every node component grid, consisting of the core content volume outward through padding fields, edge borders, and margin gaps.' },
+      { q: 'What is the difference between margin and padding?', a: '<ul><li><b>Padding:</b> Expands inner element space, increasing internal breathing room within the border limits.</li><li><b>Margin:</b> Creates structural distance spacing boundaries outside of the element borders to isolate adjacent components.</li></ul>' },
+      { q: 'What is display? And what are the differences between block / inline / inline-block / flex / grid?', a: 'Defines node rendering layout contexts:<ul><li><code>block</code>: Full-width line breaker.</li><li><code>inline</code>: Fluid item flow, ignores bounding box heights.</li><li><code>inline-block</code>: Inline alignment while retaining box model padding/height manipulation capabilities.</li><li><code>flex</code>: Triggers 1-dimensional item layout flow manipulation.</li><li><code>grid</code>: Triggers a 2-dimensional system managing structured rows/columns simultaneously.</li></ul>' },
+      { q: 'What is the difference between position: static / relative / absolute / fixed / sticky?', a: '<ul><li><code>static</code>: Normal standard layout flow.</li><li><code>relative</code>: Positioned offset from its native position without distorting surrounding components.</li><li><code>absolute</code>: Positioned relative to its nearest configured non-static parent context container.</li><li><code>fixed</code>: Locked relative to the display viewport window frame. Resistant to scrolling actions.</li><li><code>sticky</code>: Behaves as relative layout flow until a set viewport edge threshold triggers temporary fixed pinning behavior.</li></ul>' },
+      { q: 'What does z-index do?', a: 'Alters the virtual layering coordinate along the depth rendering axis (Z-Axis). Requires a non-static position attribute configuration.' },
+      { q: 'What is the difference between rem, em, and px?', a: '<ul><li><code>px</code>: Absolute design pixel value. Static.</li><li><code>em</code>: Relative scale based on the local component font value configuration.</li><li><code>rem</code>: Scaled entirely off the root HTML font size (natively 16px). Essential for elastic layouts.</li></ul>' },
+      { q: 'How does media query work?', a: 'Triggers conditional presentation style assignments whenever the destination client viewport window matches specific device parameter breakpoints (e.g., width boundaries).' }
     ]},
-    { label: 'Flexbox & Grid', qs: [
-      { q: 'What is the function of justify-content / align-items / flex-direction / flex-wrap / align-content?', a: '<ul><li>justify-content: Aligns flex children along the Main Axis line.</li><li>align-items: Aligns flex children along the Cross Axis line.</li><li>flex-direction: Configures the main structural direction axis (row, column).</li><li>flex-wrap: Permits item wrapping onto multiple layout lines if bounds break.</li><li>align-content: Controls space distribution between multi-line flex tracks.</li></ul>' },
-      { q: 'What is the difference between flex:1 and flex:auto?', a: '<ul><li><code>flex: 1</code>: Shorthand for <code>flex: 1 1 0%</code>. Sets the flex-basis to 0, forcing items to expand or shrink equally based on available space, disregarding initial content size.</li><li><code>flex: auto</code>: Shorthand for <code>flex: 1 1 auto</code>. Sets the flex-basis to auto, meaning items grow or shrink based on their actual inherent content size.</li></ul>' },
-      { q: 'When should you choose CSS Grid over Flexbox?', a: 'Use <b>Flexbox</b> when handling one-dimensional layouts (either a single row OR a single column) where you align items content-first. Use <b>CSS Grid</b> for complex two-dimensional matrices (both rows AND columns simultaneously), which allows for structural, layout-first grid design system alignment.' }
+    { label: 'Flexbox & Grid Layouts', qs: [
+      { q: 'What is the function of justify-content / align-items / flex-direction / flex-wrap / align-content?', a: '<ul><li><code>justify-content</code>: Distributes flex items along the configured Main Axis tracking line.</li><li><code>align-items</code>: Aligns components along the secondary Cross Axis line.</li><li><code>flex-direction</code>: Sets the layout tracking line orientation (row vs column).</li><li><code>flex-wrap</code>: Permits flex items to shift onto multi-row levels if space caps clip.</li><li><code>align-content</code>: Aligns multi-row track levels inside the flex container wrapper space.</li></ul>' },
+      { q: 'What is the difference between flex:1 and flex:auto?', a: '<ul><li><code>flex: 1</code>: Shorthand for <code>flex: 1 1 0%</code>; dynamically stretches items to fill remaining empty space equally, bypassing initial content mass dimensions.</li><li><code>flex: auto</code>: Shorthand for <code>flex: 1 1 auto</code>; expands layout allocations but prioritizes inherent content base widths.</li></ul>' },
+      { q: 'What is the difference between grid-template-rows and grid-template-columns?', a: '<code>grid-template-columns</code> maps out the horizontal column tracks, while <code>grid-template-rows</code> defines the vertical row track bounds of a grid matrix layout.' },
+      { q: 'What is the fr unit?', a: 'The Fraction Unit (<code>fr</code>) calculates fractional ratios of unallocated free structural layout real estate inside the grid matrix layout.' },
+      { q: 'What is minmax()?', a: 'A grid sizing function establishing a safe boundary threshold allowing an item grid track size to flex dynamically between an explicit minimum baseline up to an explicit maximum value cap.' },
+      { q: 'What is the difference between repeat(), auto-fit, and auto-fill?', a: '<ul><li><code>repeat()</code>: Eliminates manual duplication by generating structural tracks dynamically based on a pattern formula.</li><li><code>auto-fill</code>: Spawns as many tracks as possible into the container, even if the new grid tracks remain empty.</li><li><code>auto-fit</code>: Collapses empty unallocated grid tracks entirely down to 0px, flexing the active occupied columns to expand and fill the remaining space.</li></ul>' }
+    ]},
+    { label: 'Advanced CSS Manipulation', qs: [
+      { q: 'What is specificity hierarchy?', a: 'A deterministic scoring system for CSS rule resolution: <code>Inline Style (1000) &gt; ID Selectors (0100) &gt; Class/Pseudo-class (0010) &gt; Element Selectors (0001)</code>.' },
+      { q: 'What is the difference between ::before and ::after?', a: 'Pseudo-elements that inject styled presentation content from the stylesheet layer into the DOM without actual markup generation. <code>::before</code> places content immediately before the core component content mass; <code>::after</code> appends it directly following it.' },
+      { q: 'What is calc()?', a: 'An evaluation method enabling dynamic structural value math calculations inside stylesheets, blending distinct scaling types (e.g., <code>width: calc(100% - 40px);</code>).' },
+      { q: 'What is clip-path?', a: 'A property defining a specific geometric clipping mask boundary layer over a component, hiding any pixel content coordinates resting outside the vector pathway bounds.' },
+      { q: 'What is the difference between transitions and animations?', a: '<ul><li><b>Transitions:</b> Smooth animations interpolation tracking values strictly between an explicit start state and end state, requiring a trigger event (e.g., <code>:hover</code>).</li><li><b>Animations:</b> Autonomous keyframe timeline orchestrations enabling complex, repeating multi-state modifications without interaction cues.</li></ul>' }
     ]}
   ]
 },
 {
   id: 'bootstrap', label: 'Bootstrap', icon: '🅱️', colorClass: 'c-boot', iconClass: 'icon-boot',
   levels: [
-    { label: 'Basics', qs: [
-      { q: 'What is Bootstrap?', a: 'Bootstrap is an open-source, component-driven CSS and JavaScript framework used for rapid responsive front-end website development.' },
-      { q: 'Explain the Bootstrap Grid System.', a: 'It relies on a flexbox grid matrix that splits the viewport into 12 distinct columns inside a <code>.container</code> wrapper, leveraging targeted responsive classes (xs, sm, md, lg, xl, xxl) to adjust column distributions.' },
-      { q: 'What is the difference between .container and .container-fluid?', a: '<ul><li><code>.container</code>: A responsive container that adopts a fixed max-width breakpoint on varying viewports.</li><li><code>.container-fluid</code>: A full-width continuous container spanning 100% width across all viewport sizes.</li></ul>' }
-    ]}
-  ]
-},
-{
-  id: 'tailwind', label: 'Tailwind', icon: '🍃', colorClass: 'c-tw', iconClass: 'icon-tw',
-  levels: [
-    { label: 'Basics', qs: [
-      { q: 'What is Tailwind CSS?', a: 'Tailwind CSS is a utility-first utility stylesheet engine providing low-level styling classes like <code>flex</code>, <code>pt-4</code>, and <code>text-center</code> directly inside HTML templates, removing the need for custom stylesheet writing.' },
-      { q: 'What is the purpose of tailwind.config.js?', a: 'It allows customization and expansion of Tailwind defaults, enabling configuration of project palettes, custom design system tokens, variants, plugins, and viewport rules.' },
-      { q: 'How does Tailwind reduce production build sizes?', a: 'Tailwind uses a tool engine called <b>PurgeCSS</b> (or the JIT compiler engine in modern versions) to scan your HTML/JS files, map out all active classes, and completely strip out unused styles from the final generated CSS file.' }
-    ]}
-  ]
-},
-{
-  id: 'sass', label: 'SASS', icon: '💄', colorClass: 'c-sass', iconClass: 'icon-sass',
-  levels: [
-    { label: 'Basics', qs: [
-      { q: 'What is SASS?', a: 'SASS (Syntactically Awesome Stylesheets) is a CSS preprocessor that extends plain CSS with programmatic features like variables, nested rule hierarchies, mixins, and inheritance, compiling down into pure cross-browser CSS.' },
-      { q: 'What is the difference between @mixin and @extend?', a: '<ul><li><code>@mixin</code>: Injects reusable code blocks into targeted selectors, optionally taking unique arguments.</li><li><code>@extend</code>: Shares standard styling properties between multiple selectors via class inheritance mechanisms, resulting in dry, clustered selectors in compiled CSS.</li></ul>' }
-    ]}
-  ]
-},
-{
-  id: 'js', label: 'JavaScript', icon: '🟨', colorClass: 'c-js', iconClass: 'icon-js',
-  levels: [
-    { label: 'Basics', qs: [
-      { q: 'What are the data types in JavaScript?', a: 'JavaScript has 8 primary data types: <ul><li><b>Primitives:</b> String, Number, BigInt, Boolean, Undefined, Null, and Symbol. These are immutable and stored by value.</li><li><b>Non-Primitive:</b> Object (Arrays, Functions, and Objects are all subtypes of the Object type). Stored by reference in memory.</li></ul>' },
-      { q: 'What is the difference between var, let, and const?', a: '<ul><li><code>var</code>: Function-scoped, hoisted to the top with an initial value of <code>undefined</code>, and can be re-declared and reassigned.</li><li><code>let</code>: Block-scoped, not accessible before initialization due to the Temporal Dead Zone (TDZ), and can be reassigned but not re-declared.</li></ul>' },
-      { q: 'What is hoisting in JavaScript?', a: 'Hoisting is the JavaScript engine\'s default behavior of moving variable and function declarations to the top of their respective scopes before code execution. Variables declared with <code>var</code> are hoisted as <code>undefined</code>, while <code>let</code> and <code>const</code> are hoisted but remain uninitialized (in the TDZ).' },
-      { q: 'What is the difference between == and ===?', a: '<ul><li><code>==</code> (Loose Equality): Compares two values for equality after performing type coercion (converting types if they are different).</li><li><code>===</code> (Strict Equality): Compares both the value and the data type without type coercion. Returns false if types differ.</li></ul>' },
-      { q: 'What is the difference between null and undefined?', a: '<ul><li><code>undefined</code>: Means a variable has been declared but has not yet been assigned a value.</li><li><code>null</code>: Is an assignment value that represents the intentional absence of any object value. Also, <code>typeof null</code> returns <code>"object"</code> due to a legacy bug.</li></ul>' }
+    { label: 'Grid & Layout Core', qs: [
+      { q: 'What is Bootstrap and why do we use it?', a: 'An open-source UI ecosystem featuring component templates designed for fast, standardized front-end layout prototyping.' },
+      { q: 'What is the Bootstrap grid system?', a: 'A flexbox-driven responsive 12-column matrix system enabling precise item organization across modular column splits.' },
+      { q: 'What is the difference between col / col-sm / col-md / col-lg?', a: 'Breakpoint classes directing grid width behaviors: <code>col</code> maps global mobile scales, <code>col-sm</code> triggers at &ge;576px, <code>col-md</code> at &ge;768px, and <code>col-lg</code> scales layout at &ge;992px parent view bounds.' },
+      { q: 'What are the Bootstrap breakpoints?', a: 'Hardcoded device width targets using media query conditions: <code>xs: 0px</code>, <code>sm: 576px</code>, <code>md: 768px</code>, <code>lg: 992px</code>, <code>xl: 1200px</code>, and <code>xxl: 1400px</code>.' },
+      { q: 'What is the difference between container and container-fluid?', a: '<ul><li><code>.container</code>: Adapts a max-width layout snap baseline at specified responsive breakpoints.</li><li><code>.container-fluid</code>: Continuously targets a 100% full-width horizontal parent stretch across all form factors.</li></ul>' }
     ]},
-    { label: 'Advanced', qs: [
-      { q: 'What is the Event Loop and how does JS handle async operations?', a: 'The Event Loop is the engine mechanism that enables non-blocking, asynchronous behavior in single-threaded JavaScript. It constantly monitors the <b>Call Stack</b> and the <b>Callback Queue</b>. When the Call Stack is completely empty, it takes queued tasks (Microtasks like Promises first, then Macrotasks like setTimeout) and pushes them onto the stack to execute.' },
-      { q: 'What is a Closure and what are its practical use cases?', a: 'A closure is the combination of a function bundled together with references to its surrounding state (lexical environment). It allows an inner function to access variables from an outer function scope even after the outer function has finished executing. Practical uses include: creating private variables, data encapsulation, and maintaining state in currying or event handlers.' },
-      { q: 'Explain Prototypal Inheritance in JavaScript.', a: 'Unlike class-based languages, JavaScript uses prototypal inheritance. Every object has a private link (<code>[[Prototype]]</code>) pointing to another object. When you look up a property or method on an object, JS searches the object itself first; if not found, it traverses up the prototype chain until it either finds the property or reaches <code>null</code>.' },
-      { q: 'What is the difference between call(), apply(), and bind()?', a: 'All three are used to explicitly set the <code>this</code> context of a function:<ul><li><code>call()</code>: Invokes the function immediately, passing arguments individually separated by commas.</li><li><code>apply()</code>: Invokes the function immediately, passing arguments inside a single structured array.</li><li><code>bind()</code>: Does not invoke the function immediately. Instead, it returns a brand new function with the <code>this</code> context permanently bound, ready to be executed later.</li></ul>' },
-      { q: 'What is the difference between Shallow Copy and Deep Copy?', a: '<ul><li><b>Shallow Copy:</b> Copies only the top-level values of an object. If the object contains nested objects, they still point to the original memory references (e.g., via Spread Operator <code>{...obj}</code> or <code>Object.assign()</code>).</li><li><b>Deep Copy:</b> Recursively copies every single layer of an object, creating a completely independent duplicate in memory (e.g., via <code>structuredClone(obj)</code> or <code>JSON.parse(JSON.stringify(obj))</code>).</li></ul>' },
-      { q: 'What is a Promise and what are its different states?', a: 'A Promise is an object representing the eventual completion or failure of an asynchronous operation. It can exist in one of three states: <ul><li><code>Pending</code>: Initial state, operation is still running.</li><li><code>Fulfilled</code>: Operation completed successfully (triggers <code>.then()</code>).</li><li><code>Rejected</code>: Operation failed with an error (triggers <code>.catch()</code>).</li></ul>' },
-      { q: 'What is the difference between Promise.all, Promise.allSettled, and Promise.race?', a: '<ul><li><code>Promise.all</code>: Fulfills only when all promises resolve. Rejects immediately if ANY promise fails.</li><li><code>Promise.allSettled</code>: Waits for all promises to settle (either fulfill or reject) and returns an array of structural status updates.</li><li><code>Promise.race</code>: Settles as soon as the very FIRST promise resolves or rejects, discarding the rest.</li></ul>' },
-      { q: 'Explain Event Delegation in JavaScript.', a: 'Event Delegation is a design pattern where a single event listener is attached to a parent element rather than attaching individual listeners to multiple children. It relies on <b>Event Bubbling</b> to intercept events efficiently, saving system memory allocations.' }
+    { label: 'Components & Utilities', qs: [
+      { q: 'How does the Modal work?', a: 'Utilizes an overlay backdrop layer coupled with JS state controls to break into a high z-index display position while blocking underlying document interaction events.' },
+      { q: 'How does the navbar work?', a: 'Combines structural utility positioning with toggle components that collapse content elements inside mobile device sizes into hamburger menu stacks.' },
+      { q: 'What is the spacing system (m-1, p-3...)', a: 'Shorthand layout modifiers based on rem increments: the first token handles behavior type (<code>m</code>: margin, <code>p</code>: padding), an option tracks side target (<code>t, b, l, r, x, y</code>), and numbers index multiplier settings.' },
+      { q: 'What are the text and background colors (bg-primary, text-danger)', a: 'Semantic theme mapping handles: <code>primary</code> maps corporate brand color profiles, <code>success</code> tracks green verification steps, <code>danger</code> triggers warning alerts, and <code>warning</code> renders warning alerts.' }
     ]}
   ]
 },
 {
-  id: 'ts', label: 'TypeScript', icon: '📘', colorClass: 'c-ts', iconClass: 'icon-ts',
+  id: 'tailwind', label: 'Tailwind CSS', icon: '🍃', colorClass: 'c-tw', iconClass: 'icon-tw',
   levels: [
-    { label: 'Basics & Advanced', qs: [
-      { q: 'What is TypeScript?', a: 'TypeScript is an open-source strongly-typed syntactic superset of JavaScript developed by Microsoft. It compiles into standard plain JavaScript.' },
-      { q: 'What is the difference between Interface and Type?', a: '<ul><li>Interfaces: Strictly used to define Object shapes; support declaration merging.</li><li>Types: Can define aliases for primitive types, unions, tuples, or objects; do not support declaration merging.</li></ul>' },
-      { q: 'What are Generics in TypeScript and why use them?', a: 'Generics allow developers to build flexible, reusable components, methods, or classes that handle multiple types without losing compile-time type safety configurations. Example: <pre><code>function getFirst&lt;T&gt;(arr: T[]): T {\n  return arr[0];\n}</code></pre>' },
-      { q: 'What is the difference between Pick and Omit utility types?', a: '<ul><li><code>Pick&lt;T, K&gt;</code>: Constructs an output type by selecting a specific set of keys <code>K</code> from type source <code>T</code>.</li><li><code>Omit&lt;T, K&gt;</code>: Constructs an output type by removing a specific set of keys <code>K</code> from type source <code>T</code>.</li></ul>' }
+    { label: 'Architecture & Utilities', qs: [
+      { q: 'What is Tailwind?', a: 'A low-level utility-first CSS framework configuration empowering developers to build highly bespoke presentation cards straight inside markup by assigning pre-compiled classes.' },
+      { q: 'Why is it considered Utility-first?', a: 'It replaces custom CSS class creation with direct utility assembly (e.g., <code>flex items-center pt-2</code>), preserving stylistic uniformity while accelerating development.' },
+      { q: 'What is the difference between Tailwind and Bootstrap?', a: 'Bootstrap delivers pre-skinned UI patterns (e.g., <code>.btn-primary</code>). Tailwind provides atomic design blocks (e.g., <code>px-4 py-2 bg-blue-500 rounded</code>), leaving UI composition entirely custom.' },
+      { q: 'What do classes like flex / items-center / justify-between / bg-blue-500 / text-xl mean?', a: '<ul><li><code>flex</code>: Set block as flex container.</li><li><code>items-center</code>: Cross axis center align.</li><li><code>justify-between</code>: Space-between main axis layout distribution.</li><li><code>bg-blue-500</code>: Injects blue color shade 500.</li><li><code>text-xl</code>: Adjust font step mapping to 1.25rem.</li></ul>' },
+      { q: 'How do responsive classes work in Tailwind?', a: 'Utilizes mobile-first configuration prefixes. Adding a modifier string (e.g., <code>md:text-left</code>) scales attributes strictly above that breakpoint (768px).' }
+    ]},
+    { label: 'Advanced Customization', qs: [
+      { q: 'What are arbitrary values?', a: 'Square-bracket selector injection allowing ad-hoc properties without creating custom CSS overrides: <code>top-[13px]</code> compiles down to <code>top: 13px;</code> during processing.' },
+      { q: 'How does animation work in Tailwind?', a: 'Includes utility handles for standard loops like <code>animate-pulse</code>, <code>animate-spin</code>, or <code>animate-bounce</code>, and supports custom configurations in the configuration file.' },
+      { q: 'What is the config file?', a: 'The <code>tailwind.config.js</code> file defines configuration values, plugins, content sources, custom style guides, theme variations, and design system variables.' },
+      { q: 'What does dark: mean?', a: 'A design selector variant directing the engine to assign specific properties when active dark-mode conditions are detected on the client device.' },
+      { q: 'How do you create a component using @apply?', a: 'Enables custom CSS classes to bundle Tailwind atomic utilities together into a clean class layer: <pre><code>.btn-custom {\n  @apply bg-blue-500 text-white rounded px-4;\n}</code></pre>' }
     ]}
   ]
 },
 {
-  id: 'jquery', label: 'jQuery', icon: '💧', colorClass: 'c-jq', iconClass: 'icon-jq',
+  id: 'sass', label: 'SASS / SCSS', icon: '💄', colorClass: 'c-sass', iconClass: 'icon-sass',
   levels: [
-    { label: 'Basics', qs: [
-      { q: 'What is jQuery?', a: 'A legacy, fast, concise JavaScript utility library designed to simplify common HTML DOM tree manipulation, event management, animation handling, and Ajax implementations.' }
+    { label: 'Pre-processor Basics', qs: [
+      { q: 'What is the difference between SASS and SCSS?', a: '<ul><li><b>SASS:</b> Relies on an indented layout syntax, avoiding brackets and closing semicolons entirely.</li><li><b>SCSS:</b> Syntactically a superset matching plain valid CSS standards using brackets, making migration straightforward.</li></ul>' },
+      { q: 'What are variables?', a: 'Tokens starting with a dollar operator storing styling parameters for infinite redeployment across files: <code>$primary-color: #ff0000;</code>.' },
+      { q: 'What are mixins?', a: 'Reusable CSS presentation declaration groups capable of receiving dynamic argument logic: <pre><code>@mixin flexCenter($dir) {\n  display: flex; flex-direction: $dir;\n}</code></pre>' },
+      { q: 'What are functions in SASS?', a: 'Computational methods returning explicit single data values (e.g., custom responsive rem scaling) instead of printing out plain property blocks.' },
+      { q: 'What are nested rules?', a: 'Allows clean selector code structuring matching the actual hierarchical layout nested system of HTML markup nodes, reducing repetitive class naming declarations.' }
+    ]},
+    { label: 'Modular Structuring', qs: [
+      { q: 'What is @extend?', a: 'A mechanism directing a selector to inherit the full style definitions profile of an existing class token block, utilizing combined grouping selectors during compilation output.' },
+      { q: 'What is the function of Partial files?', a: 'Modular style source fragments structured with an underscore naming handle prefix (e.g., <code>_vars.scss</code>). Instructs the compiler engine to skip individual file generation, compiling them into a single file bundle.' },
+      { q: 'What do @import, @use, and @forward mean?', a: '<ul><li><code>@import</code>: Legacy file inclusion system; leaks variables globally into a unified scope.</li><li><code>@use</code>: Imports partials as encapsulated modules, scoping variables through namespaces.</li><li><code>@forward</code>: Acts as an exposed public routing link making shared tools accessible higher up the import pipeline.</li></ul>' },
+      { q: 'Why is @use better than @import?', a: '<code>@use</code> blocks global token scope polluting errors, compiles files only once regardless of re-use counts, and secures clean code safety.' },
+      { q: 'What does Modules mean in SASS?', a: 'Encapsulated stylesheet layers containing specialized variable mappings, mixins, or functions that are imported strictly via namespace call commands.' },
+      { q: 'How does SASS make CSS scalable?', a: 'Organizes large style codebases into modular, maintainable, atomic folders (e.g., 7-1 pattern architecture).' },
+      { q: 'How to create a loop with @each?', a: 'Iterates through lists or maps to generate style rules dynamically: <pre><code>@each $color in primary, success {\n  .#{$color}-text { color: get-color($color); }\n}</code></pre>' }
     ]}
   ]
 },
 {
-  id: 'angular', label: 'Angular', icon: '🅰️', colorClass: 'c-ang', iconClass: 'icon-ang',
+  id: 'js', label: 'JavaScript (ES6+)', icon: '🟨', colorClass: 'c-js', iconClass: 'icon-js',
   levels: [
-    { label: 'Basics', qs: [
-      { q: 'What is Angular?', a: 'Angular is a full-featured component framework and platform developed by Google for building scalable, enterprise-grade Single Page Applications (SPAs).' },
-      { q: 'What are Directives in Angular?', a: 'Classes that add new behavioral properties or manipulate structural elements within DOM templates: <ul><li>Structural (<code>*ngIf</code>, <code>*ngFor</code>)</li><li>Attribute (<code>ngClass</code>, <code>ngStyle</code>)</li><li>Component (Directives with templates)</li></ul>' }
+    { label: 'Basics Core', qs: [
+      { q: 'What is the difference between var, let, and const?', a: '<ul><li><code>var</code>: Function-scoped, hoisted to the top with an initial value of <code>undefined</code>, and can be re-declared and reassigned.</li><li><code>let</code>: Block-scoped, not accessible before initialization due to the Temporal Dead Zone (TDZ), and can be reassigned but not re-declared.</li><li><code>const</code>: Block-scoped, locked at initialization, requires an immediate value, and cannot be reassigned or re-declared.</li></ul>' },
+      { q: 'What is hoisting?', a: 'The JavaScript engine\'s default behavior of moving variable and function declarations to the top of their respective scopes before code execution. Variables declared with <code>var</code> are hoisted as <code>undefined</code>, while <code>let</code> and <code>const</code> are hoisted but remain uninitialized (in the TDZ).' },
+      { q: 'What is the difference between == and ===?', a: '<ul><li><code>==</code>: Loose equality matching evaluating value similarity by utilizing type coercion rules.</li><li><code>===</code>: Strict absolute matching verifying both matching data values and direct data type identity.</li></ul>' },
+      { q: 'What are primitive types?', a: 'Immutable, raw data stored directly by value on the stack thread. Consists of: <code>String, Number, Boolean, Null, Undefined, Symbol, BigInt</code>.' },
+      { q: 'What are reference types?', a: 'Complex structural objects stored dynamically on the memory heap and accessed via pointers: <code>Objects, Arrays, Functions</code>.' },
+      { q: 'What is the difference between null and undefined?', a: '<ul><li><code>undefined</code>: Variable declared but not assigned any initialization value yet.</li><li><code>null</code>: Explicit programmatic setting defining an intentional assignment value that represents the absence of any object value.</li></ul>' },
+      { q: 'What is scope?', a: 'The execution visibility boundary limit determining the reach access parameters of variables (Global, Function, or Block-scoped boundaries).' }
+    ]},
+    { label: 'Advanced Execution Concepts', qs: [
+      { q: 'What is a closure?', a: 'The combination of a function bundled together with references to its surrounding state (lexical environment). It allows an inner function to access variables from an outer function scope even after the outer function has finished executing.' },
+      { q: 'What is a callback function?', a: 'A function passed into another execution process method as a parameter argument, intended to run upon the conclusion of that internal routine.' },
+      { q: 'What are arrow functions?', a: 'Lexical syntax alternatives for writing functions. They lack a unique local binding context for the <code>this</code> keyword, instead inheriting it lexically from their containing scope.' },
+      { q: 'What is the difference between function declaration and function expression?', a: '<ul><li><b>Declaration:</b> Fully hoisted to the top of the scope at runtime, making them invokable before declaration lines.</li><li><b>Expression:</b> Assigned to a variable handler and bound by standard variable hoisting rules (e.g., TDZ if using let).</li></ul>' },
+      { q: 'What is this?', a: 'A runtime reference pointer targeting the object context currently executing the active block.' },
+      { q: 'What is the difference between bind, call, and apply?', a: '<ul><li><code>call()</code>: Executes the function immediately, receiving arguments individually comma-separated.</li><li><code>apply()</code>: Executes the function immediately, receiving arguments inside a single structured array block.</li><li><code>bind()</code>: Generates a brand new function wrapper, permanently mapping the target context payload for delayed execution.</li></ul>' }
+    ]},
+    { label: 'Arrays, Objects & Async Flows', qs: [
+      { q: 'What is the difference between map, filter, and reduce?', a: '<ul><li><code>map()</code>: Transforms each item in an array, returning a new array of identical length.</li><li><code>filter()</code>: Evaluates elements against a boolean condition, returning a subset array.</li><li><code>reduce()</code>: Accumulates array elements down into a single comprehensive data output value.</li></ul>' },
+      { q: 'What is the difference between forEach and map?', a: '<code>forEach()</code> iterates over elements to perform side effects but returns <code>undefined</code>. <code>map()</code> explicitly yields a new transformed array without altering the original array.' },
+      { q: 'How do we copy an object without reference issues?', a: 'For shallow copies, use the spread operator (<code>{...obj}</code>) or <code>Object.assign()</code>. For deep copies, use <code>structuredClone(obj)</code> or <code>JSON.parse(JSON.stringify(obj))</code> to completely sever reference pointers.' },
+      { q: 'What is the Event Loop?', a: 'The mechanism enabling non-blocking asynchronous execution in single-threaded JS. It monitors the call stack, prioritizing microtasks (Promises) before pushing queued macrotasks (setTimeout) into an emptied call stack.' },
+      { q: 'What is the difference between synchronous and asynchronous?', a: 'Synchronous execution processes lines in single-threaded order, blocking execution until a task finishes. Asynchronous workflows delegate tasks off the main thread, continuing execution uninterrupted.' },
+      { q: 'What is a Promise?', a: 'An object representing the eventual resolution or failure of an asynchronous operation, existing in three states: <code>Pending</code>, <code>Fulfilled</code>, or <code>Rejected</code>.' },
+      { q: 'What is the difference between async and await?', a: '<code>async</code> flags a function to implicitly wrap its return value in a Promise. <code>await</code> pauses execution code processing inside that function until its target Promise resolves.' },
+      { q: 'What is the fetch API?', a: 'A built-in native interface for conducting asynchronous network requests, replacing old legacy XMLHttpRequests with a Promise-driven structure.' }
     ]}
   ]
 },
 {
-  id: 'git', label: 'Git', icon: '🪵', colorClass: 'c-git', iconClass: 'icon-git',
+  id: 'ts', label: 'TypeScript Engine', icon: '📘', colorClass: 'c-ts', iconClass: 'icon-ts',
   levels: [
-    { label: 'Basics & Workflows', qs: [
-      { q: 'What is Git?', a: 'A distributed version control system designed to track file adjustments across repositories, facilitating collaborative source code workflows.' },
-      { q: 'What is the difference between git merge and git rebase?', a: '<ul><li>merge: Combines histories by preserving historical chronological logs, creating a dedicated structural merge commit.</li><li>rebase: Re-applies active commits cleanly on top of another base tip, creating a perfectly flat, linear history log.</li></ul>' },
-      { q: 'What does git stash do and when would you use it?', a: '<code>git stash</code> temporarily shelve-records your uncommitted working changes so you can clean your directory state to work on something else, allowing you to pop or apply them back later.' },
-      { q: 'How do you resolve a Merge Conflict?', a: 'Open the affected files, inspect the conflict dividers (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>), choose which code branch to keep, delete the structural markers, stage the files with <code>git add</code>, and run <code>git commit</code>.' }
+    { label: 'Type Mechanics', qs: [
+      { q: 'What is TypeScript?', a: 'A strongly typed programming language that acts as a syntactic superset of JavaScript, compiling down to clean browser-executable JS.' },
+      { q: 'What is the difference between any and unknown?', a: '<ul><li><code>any</code>: Disables type-checking entirely, allowing any operation.</li><li><code>unknown</code>: A type-safe alternative that blocks all component interaction loops until type narrowing or validation occurs.</li></ul>' },
+      { q: 'What is the difference between type and interface?', a: '<ul><li><code>interface</code>: Ideal for object structural layout definitions; supports open-ended declaration merging.</li><li><code>type</code>: Flexible alias capable of charting complex primitives, unions, and tuples.</li></ul>' },
+      { q: 'What is a union type?', a: 'Allows a data variable assignment to hold one of several specified type definitions: <code>let code: string | number;</code>.' },
+      { q: 'What do generics mean?', a: 'Template handles parameterizing types across functions or structures to maintain compile-time type safety configurations while supporting dynamic reuse: <code>function log&lt;T&gt;(data: T): T</code>.' }
+    ]},
+    { label: 'Advanced TS Capabilities', qs: [
+      { q: 'What is an enum?', a: 'A feature enabling the creation of named constant sets, organizing related values into clear numeric or string groups.' },
+      { q: 'What does readonly mean?', a: 'A modifier flag that locks class properties or interface attributes after assignment, catching modification attempts at compile-time.' },
+      { q: 'What is interface merging?', a: 'An evaluation rule where separate interfaces with identical names compile and merge into a single combined type blueprint.' },
+      { q: 'What is the difference between public / private / protected?', a: 'Access control flags:<ul><li><code>public</code>: Accessible anywhere.</li><li><code>private</code>: Accessible strictly within the declaring class template.</li><li><code>protected</code>: Accessible within the class and its subclasses.</li></ul>' },
+      { q: 'What are decorators?', a: 'Experimental annotation expressions that modify or meta-analyze classes, properties, or methods during execution.' },
+      { q: 'How does type inference work?', a: 'The compiler tracks data initialization patterns to infer variable types when explicit types are omitted.' }
     ]}
   ]
 },
 {
-  id: 'perf', label: 'Performance', icon: '⚡', colorClass: 'c-perf', iconClass: 'icon-perf',
+  id: 'jquery', label: 'Legacy jQuery', icon: '💧', colorClass: 'c-jq', iconClass: 'icon-jq',
   levels: [
-    { label: 'Basics', qs: [
-      { q: 'What is Debouncing vs Throttling?', a: '<ul><li>Debouncing: Delays a function execution until a specific period of structural inactivity has passed.</li><li>Throttling: Guarantees a function executes at most once during a fixed cyclical window.</li></ul>' },
-      { q: 'How can you optimize web assets?', a: 'Implement asset minification, leverage modern format compressions (WebP, AVIF), adopt code-splitting patterns, enforce browser caching headers, and lazy-load non-critical media assets.' }
+    { label: 'DOM & Utility Hooks', qs: [
+      { q: 'What is jQuery?', a: 'A legacy cross-browser utility library designed to simplify DOM tree traversal, event handling, animations, and AJAX workflows.' },
+      { q: 'What is the difference between hide() and remove()?', a: '<ul><li><code>hide()</code>: Modifies inline styles to <code>display: none</code>, keeping the node in the DOM tree.</li><li><code>remove()</code>: Excises the target element and its event listeners from the DOM entirely.</li></ul>' },
+      { q: 'What is AJAX in jQuery?', a: 'A wrapper method (<code>$.ajax()</code>) simplifying asynchronous network requests across legacy browser targets.' },
+      { q: 'How do we select an element?', a: 'Uses CSS selector strings inside a wrapper function call handle: <code>$(".class-name")</code> or <code>$("#id")</code>.' },
+      { q: 'What is the difference between document.ready and window.onload?', a: '<ul><li><code>document.ready</code>: Fires as soon as HTML markup text parsing completes and the DOM is structured.</li><li><code>window.onload</code>: Fires later, waiting for external images and stylesheets to finish loading.</li></ul>' },
+      { q: 'Why has jQuery usage decreased?', a: 'Modern browsers natively support clean standard selectors like <code>querySelectorAll</code> and APIs like <code>fetch</code>, alongside modern component frameworks.' },
+      { q: 'What is the difference between on() and click()?', a: '<code>click()</code> is a shorthand handle mapping events to existing nodes. <code>on()</code> supports event delegation for elements dynamically injected after load.' },
+      { q: 'How do fadeIn and fadeOut work?', a: 'Animates the CSS opacity property over time before adjusting the <code>display</code> attribute to clean up layout spaces.' }
+    ]}
+  ]
+},
+{
+  id: 'angular', label: 'Angular Core', icon: '🅰️', colorClass: 'c-ang', iconClass: 'icon-ang',
+  levels: [
+    { label: 'Architecture Foundation', qs: [
+      { q: 'What is Angular?', a: 'A robust component-driven development framework by Google, engineered for compiling scalable, enterprise-grade single-page web applications.' },
+      { q: 'What is the difference between SPA and MPA?', a: '<ul><li><b>SPA (Single Page App):</b> Loads one shell page, dynamically swapping view components via client-side routing for fluid interactions.</li><li><b>MPA (Multi-Page App):</b> Requests full secondary document cycles from a remote server for every page navigation.</li></ul>' },
+      { q: 'What is a Component?', a: 'The primary building block of an Angular view layer, uniting an HTML layout template, styling layers, and a TypeScript logic class.' },
+      { q: 'What are the parts of a Component?', a: 'A TypeScript class containing logic, an execution configuration via the <code>@Component</code> decorator metadata, an HTML layout view, and optional scope styles.' },
+      { q: 'What are Modules?', a: 'Containers (<code>@NgModule</code>) organizing components, directives, pipes, and services into distinct functional blocks.' },
+      { q: 'What are the types of Data Binding?', a: '<ul><li><b>Interpolation:</b> <code>{{ data }}</code> (TS to HTML output).</li><li><b>Property Binding:</b> <code>[target]="value"</code> (TS variables to DOM inputs).</li><li><b>Event Binding:</b> <code>(click)="method()"</code> (DOM alerts to TS logic handlers).</li><li><b>Two-way Data Binding:</b> <code>[(ngModel)]="property"</code> (Synchronizes inputs and states).</li></ul>' },
+      { q: 'What is a Directive?', a: 'A class modifying structural layouts or element behaviors in template views when interpreted by the compiler.' },
+      { q: 'What are the types of Directives?', a: '<ul><li><b>Components:</b> Directives mapped to an explicit view layout template.</li><li><b>Structural:</b> Alters DOM tree layouts by adding/removing elements (<code>*ngIf</code>, <code>*ngFor</code>).</li><li><b>Attribute:</b> Modifies visual style or property attributes (<code>ngClass</code>, <code>ngStyle</code>).</li></ul>' }
+    ]},
+    { label: 'Syllabus Core Directives', qs: [
+      { q: 'Explain: *ngIf / *ngFor / *ngSwitch', a: '<ul><li><code>*ngIf</code>: Conditionally appends or removes structural DOM nodes based on expression truthiness.</li><li><code>*ngFor</code>: Iterates through collections to generate repeated element sets.</li><li><code>*ngSwitch</code>: Dynamically displays a matching element from an array of structural cases.</li></ul>' },
+      { q: 'Explain ngClass and ngStyle', a: '<ul><li><code>ngClass</code>: Dynamically toggles CSS class strings, arrays, or objects based on expression states.</li><li><code>ngStyle</code>: Dynamically evaluates and applies inline style rules to elements.</li></ul>' }
+    ]},
+    { label: 'Services, DI & Lifecycles', qs: [
+      { q: 'What is a service?', a: 'A modular class isolating reusable, decoupled logic, data caching state workflows, or external API networking code away from component controllers.' },
+      { q: 'What is Dependency Injection?', a: 'A design pattern where dependencies are supplied to components rather than instantiated manually, handled via class constructor signatures.' },
+      { q: 'What is Services Scope?', a: 'Provides dependency singletons via configuration context scopes: <code>providedIn: "root"</code> manages a global application instance, while component-level declarations scope instances to that view branch.' },
+      { q: 'Name the most important Lifecycle Hooks', a: 'Chronological execution hooks: <code>ngOnChanges</code>, <code>ngOnInit</code>, <code>ngDoCheck</code>, <code>ngAfterViewInit</code>, and <code>ngOnDestroy</code>.' },
+      { q: 'What is the role of ngOnInit?', a: 'Invoked once after input bindings initialize, serving as the standard entry point for loading dynamic data.' },
+      { q: 'What is the role of ngOnChanges?', a: 'Triggers before <code>ngOnInit</code> and whenever data-bound <code>@Input()</code> property values mutate, capturing updates in a <code>SimpleChanges</code> object.' }
+    ]},
+    { label: 'Routing, Forms & Networking', qs: [
+      { q: 'What is RouterModule?', a: 'The service module configuring navigation pathways by parsing URL configurations and rendering matched views inside an <code>&lt;router-outlet&gt;</code>.' },
+      { q: 'What is lazy loading?', a: 'An optimization pattern deferring feature module downloads until their specific route path is actively navigated, reducing initial asset payloads.' },
+      { q: 'What is the difference between routerLink and Maps()?', a: '<code>routerLink</code> handles navigation directly inside template HTML anchors. Programmatic routing triggers navigation imperatively via code execution using the <code>Router.navigate()</code> API.' },
+      { q: 'What is the difference between Template-driven and Reactive forms?', a: '<ul><li><b>Template-driven:</b> Configured inside the view HTML layer, relying on asynchronous two-way data binding. Suitable for simple forms.</li><li><b>Reactive:</b> Form architecture defined explicitly in TypeScript code, providing synchronous programmatic control, validation feedback, and immutable data flows.</li></ul>' },
+      { q: 'What are FormGroup and FormControl?', a: '<ul><li><code>FormControl</code>: Tracks value, validation rules, and status flags for an individual form input element.</li><li><code>FormGroup</code>: Groups multiple FormControls into a unified validation container.</li></ul>' },
+      { q: 'What are Validators?', a: 'Functional validation methods evaluating input control states to return error maps when values fail validation rules.' },
+      { q: 'How do we use HttpClient?', a: 'Injects a networking service layer to manage data transactions, returning RxJS Observables to handle stream pipelines.' },
+      { q: 'What is an interceptor?', a: 'A middleware service transforming outgoing HTTP requests or incoming response packets globally (e.g., automatically appending Auth bearer tokens).' }
+    ]},
+    { label: 'Reactive Streams (RxJS vs Signals)', qs: [
+      { q: 'What is an Observable?', a: 'An RxJS lazy data stream that multi-values push updates over time to subscribed consumer observers.' },
+      { q: 'What is the difference between Subject and BehaviorSubject?', a: '<ul><li><code>Subject</code>: A multicast stream that broadcasts events strictly after subscription occurs.</li><li><code>BehaviorSubject</code>: Requires an initial value, caching its current state to immediately replay it to new subscribers.</li></ul>' },
+      { q: 'What are switchMap and mergeMap?', a: 'Flattening operators: <ul><li><code>switchMap</code>: Cancels active inner network stream requests if a new source event triggers, ideal for search typeaheads.</li><li><code>mergeMap</code>: Spawns parallel network request pipelines simultaneously without discarding active streams.</li></ul>' },
+      { q: 'What is a signal?', a: 'A reactive data structure tracking state values that directly alerts consumer functions when dependencies mutate.' },
+      { q: 'What is the difference between signal and BehaviorSubject?', a: 'Signals remove the overhead of manual RxJS subscription streams, ensuring glitch-free execution tracking without tracking leaks.' },
+      { q: 'What does computed mean?', a: 'Generates a read-only signal that calculates its value dynamically from other signal dependencies, caching updates efficiently.' },
+      { q: 'What does effect mean?', a: 'An operation block executing side effects autonomously whenever its tracked signal values update.' },
+      { q: 'Signals vs Observables', a: 'Signals optimize state management within templates. Observables manage asynchronous data pipeline flows, streaming events, and timing operators.' }
+    ]},
+    { label: 'Advanced Angular Architecture', qs: [
+      { q: 'What is Change Detection?', a: 'The framework process synchronization engine mapping TypeScript data models to updating component view nodes.' },
+      { q: 'What is the difference between Default and OnPush?', a: '<ul><li><code>Default</code>: Strategy checking every template node on any event trigger.</li><li><code>OnPush</code>: Performance strategy checking components only when <code>@Input</code> references change, an Observable emits, or an event listener fires.</li></ul>' },
+      { q: 'Change Detection Cycle', a: 'The framework tracks execution zones to evaluate component trees, updating dirty nodes and stabilizing the layout.' },
+      { q: 'Standalone Components', a: 'A modern design flag (<code>standalone: true</code>) eliminating the boilerplate of <code>NgModules</code> by letting components manage their own dependencies directly.' },
+      { q: 'ViewEncapsulation', a: 'Controls how component style scopes are isolated, supporting Emulated strategies, shadow root boundaries, or global overrides.' },
+      { q: 'What is ViewChild', a: 'A selector decorator that grabs a reference handle targeting a local template element or child component inside the view layer.' },
+      { q: 'What is ContentChild', a: 'A decorator grabbing references targeting elements projected into the component using <code>&lt;ng-content&gt;</code>.' },
+      { q: 'What is a Pipe?', a: 'A transformation tool inside view layouts formatting raw input expressions on screen (e.g., <code>| date</code>).' },
+      { q: 'What is the difference between pure and impure pipe?', a: 'Pure pipes evaluate strictly when input reference coordinates mutate. Impure pipes evaluate on every single change detection sweep, introducing rendering overhead.' },
+      { q: 'What are HostListener and HostBinding?', a: '<ul><li><code>HostBinding</code>: Binds a class property to attributes of the hosting element node.</li><li><code>HostListener</code>: Subscribes to events fired by the hosting element container.</li></ul>' },
+      { q: 'How to create a Custom Directive?', a: 'Declare a class decorated with <code>@Directive</code>, specify a selector attribute, and inject <code>ElementRef</code> to handle styling or behavioral modifications.' },
+      { q: 'How to create a Custom Pipe?', a: 'Implement a class decorated with <code>@Pipe</code> that satisfies the <code>PipeTransform</code> contract interface, defining transformation logic inside the <code>transform()</code> method.' }
+    ]},
+    { label: 'Angular Guards Syllabi', qs: [
+      { q: 'What is a Guard?', a: 'A routing security interface determining if a user navigation attempt is permitted to access a specific route.' },
+      { q: 'What are the types of Guards? (canActivate – canDeactivate – canLoad – canMatch – resolve)', a: 'Routing lifecycle filters: <ul><li><code>canActivate</code>: Controls route entry permissions.</li><li><code>canDeactivate</code>: Checks if a user can navigate away from a view.</li><li><code>canLoad</code>: Blocks module asset downloads until authorized.</li><li><code>canMatch</code>: Controls route matching rules.</li><li><code>resolve</code>: Pre-fetches data before a view initializes.</li></ul>' },
+      { q: 'What is the difference between canActivate and canLoad?', a: '<code>canActivate</code> allows module scripts to load even if access is blocked later. <code>canLoad</code> blocks lazy-loaded source files from downloading entirely if the guard fails, protecting network bandwidth.' },
+      { q: 'How does AuthGuard work?', a: 'Intercepts route activation by evaluating a token validation service, routing unauthorized sessions away to login screens.' }
     ]}
   ]
 }
 ];
 
 // ════════════════════════════════════════
-// RENDER & APP LOGIC
+// RENDER ENGINE LOGIC
 // ════════════════════════════════════════
 let checkedQuestions = new Set();
-
 document.getElementById('yr').innerText = new Date().getFullYear();
 
-// Initialize LocalStorage Tracking
-if(localStorage.getItem('checked_q')) {
+if(localStorage.getItem('syllabus_checked_q')) {
   try {
-    const arr = JSON.parse(localStorage.getItem('checked_q'));
-    checkedQuestions = new Set(arr);
-  } catch(e) {}
+    checkedQuestions = new Set(JSON.parse(localStorage.getItem('syllabus_checked_q')));
+  } catch(e){}
 }
 
 function saveState() {
-  localStorage.setItem('checked_q', JSON.stringify([...checkedQuestions]));
+  localStorage.setItem('syllabus_checked_q', JSON.stringify([...checkedQuestions]));
 }
 
-// Global counters
 let totalQuestionsCount = 0;
 DATA.forEach(t => t.levels.forEach(l => totalQuestionsCount += l.qs.length));
 document.getElementById('stat-total').innerText = totalQuestionsCount;
@@ -902,7 +683,6 @@ function updateStats() {
   const done = checkedQuestions.size;
   document.getElementById('stat-done').innerText = done;
   document.getElementById('stat-left').innerText = totalQuestionsCount - done;
-  
   const percent = totalQuestionsCount > 0 ? Math.round((done / totalQuestionsCount) * 100) : 0;
   document.getElementById('progress-bar').style.width = percent + '%';
   document.getElementById('progress-text').innerText = percent + '%';
@@ -911,24 +691,19 @@ function updateStats() {
 function renderContent(filterTopic = 'all', searchKeyword = '') {
   const container = document.getElementById('qa-content');
   container.innerHTML = '';
-  
   let hasAnyResults = false;
   const kw = searchKeyword.toLowerCase().trim();
 
   DATA.forEach(topic => {
     if (filterTopic !== 'all' && topic.id !== filterTopic) return;
-
     let filteredLevels = [];
 
     topic.levels.forEach(level => {
       let filteredQs = [];
       level.qs.forEach(qObj => {
         const matchesSearch = qObj.q.toLowerCase().includes(kw) || qObj.a.toLowerCase().includes(kw);
-        if (matchesSearch) {
-          filteredQs.push(qObj);
-        }
+        if (matchesSearch) filteredQs.push(qObj);
       });
-
       if (filteredQs.length > 0) {
         filteredLevels.push({ label: level.label, qs: filteredQs });
       }
@@ -937,37 +712,21 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
     if (filteredLevels.length === 0) return;
     hasAnyResults = true;
 
-    // Generate Topic Section UI
     const sec = document.createElement('section');
     sec.className = 'topic-section';
-
     let totalQsInTopic = 0;
     topic.levels.forEach(l => totalQsInTopic += l.qs.length);
-    const topicMark = {
-      html: 'HTML',
-      css: 'CSS',
-      bootstrap: 'BS',
-      tailwind: 'TW',
-      sass: 'SASS',
-      js: 'JS',
-      ts: 'TS',
-      jquery: 'JQ',
-      angular: 'NG',
-      git: 'GIT',
-      perf: 'PF'
-    }[topic.id] || topic.label.slice(0, 2).toUpperCase();
 
-    let headingHtml = `
+    sec.innerHTML = `
       <div class="topic-heading">
-        <div class="topic-heading-icon ${topic.iconClass}">${topicMark}</div>
+        <div class="topic-heading-icon ${topic.iconClass}">${topic.id.toUpperCase().slice(0,4)}</div>
         <div class="topic-heading-text">
           <h2>${topic.label}</h2>
-          <span>Focused review questions for ${topic.label}</span>
+          <span>Targeted curriculum criteria evaluation for ${topic.label}</span>
         </div>
-        <span class="topic-badge ${topic.colorClass}">${totalQsInTopic} ${totalQsInTopic === 1 ? 'question' : 'questions'}</span>
+        <span class="topic-badge ${topic.colorClass}">${totalQsInTopic} Syllabus Tasks</span>
       </div>
     `;
-    sec.innerHTML = headingHtml;
 
     filteredLevels.forEach(level => {
       const lvlLbl = document.createElement('div');
@@ -976,10 +735,8 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
       sec.appendChild(lvlLbl);
 
       level.qs.forEach(qObj => {
-        // Safe continuous unique key mapping
         const qKey = (topic.id + '-' + level.label + '-' + qObj.q).replace(/\s+/g, '_');
         const isChecked = checkedQuestions.has(qKey);
-
         const card = document.createElement('div');
         card.className = `q-card ${isChecked ? 'is-done' : ''}`;
         card.setAttribute('data-key', qKey);
@@ -1000,15 +757,12 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
             <div class="q-arrow">&#9662;</div>
           </div>
           <div class="q-body">
-            <div class="q-body-inner">
-              ${finalA}
-            </div>
+            <div class="q-body-inner">${finalA}</div>
           </div>
         `;
         sec.appendChild(card);
       });
     });
-
     container.appendChild(sec);
   });
 
@@ -1016,9 +770,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
   attachAccordionEvents();
 }
 
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
+function escapeRegExp(string) { return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
 function attachAccordionEvents() {
   document.querySelectorAll('.q-header').forEach(hdr => {
@@ -1026,18 +778,16 @@ function attachAccordionEvents() {
       const card = this.parentElement;
       const body = card.querySelector('.q-body');
       
-      // If clicking check box specifically
       if(e.target.classList.contains('q-check')) {
         e.stopPropagation();
-        const chk = e.target;
         const key = card.getAttribute('data-key');
         if(checkedQuestions.has(key)) {
           checkedQuestions.delete(key);
-          chk.classList.remove('checked');
+          e.target.classList.remove('checked');
           card.classList.remove('is-done');
         } else {
           checkedQuestions.add(key);
-          chk.classList.add('checked');
+          e.target.classList.add('checked');
           card.classList.add('is-done');
         }
         saveState();
@@ -1045,7 +795,6 @@ function attachAccordionEvents() {
         return;
       }
 
-      // Standard accordion open/close mechanism
       if(card.classList.contains('open')) {
         card.classList.remove('open');
         body.classList.remove('open');
@@ -1059,14 +808,10 @@ function attachAccordionEvents() {
   });
 }
 
-// ════════════════════════════════════════
-// SEARCH & FILTERS CONTROLLER
-// ════════════════════════════════════════
 let activeTopic = 'all';
 const searchInput = document.getElementById('search');
 const clearSearchBtn = document.getElementById('clear-search');
 
-// Filter Tab switching click
 document.querySelectorAll('.topic-tab').forEach(tab => {
   tab.onclick = function() {
     document.querySelectorAll('.topic-tab').forEach(t => t.classList.remove('active'));
@@ -1076,13 +821,8 @@ document.querySelectorAll('.topic-tab').forEach(tab => {
   };
 });
 
-// Search input dispatch input monitoring
 searchInput.oninput = function() {
-  if(this.value.length > 0) {
-    clearSearchBtn.style.display = 'block';
-  } else {
-    clearSearchBtn.style.display = 'none';
-  }
+  clearSearchBtn.style.display = this.value.length > 0 ? 'block' : 'none';
   renderContent(activeTopic, this.value);
 };
 
@@ -1093,23 +833,15 @@ clearSearchBtn.onclick = function() {
   searchInput.focus();
 };
 
-// Scroll to top layout tracking
 const scrollTopBtn = document.getElementById('scroll-top');
 window.onscroll = function() {
-  if(document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-    scrollTopBtn.style.display = 'flex';
-  } else {
-    scrollTopBtn.style.display = 'none';
-  }
+  scrollTopBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? 'flex' : 'none';
 };
-scrollTopBtn.onclick = function() {
-  window.scrollTo({top: 0, behavior: 'smooth'});
-};
+scrollTopBtn.onclick = function() { window.scrollTo({top: 0, behavior: 'smooth'}); };
 
-// Initial setup rendering
+// Initialization
 renderContent('all', '');
 updateStats();
 </script>
-
 </body>
 </html>
