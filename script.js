@@ -282,6 +282,7 @@ function saveState() {
 let totalQuestionsCount = 0;
 DATA.forEach(t => t.levels.forEach(l => totalQuestionsCount += l.qs.length));
 document.getElementById('stat-total').innerText = totalQuestionsCount;
+document.getElementById('stat-topics').innerText = DATA.length;
 
 function updateStats() {
   const done = checkedQuestions.size;
@@ -289,13 +290,21 @@ function updateStats() {
   document.getElementById('stat-left').innerText = totalQuestionsCount - done;
   const percent = totalQuestionsCount > 0 ? Math.round((done / totalQuestionsCount) * 100) : 0;
   document.getElementById('progress-bar').style.width = percent + '%';
-  document.getElementById('progress-text').innerText = percent + '%';
+  document.getElementById('progress-text').innerText = percent + '% complete';
+
+  const navProgressBar = document.getElementById('nav-progress-bar');
+  const navProgressText = document.getElementById('nav-progress-text');
+  if (navProgressBar && navProgressText) {
+    navProgressBar.style.width = percent + '%';
+    navProgressText.innerText = percent + '% complete';
+  }
 }
 
 function renderContent(filterTopic = 'all', searchKeyword = '') {
   const container = document.getElementById('qa-content');
   container.innerHTML = '';
   let hasAnyResults = false;
+  let visibleQuestions = 0;
   const kw = searchKeyword.toLowerCase().trim();
 
   DATA.forEach(topic => {
@@ -309,6 +318,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         if (matchesSearch) filteredQs.push(qObj);
       });
       if (filteredQs.length > 0) {
+        visibleQuestions += filteredQs.length;
         filteredLevels.push({ label: level.label, qs: filteredQs });
       }
     });
@@ -355,10 +365,10 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         }
 
         card.innerHTML = `
-          <div class="q-header">
-            <div class="q-check ${isChecked ? 'checked' : ''}">&#10003;</div>
+          <div class="q-header" role="button" tabindex="0" aria-expanded="false">
+            <button class="q-check ${isChecked ? 'checked' : ''}" type="button" aria-label="Mark question as reviewed">&#10003;</button>
             <div class="q-title">${finalQ}</div>
-            <div class="q-arrow">&#9662;</div>
+            <div class="q-arrow" aria-hidden="true">&#9662;</div>
           </div>
           <div class="q-body">
             <div class="q-body-inner">${finalA}</div>
@@ -371,7 +381,14 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
   });
 
   document.getElementById('no-results').style.display = hasAnyResults ? 'none' : 'block';
+  updateVisibleCount(visibleQuestions);
   attachAccordionEvents();
+}
+
+function updateVisibleCount(count) {
+  const visibleCount = document.getElementById('visible-count');
+  if (!visibleCount) return;
+  visibleCount.innerText = `${count} questions showing`;
 }
 
 function escapeHTML(value) {
@@ -387,9 +404,19 @@ function escapeRegExp(string) { return string.replace(/[.*+?^${}()|[\]\\]/g, '\\
 
 function attachAccordionEvents() {
   document.querySelectorAll('.q-header').forEach(hdr => {
+    const toggleCard = function(header, forceOpen = null) {
+      const card = header.parentElement;
+      const body = card.querySelector('.q-body');
+      const shouldOpen = forceOpen === null ? !card.classList.contains('open') : forceOpen;
+
+      card.classList.toggle('open', shouldOpen);
+      body.classList.toggle('open', shouldOpen);
+      header.setAttribute('aria-expanded', String(shouldOpen));
+      body.style.maxHeight = shouldOpen ? body.scrollHeight + "px" : null;
+    };
+
     hdr.onclick = function(e) {
       const card = this.parentElement;
-      const body = card.querySelector('.q-body');
       
       if(e.target.classList.contains('q-check')) {
         e.stopPropagation();
@@ -408,15 +435,13 @@ function attachAccordionEvents() {
         return;
       }
 
-      if(card.classList.contains('open')) {
-        card.classList.remove('open');
-        body.classList.remove('open');
-        body.style.maxHeight = null;
-      } else {
-        card.classList.add('open');
-        body.classList.add('open');
-        body.style.maxHeight = body.scrollHeight + "px";
-      }
+      toggleCard(this);
+    };
+
+    hdr.onkeydown = function(e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      toggleCard(this);
     };
   });
 }
@@ -434,6 +459,32 @@ document.querySelectorAll('.topic-tab').forEach(tab => {
   };
 });
 
+document.querySelectorAll('[data-scroll-target]').forEach(btn => {
+  btn.onclick = function() {
+    const target = document.getElementById(this.getAttribute('data-scroll-target'));
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+});
+
+document.getElementById('review-next').onclick = function() {
+  const nextCard = [...document.querySelectorAll('.q-card')].find(card => !checkedQuestions.has(card.getAttribute('data-key')));
+  if (!nextCard) {
+    const originalText = this.innerText;
+    this.innerText = 'All reviewed';
+    window.setTimeout(() => { this.innerText = originalText; }, 1200);
+    return;
+  }
+
+  const header = nextCard.querySelector('.q-header');
+  const body = nextCard.querySelector('.q-body');
+  nextCard.classList.add('open');
+  body.classList.add('open');
+  body.style.maxHeight = body.scrollHeight + "px";
+  header.setAttribute('aria-expanded', 'true');
+  nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+};
+
 searchInput.oninput = function() {
   clearSearchBtn.style.display = this.value.length > 0 ? 'block' : 'none';
   renderContent(activeTopic, this.value);
@@ -447,11 +498,18 @@ clearSearchBtn.onclick = function() {
 };
 
 const scrollTopBtn = document.getElementById('scroll-top');
-window.onscroll = function() {
-  scrollTopBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? 'flex' : 'none';
-};
+const appHeader = document.querySelector('.app-header');
+
+function handleScroll() {
+  const scrollY = document.body.scrollTop || document.documentElement.scrollTop;
+  scrollTopBtn.style.display = scrollY > 300 ? 'flex' : 'none';
+  appHeader.classList.toggle('is-scrolled', scrollY > 160);
+}
+
+window.addEventListener('scroll', handleScroll);
 scrollTopBtn.onclick = function() { window.scrollTo({top: 0, behavior: 'smooth'}); };
 
 // Initialization
 renderContent('all', '');
 updateStats();
+handleScroll();

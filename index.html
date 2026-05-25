@@ -12,68 +12,90 @@
 <body>
 
 <!-- HEADER -->
-<header>
-  <div class="logo">
-    <span class="brand-mark">DE</span>
-    <div class="brand-text">
-      <span class="brand-name">DevEvaluator</span>
-      <span class="brand-subtitle">Interview readiness tracker</span>
-    </div>
-  </div>
-  <div class="header-right">
-    <div class="progress-wrap">
-      <span class="progress-label">Mastery</span>
-      <div class="progress-bar-outer">
-        <div class="progress-bar-inner" id="progress-bar"></div>
+<header class="app-header">
+  <div class="nav-shell">
+    <a class="logo" href="#overview" aria-label="DevEvaluator home">
+      <span class="brand-mark">DE</span>
+      <span class="brand-text">
+        <span class="brand-name">DevEvaluator</span>
+        <span class="brand-subtitle">Interview readiness tracker</span>
+      </span>
+    </a>
+    <div class="nav-progress" aria-label="Current study progress">
+      <span id="nav-progress-text">0% complete</span>
+      <div class="nav-progress-track" aria-hidden="true">
+        <div class="nav-progress-fill" id="nav-progress-bar"></div>
       </div>
-      <span id="progress-text">0%</span>
     </div>
+    <span class="nav-context">Q&A practice workspace</span>
   </div>
 </header>
 
 <div class="container">
   <!-- OVERVIEW PANEL -->
-  <section class="overview">
+  <section class="overview" id="overview">
     <div class="overview-copy">
       <span class="eyebrow">Comprehensive Interview Syllabus</span>
       <h1>DevEvaluator</h1>
-      <p>Every conceptual milestone, structural pattern, framework feature, hydration strategy, compilation type, and optimization workflow in your custom curriculum—fully interactive.</p>
+      <p>A clean practice space for frontend interview questions. Search a topic, open a question, mark it reviewed, and continue from the next unfinished item.</p>
+      <div class="overview-actions">
+        <button class="primary-action" type="button" data-scroll-target="workspace">Start reviewing</button>
+        <button class="secondary-action" type="button" id="review-next">Open next question</button>
+      </div>
     </div>
     <div class="stats-bar">
+      <div class="study-summary">
+        <span class="section-kicker">Study Snapshot</span>
+        <strong id="progress-text">0% complete</strong>
+        <div class="progress-bar-outer" aria-hidden="true">
+          <div class="progress-bar-inner" id="progress-bar"></div>
+        </div>
+      </div>
       <div class="stat-item">
         <div class="stat-num" id="stat-total">0</div>
-        <div class="stat-lbl">Total Syllabus Qs</div>
+        <div class="stat-lbl">Questions</div>
+        <p>All questions available in this syllabus.</p>
       </div>
       <div class="stat-item">
         <div class="stat-num" id="stat-done">0</div>
         <div class="stat-lbl">Reviewed</div>
+        <p>Questions you marked as done.</p>
       </div>
       <div class="stat-item">
         <div class="stat-num" id="stat-topics">9</div>
-        <div class="stat-lbl">Core Modules</div>
+        <div class="stat-lbl">Topics</div>
+        <p>Main frontend topics in the curriculum.</p>
       </div>
       <div class="stat-item">
         <div class="stat-num" id="stat-left">0</div>
-        <div class="stat-lbl">Syllabus Left</div>
+        <div class="stat-lbl">Remaining</div>
+        <p>Questions still waiting for review.</p>
       </div>
     </div>
   </section>
 
   <!-- SEARCH CONTROLLER -->
-  <section class="control-bar">
+  <section class="control-bar" id="practice-tools">
+    <div class="control-heading">
+      <div>
+        <span class="section-kicker">Practice Command Center</span>
+        <h2>Search and track what you know</h2>
+      </div>
+      <span class="result-pill" id="visible-count">0 questions showing</span>
+    </div>
     <div class="search-wrap">
       <span class="search-icon"></span>
       <input type="text" id="search" placeholder="Search any question, sub-topic, or keyword from your full syllabus..." autocomplete="off" />
-      <button id="clear-search">x</button>
+      <button id="clear-search" type="button" aria-label="Clear search">x</button>
     </div>
   </section>
 
   <!-- MAIN ENGINE WORKSPACE -->
-  <div class="workspace">
+  <div class="workspace" id="workspace">
     <aside class="topic-sidebar">
-      <div class="sidebar-title">Syllabus Modules</div>
+      <div class="sidebar-title">Syllabus Topics</div>
       <div class="topic-tabs" id="topic-tabs">
-        <button class="topic-tab active" data-topic="all">All Modules</button>
+        <button class="topic-tab active" data-topic="all">All Topics</button>
         <button class="topic-tab" data-topic="html">HTML</button>
         <button class="topic-tab" data-topic="css">CSS Architecture</button>
         <button class="topic-tab" data-topic="bootstrap">Bootstrap</button>
