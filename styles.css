@@ -389,7 +389,13 @@ footer strong { color: var(--accent); }
   .brand-mark { width: 32px; height: 32px; flex: 0 0 32px; }
   .brand-name { font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .brand-subtitle { display: none; }
-  .nav-progress { width: 118px; grid-template-columns: 1fr; gap: 4px; justify-items: end; }
+  .nav-progress {
+    width: min(230px, 100%);
+    grid-template-columns: auto minmax(92px, 1fr);
+    gap: 8px;
+    justify-self: center;
+    justify-items: center;
+  }
   .nav-progress span { font-size: .68rem; }
   .nav-progress-track { width: 100%; max-width: none; }
   .container { padding: 12px 10px 60px; }
@@ -441,8 +447,17 @@ footer strong { color: var(--accent); }
 }
 
 @media (max-width: 380px) {
-  .nav-progress { display: none; }
+  body { padding-top: 76px; }
   .nav-shell { grid-template-columns: 1fr; }
+  .nav-progress {
+    width: min(230px, 100%);
+    grid-template-columns: auto minmax(92px, 1fr);
+    justify-self: center;
+    justify-items: center;
+  }
+  .nav-progress span {
+    justify-self: center;
+  }
   .overview-copy { padding: 16px; }
   .stats-bar, .control-bar, .topic-section { padding: 10px; }
   .topic-sidebar { padding: 10px; }
