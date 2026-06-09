@@ -40,6 +40,7 @@ body {
   color: var(--text);
   min-height: 100vh;
   line-height: 1.55;
+  padding-top: 64px;
 }
 
 body::before {
@@ -65,7 +66,7 @@ button:focus-visible, input:focus-visible {
    HEADER
 ════════════════════════════════════════ */
 .app-header {
-  position: sticky; top: 0; z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   background: rgba(251, 251, 247, .92);
   backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(222, 223, 216, .72);
@@ -381,6 +382,7 @@ footer strong { color: var(--accent); }
 }
 
 @media (max-width: 600px) {
+  body { padding-top: 57px; }
   .app-header { padding: 8px 10px; gap: 8px; }
   .nav-shell { grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
   .logo { min-width: 0; gap: 9px; }
