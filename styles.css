@@ -372,9 +372,9 @@ footer strong { color: var(--accent); }
   .nav-context { display: none; }
   .overview { grid-template-columns: 1fr; gap: 16px; }
   .workspace { grid-template-columns: 1fr; gap: 20px; }
-  .topic-sidebar { position: static; width: 100%; min-width: 0; padding: 10px; margin-bottom: 4px; }
-  .topic-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
-  .topic-tab { flex: 0 0 auto; width: auto; font-size: .82rem; padding: 8px 12px; }
+  .topic-sidebar { position: static; width: 100%; min-width: 0; padding: 12px; margin-bottom: 4px; }
+  .topic-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .topic-tab { width: 100%; min-height: 38px; font-size: .82rem; padding: 8px 10px; text-align: center; white-space: normal; }
   .topic-tab:hover { transform: translateY(-1px); }
   .sidebar-title { padding-bottom: 6px; }
 }
@@ -402,9 +402,30 @@ footer strong { color: var(--accent); }
   .stats-bar { grid-template-columns: 1fr; gap: 8px; padding: 10px; }
   .stat-item { padding: 10px; text-align: center; }
   .workspace { gap: 14px; }
-  .topic-sidebar { margin-left: -10px; margin-right: -10px; width: calc(100% + 20px); border-left: 0; border-right: 0; border-radius: 0; }
-  .topic-tabs { padding: 0 10px 8px; scroll-padding-inline: 10px; }
-  .sidebar-title { padding-left: 10px; }
+  .topic-sidebar {
+    margin: 0 0 12px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .92);
+  }
+  .topic-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .topic-tab {
+    min-height: 40px;
+    padding: 9px 8px;
+    font-size: .78rem;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sidebar-title {
+    margin: 0 0 10px;
+    padding: 0;
+    font-size: .68rem;
+    text-align: left;
+  }
   .topic-section { padding: 12px; }
   .topic-heading-text h2 { font-size: 1rem; overflow-wrap: anywhere; }
   .q-header { padding: 12px 10px; gap: 8px; }
@@ -421,6 +442,8 @@ footer strong { color: var(--accent); }
   .nav-shell { grid-template-columns: 1fr; }
   .overview-copy { padding: 16px; }
   .stats-bar, .control-bar, .topic-section { padding: 10px; }
+  .topic-sidebar { padding: 10px; }
+  .topic-tabs { grid-template-columns: 1fr; }
   .q-check { width: 18px; height: 18px; }
   #scroll-top { right: 14px; bottom: 14px; width: 40px; height: 40px; }
 }
