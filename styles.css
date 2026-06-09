@@ -374,8 +374,9 @@ footer strong { color: var(--accent); }
   .workspace { grid-template-columns: 1fr; gap: 20px; }
   .topic-sidebar { position: static; width: 100%; min-width: 0; padding: 12px; margin-bottom: 4px; }
   .topic-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .topic-tab { width: 100%; min-height: 38px; font-size: .82rem; padding: 8px 10px; text-align: center; white-space: normal; }
+  .topic-tab { width: 100%; min-height: 38px; font-size: .82rem; padding: 8px 10px; text-align: center; white-space: normal; overflow: visible; }
   .topic-tab:hover { transform: translateY(-1px); }
+  .topic-tab.active { box-shadow: inset 0 -3px 0 var(--accent); }
   .sidebar-title { padding-bottom: 6px; }
 }
 
