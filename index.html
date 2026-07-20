@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
@@ -15,7 +15,15 @@
 <header class="app-header">
   <div class="nav-shell">
     <a class="logo" href="#overview" aria-label="DevEvaluator home">
-      <span class="brand-mark">DE</span>
+      <span class="brand-mark">
+        <svg class="brand-logo-svg" viewBox="0 0 36 36" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="36" height="36" rx="9" fill="#14241d"/>
+          <rect x="0.5" y="0.5" width="35" height="35" rx="8.5" stroke="rgba(255, 255, 255, 0.14)"/>
+          <path d="M10 13.5L5.5 18L10 22.5" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13.5 17.5L16.8 20.8L22.5 14" stroke="#34d399" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M26 13.5L30.5 18L26 22.5" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
       <span class="brand-text">
         <span class="brand-name">DevEvaluator</span>
         <span class="brand-subtitle">Interview readiness tracker</span>
@@ -37,10 +45,9 @@
     <div class="overview-copy">
       <span class="eyebrow">Comprehensive Interview Syllabus</span>
       <h1>DevEvaluator</h1>
-      <p>A clean practice space for frontend interview questions. Search a topic, open a question, mark it reviewed, and continue from the next unfinished item.</p>
+      <p>Master frontend engineering technical interviews with a structured, interactive syllabus. Explore core concepts across HTML5, CSS Architecture, Bootstrap, Tailwind, SASS, JavaScript ES6+, TypeScript, Angular Core, and real-world System Design scenarios. Save key questions for targeted revision, toggle instant Arabic translations, track your completion progress, and leverage Gemini AI for deep-dive technical explanations with live code examples.</p>
       <div class="overview-actions">
         <button class="primary-action" type="button" data-scroll-target="workspace">Start reviewing</button>
-        <button class="secondary-action" type="button" id="review-next">Open next question</button>
       </div>
     </div>
     <div class="stats-bar">
@@ -62,9 +69,14 @@
         <p>Questions you marked as done.</p>
       </div>
       <div class="stat-item">
+        <div class="stat-num" id="stat-saved">0</div>
+        <div class="stat-lbl">Saved</div>
+        <p>Questions saved for review.</p>
+      </div>
+      <div class="stat-item">
         <div class="stat-num" id="stat-topics">9</div>
         <div class="stat-lbl">Topics</div>
-        <p>Main frontend topics in the curriculum.</p>
+        <p>Main frontend topics in curriculum.</p>
       </div>
       <div class="stat-item">
         <div class="stat-num" id="stat-left">0</div>
@@ -81,7 +93,13 @@
         <span class="section-kicker">Practice Command Center</span>
         <h2>Search and track what you know</h2>
       </div>
-      <span class="result-pill" id="visible-count">0 questions showing</span>
+      <div class="control-actions-wrap">
+        <button id="toggle-all-lang" class="lang-toggle-btn" type="button">
+          <svg class="svg-icon svg-globe" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span id="global-lang-lbl">Translate All to Arabic</span>
+        </button>
+        <span class="result-pill" id="visible-count">0 questions showing</span>
+      </div>
     </div>
     <div class="search-wrap">
       <span class="search-icon"></span>
@@ -96,6 +114,10 @@
       <div class="sidebar-title">Syllabus Topics</div>
       <div class="topic-tabs" id="topic-tabs">
         <button class="topic-tab active" data-topic="all">All Topics</button>
+        <button class="topic-tab topic-tab-saved" data-topic="bookmarked">
+          <svg class="svg-icon svg-star" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Saved Questions</span>
+        </button>
         <button class="topic-tab" data-topic="html">HTML</button>
         <button class="topic-tab" data-topic="css">CSS Architecture</button>
         <button class="topic-tab" data-topic="bootstrap">Bootstrap</button>
@@ -111,7 +133,7 @@
 
     <main class="qa-panel">
       <div id="no-results">
-        <span style="font-size:24px; display:block; margin-bottom:8px;">🔍</span>
+        <span class="no-results-icon"><svg class="svg-icon svg-search" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
         No matching syllabus criteria found. Try another technical phrase.
       </div>
       <div id="qa-content"></div>

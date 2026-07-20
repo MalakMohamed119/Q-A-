@@ -298,19 +298,32 @@ const DATA = [
 ];
 
 // ════════════════════════════════════════
-// RENDER ENGINE LOGIC
+// RENDER ENGINE LOGIC & STATE
 // ════════════════════════════════════════
 let checkedQuestions = new Set();
+let bookmarkedQuestions = new Set();
+let cardLanguageOverrides = new Map(); // qKey -> 'en' | 'ar'
+let isGlobalArabic = false;
+
+function getCardLanguage(qKey) {
+  if (cardLanguageOverrides.has(qKey)) {
+    return cardLanguageOverrides.get(qKey);
+  }
+  return isGlobalArabic ? 'ar' : 'en';
+}
+
 document.getElementById('yr').innerText = new Date().getFullYear();
 
-if(localStorage.getItem('syllabus_checked_q')) {
-  try {
-    checkedQuestions = new Set(JSON.parse(localStorage.getItem('syllabus_checked_q')));
-  } catch(e){}
+if (localStorage.getItem('syllabus_checked_q')) {
+  try { checkedQuestions = new Set(JSON.parse(localStorage.getItem('syllabus_checked_q'))); } catch(e){}
+}
+if (localStorage.getItem('syllabus_bookmarked_q')) {
+  try { bookmarkedQuestions = new Set(JSON.parse(localStorage.getItem('syllabus_bookmarked_q'))); } catch(e){}
 }
 
 function saveState() {
   localStorage.setItem('syllabus_checked_q', JSON.stringify([...checkedQuestions]));
+  localStorage.setItem('syllabus_bookmarked_q', JSON.stringify([...bookmarkedQuestions]));
 }
 
 let totalQuestionsCount = 0;
@@ -320,7 +333,10 @@ document.getElementById('stat-topics').innerText = DATA.length;
 
 function updateStats() {
   const done = checkedQuestions.size;
+  const saved = bookmarkedQuestions.size;
   document.getElementById('stat-done').innerText = done;
+  const savedStat = document.getElementById('stat-saved');
+  if (savedStat) savedStat.innerText = saved;
   document.getElementById('stat-left').innerText = totalQuestionsCount - done;
   const percent = totalQuestionsCount > 0 ? Math.round((done / totalQuestionsCount) * 100) : 0;
   document.getElementById('progress-bar').style.width = percent + '%';
@@ -334,6 +350,88 @@ function updateStats() {
   }
 }
 
+// Arabic translation helper dictionary and transformer
+function getArabicContent(qObj) {
+  if (qObj.q_ar && qObj.a_ar) {
+    return { q: qObj.q_ar, a: qObj.a_ar };
+  }
+  
+  let qAr = qObj.q;
+  let aAr = qObj.a;
+
+  const qMap = {
+    'What is HTML?': 'ما هو HTML؟',
+    'What is the difference between <div> and <span>?': 'ما الفرق بين عنصر <div> وعنصر <span>؟',
+    'What is Semantic HTML and why is it important?': 'ما هو الـ Semantic HTML ولماذا هو مهم لمصممي ومطوري المويب؟',
+    'Name some new semantic tags in HTML5.': 'اذكر أهم الوسوم الدلالية (Semantic Tags) الجديدة في HTML5.',
+    'What is the difference between <section> and <article>?': 'ما الفرق بين استخدام <section> و <article>؟',
+    'What is the DOM?': 'ما هو شجرة الـ DOM (Document Object Model)؟',
+    'What is the DOCTYPE?': 'ما هي وظيفة التصريح DOCTYPE في الصفحة؟',
+    'What is an attribute?': 'ما هي الخاصية (Attribute) في عناصر HTML؟',
+    'What is the difference between Block elements and Inline elements?': 'ما الفرق بين العناصر الكتليّة (Block) والعناصر المضمنة (Inline)؟',
+    'What is the difference between id and class?': 'ما الفرق بين المعرف id والكلاس class؟',
+    'Can an id be repeated?': 'هل يصح تكرار نفس الـ id في أكثر من عنصر؟',
+    'What are meta tags?': 'ما هي وسوم الـ Meta وما فائدتها؟',
+    'What is the function of <meta viewport>?': 'ما هي وظيفة الوسم <meta viewport> بالنسبة للتجاوب مع الشاشات؟',
+    'What is the difference between <script> in the head and the body?': 'ما الفرق بين وضع ملف الـ Script في <head> أو في أسفل <body>؟',
+    'What is the difference between <img alt=""> and without it?': 'ما الفرق بين وضع النص البديل alt للصور وتركه فارغاً؟',
+    'What is the difference between <link> and <script>?': 'ما الفرق بين استخدام وسم <link> ووسم <script>؟',
+    'What do defer and async do?': 'ماذا تفعل الخصائص defer و async عند استدعاء ملفات الـ JavaScript؟',
+    'What are localStorage and sessionStorage?': 'ما الفرق بين استخدام localStorage و sessionStorage؟',
+    'What is the difference between form GET and POST?': 'ما الفرق بين إرسال البيانات بطريقة GET وطريقة POST في النماذج؟',
+    'What is an iframe?': 'ما هو الـ iframe وما هي استخداماته؟',
+    'What is the benefit of accessibility (ARIA attributes)?': 'ما هي فائدة خصائص إمكانية الوصول (ARIA attributes)؟',
+    'What is Shadow DOM?': 'ما هو الـ Shadow DOM وكيف يعمل في الـ Web Components؟',
+    'What are Web Components?': 'ما هي مكونات الويب Web Components؟',
+    'What is the <template> tag?': 'ما هو وسم <template> وكيف نستخدمه؟',
+    'What is the benefit of <picture> and srcset?': 'ما هي فائدة وسم <picture> وخاصية srcset في التجاوب مع الصور؟',
+    'What is TypeScript?': 'ما هي لغة TypeScript وما فائدة استخدامها؟',
+    'What is the difference between any and unknown?': 'ما الفرق بين استخدام النوع any والنوع unknown في TypeScript؟',
+    'What is the difference between type and interface?': 'ما الفرق بين التعريف باستخدام type والتعريف باستخدام interface؟',
+    'What is a union type?': 'ما هو الـ Union Type في TypeScript؟',
+    'What do generics mean?': 'ما هي الـ Generics في TypeScript وما أهميتها؟',
+    'What is an enum?': 'ما هو الـ Enum وكيف نستخدمه؟',
+    'What does readonly mean?': 'ماذا تعني الكلمة المفتاحية readonly؟',
+    'What is interface merging?': 'ما هو دمج الواجهات (Interface Merging) في TypeScript؟',
+    'What is the difference between public / private / protected?': 'ما الفرق بين مستويات الوصول public و private و protected؟',
+    'What are decorators?': 'ما هي الـ Decorators في TypeScript؟',
+    'How does type inference work?': 'كيف يعمل استنتاج الأنواع (Type Inference) تلقائياً؟',
+    'What is jQuery?': 'ما هي مكتبة jQuery؟',
+    'What is Angular?': 'ما هو إطار العمل Angular وما مميزاته؟',
+    'What is the difference between SPA and MPA?': 'ما الفرق بين تطبيقات الصفحة الواحدة (SPA) والتطبيقات متعددة الصفحات (MPA)؟',
+    'What is a Component?': 'ما هو المكون Component في Angular؟',
+    'What is a Service?': 'ما هي الخدمة Service في Angular؟',
+    'What is Dependency Injection?': 'ما هو حقن التبعيات (Dependency Injection)؟',
+    'What is a closure?': 'ما هو مفهوم الـ Closure في JavaScript؟',
+    'What is hoisting?': 'ما هي ظاهرة الـ Hoisting في JavaScript؟',
+    'What is the difference between var, let, and const?': 'ما الفرق بين var و let و const في تعريف المتغيرات؟'
+  };
+
+  if (qMap[qObj.q]) {
+    qAr = qMap[qObj.q];
+  } else {
+    qAr = qAr
+      .replace(/^What is the difference between/i, 'ما الفرق بين')
+      .replace(/^What is/i, 'ما هو')
+      .replace(/^What are/i, 'ما هي')
+      .replace(/^How does/i, 'كيف يعمل')
+      .replace(/^How do we/i, 'كيف نقوم بـ')
+      .replace(/^Explain/i, 'اشرح');
+  }
+
+  aAr = aAr
+    .replace(/A block-level element/g, 'عنصر كتلوي (Block-level)')
+    .replace(/An inline element/g, 'عنصر مضمن (Inline element)')
+    .replace(/HyperText Markup Language/g, 'لغة توصيف النص الفائق (HyperText Markup Language)')
+    .replace(/Document Object Model/g, 'نموذج كائن المستند (Document Object Model)')
+    .replace(/Data remains indefinitely/g, 'تظل البيانات محفوظة بشكل دائم حتى يتم مسحها')
+    .replace(/Wiped instantly whenever/g, 'يتم مسح البيانات فور إغلاق تبويب المتصفح')
+    .replace(/Single Page App/g, 'تطبيق الصفحة الواحدة (SPA)')
+    .replace(/Multi-Page App/g, 'تطبيق متعدد الصفحات (MPA)');
+
+  return { q: qAr, a: aAr };
+}
+
 function renderContent(filterTopic = 'all', searchKeyword = '') {
   const container = document.getElementById('qa-content');
   container.innerHTML = '';
@@ -342,15 +440,23 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
   const kw = searchKeyword.toLowerCase().trim();
 
   DATA.forEach(topic => {
-    if (filterTopic !== 'all' && topic.id !== filterTopic) return;
+    if (filterTopic !== 'all' && filterTopic !== 'bookmarked' && topic.id !== filterTopic) return;
     let filteredLevels = [];
 
     topic.levels.forEach(level => {
       let filteredQs = [];
       level.qs.forEach(qObj => {
+        const qKey = (topic.id + '-' + level.label + '-' + qObj.q).replace(/\s+/g, '_');
+        
+        // Filter by bookmarked topic if active
+        if (filterTopic === 'bookmarked' && !bookmarkedQuestions.has(qKey)) {
+          return;
+        }
+
         const matchesSearch = qObj.q.toLowerCase().includes(kw) || qObj.a.toLowerCase().includes(kw);
-        if (matchesSearch) filteredQs.push(qObj);
+        if (matchesSearch) filteredQs.push({ ...qObj, qKey });
       });
+
       if (filteredQs.length > 0) {
         visibleQuestions += filteredQs.length;
         filteredLevels.push({ label: level.label, qs: filteredQs });
@@ -383,14 +489,19 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
       sec.appendChild(lvlLbl);
 
       level.qs.forEach(qObj => {
-        const qKey = (topic.id + '-' + level.label + '-' + qObj.q).replace(/\s+/g, '_');
+        const qKey = qObj.qKey;
         const isChecked = checkedQuestions.has(qKey);
+        const isBookmarked = bookmarkedQuestions.has(qKey);
+        const cardLang = getCardLanguage(qKey);
+        const isArabic = cardLang === 'ar';
+
         const card = document.createElement('div');
-        card.className = `q-card ${isChecked ? 'is-done' : ''}`;
+        card.className = `q-card ${isChecked ? 'is-done' : ''} ${isBookmarked ? 'is-bookmarked' : ''} ${isArabic ? 'rtl-mode' : ''}`;
         card.setAttribute('data-key', qKey);
 
-        let finalQ = escapeHTML(qObj.q);
-        let finalA = qObj.a;
+        const content = isArabic ? getArabicContent(qObj) : { q: qObj.q, a: qObj.a };
+        let finalQ = escapeHTML(content.q);
+        let finalA = content.a;
 
         if (kw) {
           const regex = new RegExp(`(${escapeRegExp(searchKeyword)})`, 'gi');
@@ -398,14 +509,34 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           finalA = finalA.replace(regex, '<span class="highlight">$1</span>');
         }
 
+        const promptText = `${qObj.q}\n\nPlease explain this frontend developer interview question in detail with practical code examples and best practices.`;
+        const geminiUrl = `https://gemini.google.com/app?q=${encodeURIComponent(promptText)}`;
+
         card.innerHTML = `
           <div class="q-header" role="button" tabindex="0" aria-expanded="false">
-            <button class="q-check ${isChecked ? 'checked' : ''}" type="button" aria-label="Mark question as reviewed">&#10003;</button>
+            <button class="q-check ${isChecked ? 'checked' : ''}" type="button" aria-label="Mark question as reviewed" title="${isChecked ? 'Reviewed' : 'Mark as reviewed'}">&#10003;</button>
             <div class="q-title">${finalQ}</div>
+            <div class="q-actions">
+              <button class="q-translate ${isArabic ? 'translated' : ''}" type="button" title="Translate language">
+                <svg class="svg-icon svg-globe" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <span>${isArabic ? 'English' : 'Arabic'}</span>
+              </button>
+              <button class="q-bookmark ${isBookmarked ? 'bookmarked' : ''}" type="button" title="${isBookmarked ? 'Remove from saved' : 'Save for later review'}">
+                <svg class="svg-icon svg-star" viewBox="0 0 24 24" width="13" height="13" fill="${isBookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </button>
+            </div>
             <div class="q-arrow" aria-hidden="true">&#9662;</div>
           </div>
           <div class="q-body">
-            <div class="q-body-inner">${finalA}</div>
+            <div class="q-body-inner">
+              ${finalA}
+              <div class="gemini-footer">
+                <a class="gemini-link-btn" href="${geminiUrl}" target="_blank" rel="noopener">
+                  <svg class="gemini-sparkle-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>
+                  <span>Ask Gemini for Deep Explanation & Code Examples</span>
+                </a>
+              </div>
+            </div>
           </div>
         `;
         sec.appendChild(card);
@@ -414,7 +545,26 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
     container.appendChild(sec);
   });
 
-  document.getElementById('no-results').style.display = hasAnyResults ? 'none' : 'block';
+  const noResultsEl = document.getElementById('no-results');
+  if (noResultsEl) {
+    if (!hasAnyResults) {
+      if (filterTopic === 'bookmarked') {
+        noResultsEl.innerHTML = `
+          <span class="no-results-icon" style="margin-bottom:12px; display:inline-block;"><svg class="svg-icon svg-star" viewBox="0 0 24 24" width="32" height="32" fill="#d97706" stroke="#d97706" stroke-width="1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><br>
+          <strong style="font-size:1.1rem; color:var(--text);">No saved questions yet</strong><br>
+          <span style="font-size:0.9rem; color:var(--text2); display:inline-block; margin-top:6px;">Click the star button on any question to save it for later review.</span>
+        `;
+      } else {
+        noResultsEl.innerHTML = `
+          <span class="no-results-icon" style="margin-bottom:8px; display:inline-block;"><svg class="svg-icon svg-search" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><br>
+          No matching syllabus criteria found. Try another technical phrase.
+        `;
+      }
+      noResultsEl.style.display = 'block';
+    } else {
+      noResultsEl.style.display = 'none';
+    }
+  }
   updateVisibleCount(visibleQuestions);
   attachAccordionEvents();
 }
@@ -451,21 +601,49 @@ function attachAccordionEvents() {
 
     hdr.onclick = function(e) {
       const card = this.parentElement;
-      
-      if(e.target.classList.contains('q-check')) {
+      const key = card.getAttribute('data-key');
+
+      // Stop accordion toggle when clicking external links like Ask Gemini
+      if (e.target.closest('.q-gemini') || e.target.closest('.gemini-link-btn')) {
         e.stopPropagation();
-        const key = card.getAttribute('data-key');
-        if(checkedQuestions.has(key)) {
+        return;
+      }
+      
+      // Handle check button click
+      if (e.target.closest('.q-check')) {
+        e.stopPropagation();
+        if (checkedQuestions.has(key)) {
           checkedQuestions.delete(key);
-          e.target.classList.remove('checked');
-          card.classList.remove('is-done');
         } else {
           checkedQuestions.add(key);
-          e.target.classList.add('checked');
-          card.classList.add('is-done');
         }
         saveState();
         updateStats();
+        renderContent(activeTopic, searchInput.value);
+        return;
+      }
+
+      // Handle bookmark button click
+      if (e.target.closest('.q-bookmark')) {
+        e.stopPropagation();
+        if (bookmarkedQuestions.has(key)) {
+          bookmarkedQuestions.delete(key);
+        } else {
+          bookmarkedQuestions.add(key);
+        }
+        saveState();
+        updateStats();
+        renderContent(activeTopic, searchInput.value);
+        return;
+      }
+
+      // Handle translate button click
+      if (e.target.closest('.q-translate')) {
+        e.stopPropagation();
+        const currentLang = getCardLanguage(key);
+        const nextLang = currentLang === 'ar' ? 'en' : 'ar';
+        cardLanguageOverrides.set(key, nextLang);
+        renderContent(activeTopic, searchInput.value);
         return;
       }
 
@@ -483,6 +661,20 @@ function attachAccordionEvents() {
 let activeTopic = 'all';
 const searchInput = document.getElementById('search');
 const clearSearchBtn = document.getElementById('clear-search');
+const toggleAllLangBtn = document.getElementById('toggle-all-lang');
+const globalLangLbl = document.getElementById('global-lang-lbl');
+
+if (toggleAllLangBtn) {
+  toggleAllLangBtn.onclick = function() {
+    isGlobalArabic = !isGlobalArabic;
+    cardLanguageOverrides.clear();
+    this.classList.toggle('active', isGlobalArabic);
+    if (globalLangLbl) {
+      globalLangLbl.innerText = isGlobalArabic ? 'Switch All to English' : 'Translate All to Arabic';
+    }
+    renderContent(activeTopic, searchInput.value);
+  };
+}
 
 document.querySelectorAll('.topic-tab').forEach(tab => {
   tab.onclick = function() {
@@ -501,23 +693,26 @@ document.querySelectorAll('[data-scroll-target]').forEach(btn => {
   };
 });
 
-document.getElementById('review-next').onclick = function() {
-  const nextCard = [...document.querySelectorAll('.q-card')].find(card => !checkedQuestions.has(card.getAttribute('data-key')));
-  if (!nextCard) {
-    const originalText = this.innerText;
-    this.innerText = 'All reviewed';
-    window.setTimeout(() => { this.innerText = originalText; }, 1200);
-    return;
-  }
+const reviewNextBtn = document.getElementById('review-next');
+if (reviewNextBtn) {
+  reviewNextBtn.onclick = function() {
+    const nextCard = [...document.querySelectorAll('.q-card')].find(card => !checkedQuestions.has(card.getAttribute('data-key')));
+    if (!nextCard) {
+      const originalText = this.innerText;
+      this.innerText = 'All reviewed';
+      window.setTimeout(() => { this.innerText = originalText; }, 1200);
+      return;
+    }
 
-  const header = nextCard.querySelector('.q-header');
-  const body = nextCard.querySelector('.q-body');
-  nextCard.classList.add('open');
-  body.classList.add('open');
-  body.style.maxHeight = body.scrollHeight + "px";
-  header.setAttribute('aria-expanded', 'true');
-  nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-};
+    const header = nextCard.querySelector('.q-header');
+    const body = nextCard.querySelector('.q-body');
+    nextCard.classList.add('open');
+    body.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + "px";
+    header.setAttribute('aria-expanded', 'true');
+    nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+}
 
 searchInput.oninput = function() {
   clearSearchBtn.style.display = this.value.length > 0 ? 'block' : 'none';
@@ -547,3 +742,4 @@ scrollTopBtn.onclick = function() { window.scrollTo({top: 0, behavior: 'smooth'}
 renderContent('all', '');
 updateStats();
 handleScroll();
+
