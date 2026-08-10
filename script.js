@@ -304,6 +304,31 @@ let checkedQuestions = new Set();
 let bookmarkedQuestions = new Set();
 let cardLanguageOverrides = new Map(); // qKey -> 'en' | 'ar'
 let isGlobalArabic = false;
+// Keep completed translations and in-flight requests separate so switching a card
+// between languages never sends the same request more than once.
+const arabicContentCache = new Map();
+const pendingArabicTranslations = new Map();
+const arabicTranslationQueue = [];
+let activeArabicTranslations = 0;
+const MAX_CONCURRENT_ARABIC_TRANSLATIONS = 3;
+
+function enqueueArabicTranslation(task) {
+  return new Promise((resolve, reject) => {
+    arabicTranslationQueue.push({ task, resolve, reject });
+    processArabicTranslationQueue();
+  });
+}
+
+function processArabicTranslationQueue() {
+  while (activeArabicTranslations < MAX_CONCURRENT_ARABIC_TRANSLATIONS && arabicTranslationQueue.length) {
+    const { task, resolve, reject } = arabicTranslationQueue.shift();
+    activeArabicTranslations += 1;
+    task().then(resolve, reject).finally(() => {
+      activeArabicTranslations -= 1;
+      processArabicTranslationQueue();
+    });
+  }
+}
 
 function getCardLanguage(qKey) {
   if (cardLanguageOverrides.has(qKey)) {
@@ -432,6 +457,73 @@ function getArabicContent(qObj) {
   return { q: qAr, a: aAr };
 }
 
+function extractTranslatedText(response) {
+  return Array.isArray(response?.[0])
+    ? response[0].map(part => part[0]).join('')
+    : '';
+}
+
+function restoreHtmlTags(text, tags, protectedFragments) {
+  return text
+    .replace(/\[\[\[TAG(\d+)\]\]\]/g, (_, index) => tags[Number(index)] ?? '')
+    .replace(/\[\[\[PROTECTED(\d+)\]\]\]/g, (_, index) => protectedFragments[Number(index)] ?? '');
+}
+
+async function translateHtmlToArabic(html) {
+  const tags = [];
+  const protectedFragments = [];
+  const contentWithProtectedCode = html.replace(/<(code|pre)\b[^>]*>[\s\S]*?<\/\1>/gi, fragment =>
+    `[[[PROTECTED${protectedFragments.push(fragment) - 1}]]]`
+  );
+  const text = contentWithProtectedCode.replace(/<[^>]*>/g, tag => `[[[TAG${tags.push(tag) - 1}]]]`);
+  if (!text.trim()) return html;
+
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ar&dt=t&q=${encodeURIComponent(text)}`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Translation request failed (${response.status})`);
+  const translatedText = extractTranslatedText(await response.json());
+  if (!translatedText) throw new Error('Translation service returned no text');
+  return restoreHtmlTags(translatedText, tags, protectedFragments);
+}
+
+function applyArabicTranslation(qKey, content) {
+  document.querySelectorAll(`.q-card[data-key="${CSS.escape(qKey)}"]`).forEach(card => {
+    if (!card.classList.contains('rtl-mode')) return;
+    const title = card.querySelector('.q-title');
+    const answer = card.querySelector('.answer-content');
+    if (title) title.innerHTML = escapeHTML(content.q);
+    if (answer) answer.innerHTML = content.a;
+    card.classList.remove('translation-pending');
+    const body = card.querySelector('.q-body');
+    if (body?.classList.contains('open')) body.style.maxHeight = `${body.scrollHeight}px`;
+  });
+}
+
+function requestArabicTranslation(qKey, qObj) {
+  if (arabicContentCache.has(qKey)) return;
+  if (pendingArabicTranslations.has(qKey)) return;
+
+  const request = enqueueArabicTranslation(() => Promise.all([
+    translateHtmlToArabic(qObj.q),
+    translateHtmlToArabic(qObj.a)
+  ]))
+    .then(([q, a]) => {
+      const content = { q, a };
+      arabicContentCache.set(qKey, content);
+      applyArabicTranslation(qKey, content);
+    })
+    .catch(() => {
+      // The built-in wording remains visible if the visitor is offline or the
+      // translation service is temporarily unavailable.
+      document.querySelectorAll(`.q-card[data-key="${CSS.escape(qKey)}"]`).forEach(card => {
+        card.classList.remove('translation-pending');
+      });
+    })
+    .finally(() => pendingArabicTranslations.delete(qKey));
+
+  pendingArabicTranslations.set(qKey, request);
+}
+
 function renderContent(filterTopic = 'all', searchKeyword = '') {
   const container = document.getElementById('qa-content');
   container.innerHTML = '';
@@ -499,7 +591,8 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         card.className = `q-card ${isChecked ? 'is-done' : ''} ${isBookmarked ? 'is-bookmarked' : ''} ${isArabic ? 'rtl-mode' : ''}`;
         card.setAttribute('data-key', qKey);
 
-        const content = isArabic ? getArabicContent(qObj) : { q: qObj.q, a: qObj.a };
+        const cachedArabicContent = arabicContentCache.get(qKey);
+        const content = isArabic ? (cachedArabicContent || getArabicContent(qObj)) : { q: qObj.q, a: qObj.a };
         let finalQ = escapeHTML(content.q);
         let finalA = content.a;
 
@@ -529,7 +622,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           </div>
           <div class="q-body">
             <div class="q-body-inner">
-              ${finalA}
+              <div class="answer-content">${finalA}</div>
               <div class="gemini-footer">
                 <a class="gemini-link-btn" href="${geminiUrl}" target="_blank" rel="noopener">
                   <svg class="gemini-sparkle-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>
@@ -540,6 +633,11 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           </div>
         `;
         sec.appendChild(card);
+
+        if (isArabic && !cachedArabicContent) {
+          card.classList.add('translation-pending');
+          requestArabicTranslation(qKey, qObj);
+        }
       });
     });
     container.appendChild(sec);
