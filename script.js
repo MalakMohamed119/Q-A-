@@ -355,10 +355,8 @@ function saveState() {
 }
 
 let totalQuestionsCount = 0;
-const questionNumberByText = new Map();
 DATA.forEach(t => t.levels.forEach(l => l.qs.forEach(qObj => {
   totalQuestionsCount += 1;
-  questionNumberByText.set(qObj.q, totalQuestionsCount);
 })));
 document.getElementById('stat-total').innerText = totalQuestionsCount;
 document.getElementById('stat-topics').innerText = DATA.length;
@@ -586,22 +584,39 @@ function getDetailedSections(language) {
   if (detailedSectionsByLanguage.has(language)) return detailedSectionsByLanguage.get(language);
 
   const source = window.DETAILED_EXPLANATIONS?.[language] || '';
-  const headings = [...source.matchAll(/^#{1,2}\s+(\d+)[.)].*$/gm)];
-  const sections = new Map();
-  headings.forEach((heading, index) => {
+  const headings = [...source.matchAll(/^#{1,2}\s+(\d+)[.)]\s*(.*)$/gm)];
+  const sections = [];
+  headings.forEach(heading => {
     const sectionStart = heading.index + heading[0].length;
     const nextHeading = source.indexOf('\n#', sectionStart);
     const sectionEnd = nextHeading === -1 ? source.length : nextHeading;
-    sections.set(Number(heading[1]), source.slice(sectionStart, sectionEnd).trim());
+    sections.push({ number: Number(heading[1]), title: heading[2], content: source.slice(sectionStart, sectionEnd).trim() });
   });
   detailedSectionsByLanguage.set(language, sections);
   return sections;
 }
 
+function explanationTokens(value) {
+  const ignored = new Set(['what', 'is', 'are', 'the', 'a', 'an', 'and', 'or', 'of', 'to', 'do', 'does', 'how', 'with', 'between', 'in', 'vs']);
+  return new Set(value.toLowerCase().replace(/[^a-z0-9+#.-]+/g, ' ').split(/\s+/).filter(word => word.length > 1 && !ignored.has(word)));
+}
+
 function findStaticExplanation(question, language) {
-  const questionNumber = questionNumberByText.get(question);
-  const section = getDetailedSections(language).get(questionNumber);
-  return section ? markdownToExplanationHtml(section) : '';
+  const questionTokens = explanationTokens(question);
+  let bestMatch = null;
+  let bestScore = 0;
+
+  getDetailedSections(language).forEach(section => {
+    const titleTokens = explanationTokens(section.title);
+    const shared = [...questionTokens].filter(token => titleTokens.has(token)).length;
+    const score = shared / Math.max(1, Math.min(questionTokens.size, titleTokens.size));
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = section;
+    }
+  });
+
+  return bestScore >= 0.6 && bestMatch ? markdownToExplanationHtml(bestMatch.content) : '';
 }
 
 function requestDetailedExplanation(qKey, qObj, language) {
