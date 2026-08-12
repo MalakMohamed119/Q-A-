@@ -15,6 +15,22 @@ function send(res, status, body) {
   res.status(status).json(body);
 }
 
+function readableOpenAIError(status, error = {}) {
+  if (status === 401 || error.code === 'invalid_api_key') {
+    return 'مفتاح OpenAI غير صحيح أو تم إلغاؤه. أنشئ مفتاحًا جديدًا وضعه في Vercel.';
+  }
+  if (status === 429 || error.code === 'insufficient_quota') {
+    return 'لا يوجد رصيد API متاح أو تم تجاوز حد الاستخدام في حساب OpenAI.';
+  }
+  if (status === 404 || error.code === 'model_not_found') {
+    return 'الموديل المحدد غير متاح لحسابك. غيّر OPENAI_MODEL في Vercel إلى موديل متاح.';
+  }
+  if (status === 403) {
+    return 'المفتاح لا يملك صلاحية استخدام هذا الموديل أو المشروع.';
+  }
+  return 'تعذر على OpenAI إنشاء الرد الآن. راجع Vercel Runtime Logs لمعرفة التفاصيل.';
+}
+
 export default async function handler(req, res) {
   // Lets the browser decide whether to use AI without first sending a request
   // that will fail when the deployment has no secret configured.
@@ -60,7 +76,7 @@ export default async function handler(req, res) {
     const data = await response.json();
     if (!response.ok) {
       console.error('OpenAI request failed:', data?.error?.message);
-      return send(res, 502, { error: 'تعذر إنشاء الرد الآن. حاول مرة أخرى.' });
+      return send(res, 502, { error: readableOpenAIError(response.status, data?.error) });
     }
     const output = data.output_text?.trim();
     if (!output) return send(res, 502, { error: 'لم تُرجع الخدمة نصًا.' });
