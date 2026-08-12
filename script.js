@@ -312,7 +312,6 @@ const detailedExplanationCache = new Map();
 const expandedDetailedExplanations = new Set();
 const detailedSectionsByLanguage = new Map();
 const staticExplanationByQuestion = new Map();
-const staticArabicStudyContentByQuestion = new Map();
 const arabicTranslationQueue = [];
 let activeArabicTranslations = 0;
 const MAX_CONCURRENT_ARABIC_TRANSLATIONS = 3;
@@ -466,72 +465,6 @@ function getArabicContent(qObj) {
   return { q: qAr, a: aAr };
 }
 
-function getStaticArabicStudyContent(qObj) {
-  const questionNumber = questionNumberByText.get(qObj.q);
-  if (!questionNumber) return null;
-
-  if (!staticArabicStudyContentByQuestion.size) {
-    // The imported study handout is stored as a separate static script. Some
-    // local editors save its UTF-8 text through a Windows-1252 code path, so
-    // repair that reversible mojibake before indexing its Arabic headings.
-    const repairMojibake = value => {
-      const windows1252 = {
-        0x20AC: 0x80, 0x201A: 0x82, 0x0192: 0x83, 0x201E: 0x84, 0x2026: 0x85,
-        0x2020: 0x86, 0x2021: 0x87, 0x02C6: 0x88, 0x2030: 0x89, 0x0160: 0x8A,
-        0x2039: 0x8B, 0x0152: 0x8C, 0x017D: 0x8E, 0x2018: 0x91, 0x2019: 0x92,
-        0x201C: 0x93, 0x201D: 0x94, 0x2022: 0x95, 0x2013: 0x96, 0x2014: 0x97,
-        0x02DC: 0x98, 0x2122: 0x99, 0x0161: 0x9A, 0x203A: 0x9B, 0x0153: 0x9C,
-        0x017E: 0x9E, 0x0178: 0x9F
-      };
-      const bytes = Uint8Array.from(value, char => windows1252[char.codePointAt(0)] ?? char.charCodeAt(0));
-      return new TextDecoder('utf-8', { fatal: false }).decode(bytes);
-    };
-    let suppliedSource = window.SUPPLIED_ARABIC_STUDY_CONTENT || '';
-    for (let pass = 0; pass < 3 && !/[\u0600-\u06FF]/.test(suppliedSource); pass += 1) {
-      suppliedSource = repairMojibake(suppliedSource);
-    }
-    suppliedSource = suppliedSource
-      .replace(/^n/, '')
-      .replace(/n$/, '')
-      .replace(/^(\d+)\.\s+(?=[\u0600-\u06FF])/gm, '## $1. ');
-    const source = `${window.DETAILED_EXPLANATIONS?.ar || ''}\n${suppliedSource}`;
-    const headings = [...source.matchAll(/^(?:#{1,2}\s+|السؤال\s+)(\d+)[.):]\s*(.*)$/gm)];
-    headings.forEach(heading => {
-      const start = heading.index + heading[0].length;
-      const remainder = source.slice(start);
-      const nextHeading = remainder.search(/\n(?:#{1,2}\s+|السؤال\s+)\d+[.):]/);
-      const end = nextHeading === -1 ? source.length : start + nextHeading;
-      const answer = source.slice(start, end).trim();
-      if (answer) {
-        staticArabicStudyContentByQuestion.set(Number(heading[1]), {
-          q: heading[2].trim(),
-          a: markdownToExplanationHtml(answer)
-        });
-      }
-    });
-  }
-
-  // The supplied JavaScript material splits Event Bubbling and Event
-  // Delegation into two entries, while this syllabus combines them.
-  if (questionNumber === 94) {
-    const bubbling = staticArabicStudyContentByQuestion.get(94);
-    const delegation = staticArabicStudyContentByQuestion.get(95);
-    if (bubbling && delegation) {
-      return {
-        q: 'ما هو Event Bubbling وEvent Delegation؟',
-        a: `<p><strong>Event Bubbling</strong></p>${bubbling.a}<p><strong>Event Delegation</strong></p>${delegation.a}`
-      };
-    }
-  }
-
-  // Continue after the two source entries that were merged into one card.
-  const suppliedNumber = questionNumber === 95 ? 96
-    : questionNumber === 96 ? 97
-    : questionNumber === 97 || questionNumber === 98 ? 98
-    : questionNumber;
-  return staticArabicStudyContentByQuestion.get(suppliedNumber) || null;
-}
-
 function extractTranslatedText(response) {
   return Array.isArray(response?.[0])
     ? response[0].map(part => part[0]).join('')
@@ -592,21 +525,30 @@ function requestArabicTranslation(qKey, qObj) {
   if (arabicContentCache.has(qKey)) return;
   if (pendingArabicTranslations.has(qKey)) return;
 
-  const request = enqueueArabicTranslation(() => Promise.all([
-    translateHtmlToArabic(qObj.q),
-    translateHtmlToArabic(qObj.a)
-  ]))
-    .then(([q, a]) => {
-      const content = { q, a };
+  // Translate the title and answer independently. A long answer or a failed
+  // answer request must not prevent the question itself from being translated.
+  const content = { q: qObj.q, a: qObj.a };
+  const questionRequest = enqueueArabicTranslation(() => translateHtmlToArabic(qObj.q))
+    .then(q => {
+      content.q = q;
       arabicContentCache.set(qKey, content);
       applyArabicTranslation(qKey, content);
-    })
-    .catch(() => {
-      // The built-in wording remains visible if the visitor is offline or the
-      // translation service is temporarily unavailable.
-      document.querySelectorAll(`.q-card[data-key="${CSS.escape(qKey)}"]`).forEach(card => {
-        card.classList.remove('translation-pending');
-      });
+    });
+  const answerRequest = enqueueArabicTranslation(() => translateHtmlToArabic(qObj.a))
+    .then(a => {
+      content.a = a;
+      arabicContentCache.set(qKey, content);
+      applyArabicTranslation(qKey, content);
+    });
+
+  const request = Promise.allSettled([questionRequest, answerRequest])
+    .then(results => {
+      if (results[0].status === 'rejected') {
+        // Keep the small built-in question dictionary as an offline fallback.
+        content.q = getArabicContent(qObj).q;
+        arabicContentCache.set(qKey, content);
+        applyArabicTranslation(qKey, content);
+      }
     })
     .finally(() => pendingArabicTranslations.delete(qKey));
 
@@ -808,13 +750,9 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         card.questionData = qObj;
 
         const cachedArabicContent = arabicContentCache.get(qKey);
-        const staticArabicContent = isArabic ? getStaticArabicStudyContent(qObj) : null;
-        // Do not show the legacy dictionary here: it contains stale, wrongly
-        // encoded Arabic strings. Keep the original content visible while the
-        // contextual translation is being requested instead.
-        const content = isArabic
-          ? (cachedArabicContent || staticArabicContent || { q: qObj.q, a: qObj.a })
-          : { q: qObj.q, a: qObj.a };
+        // Keep the original content visible while the contextual translation
+        // is being requested.
+        const content = isArabic ? (cachedArabicContent || { q: qObj.q, a: qObj.a }) : { q: qObj.q, a: qObj.a };
         let finalQ = escapeHTML(content.q);
         let finalA = content.a;
         const detailedKey = explanationCacheKey(qKey, cardLang);
@@ -855,7 +793,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         `;
         sec.appendChild(card);
 
-        if (isArabic && !cachedArabicContent && !staticArabicContent) {
+        if (isArabic && !cachedArabicContent) {
           card.classList.add('translation-pending');
           requestArabicTranslation(qKey, qObj);
         }
