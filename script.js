@@ -311,6 +311,17 @@ const pendingArabicTranslations = new Map();
 const arabicTranslationQueue = [];
 let activeArabicTranslations = 0;
 const MAX_CONCURRENT_ARABIC_TRANSLATIONS = 3;
+let aiAvailabilityPromise;
+
+function isAIServiceAvailable() {
+  if (!aiAvailabilityPromise) {
+    aiAvailabilityPromise = fetch('/api/ai')
+      .then(response => response.ok ? response.json() : { enabled: false })
+      .then(result => result.enabled === true)
+      .catch(() => false);
+  }
+  return aiAvailabilityPromise;
+}
 
 function enqueueArabicTranslation(task) {
   return new Promise((resolve, reject) => {
@@ -479,7 +490,8 @@ async function translateHtmlToArabic(html) {
   if (!text.trim()) return html;
 
   let translatedText = '';
-  try {
+  if (await isAIServiceAvailable()) {
+    try {
     const response = await fetch('/api/ai', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -487,8 +499,9 @@ async function translateHtmlToArabic(html) {
     });
     const result = await response.json();
     if (response.ok && result.output) translatedText = result.output;
-  } catch (_) {
-    // Translation still works for visitors even if the optional AI endpoint is down.
+    } catch (_) {
+      // The standard translator below remains available if AI is temporarily down.
+    }
   }
 
   // The AI key is configured per deployment. Until it is added (or if the AI
@@ -734,6 +747,9 @@ function attachAIExplanationEvents() {
       output.className = 'ai-explanation is-loading';
       output.textContent = 'يفكر المساعد في شرح مناسب…';
       try {
+        if (!(await isAIServiceAvailable())) {
+          throw new Error('الشرح الذكي غير مُفعّل في هذا الموقع بعد. أضف OPENAI_API_KEY إلى إعدادات Vercel لتفعيله.');
+        }
         const response = await fetch('/api/ai', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

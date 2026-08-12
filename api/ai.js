@@ -16,8 +16,14 @@ function send(res, status, body) {
 }
 
 export default async function handler(req, res) {
+  // Lets the browser decide whether to use AI without first sending a request
+  // that will fail when the deployment has no secret configured.
+  if (req.method === 'GET') {
+    return send(res, 200, { enabled: Boolean(process.env.OPENAI_API_KEY) });
+  }
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
+    res.setHeader('Allow', 'GET, POST');
     return send(res, 405, { error: 'Method not allowed.' });
   }
 
