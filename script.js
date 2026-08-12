@@ -309,6 +309,8 @@ let isGlobalArabic = false;
 const arabicContentCache = new Map();
 const pendingArabicTranslations = new Map();
 const relatedExplanationCache = new Map();
+const arabicExplanationCache = new Map();
+const pendingArabicExplanations = new Map();
 const detailedSectionsByLanguage = new Map();
 const arabicTranslationQueue = [];
 let activeArabicTranslations = 0;
@@ -593,7 +595,9 @@ function getDetailedSections(language) {
 
 function getRelatedExplanation(question, language) {
   const cacheKey = `${question}::${language}`;
-  if (relatedExplanationCache.has(cacheKey)) return relatedExplanationCache.get(cacheKey);
+  if (relatedExplanationCache.has(cacheKey)) {
+    return relatedExplanationCache.get(cacheKey);
+  }
 
   const ignored = new Set(['what', 'is', 'are', 'the', 'and', 'how', 'does', 'do', 'difference', 'between', 'with', 'why', 'when', 'in', 'of', 'to', 'a', 'an']);
   const words = value => new Set((value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').match(/[a-z][a-z0-9-]{2,}/g) || [])
@@ -616,11 +620,47 @@ function getRelatedExplanation(question, language) {
   }
 
   const localized = language === 'ar' ? getDetailedSections('ar').get(best.number) : best.section;
+  const hasArabicSource = Boolean(localized?.body);
   const body = localized?.body || best.section.body;
   const direction = language === 'ar' ? ' dir="rtl"' : '';
   const explanation = `<div class="explanation-content"${direction}>${renderExplanationMarkdown(body)}</div>`;
   relatedExplanationCache.set(cacheKey, explanation);
+
+  // Some supplied Arabic study notes do not yet have a matching section. In
+  // that case, translate the English fallback instead of leaving it visible.
+  if (language === 'ar' && !hasArabicSource) {
+    requestArabicExplanation(cacheKey, best.section.body);
+  }
   return explanation;
+}
+
+function applyArabicExplanation(cacheKey, explanation) {
+  document.querySelectorAll(`.detailed-explanation[data-explanation-key="${CSS.escape(cacheKey)}"]`).forEach(panel => {
+    panel.innerHTML = explanation;
+    const body = panel.closest('.q-body');
+    if (body?.classList.contains('open')) body.style.maxHeight = `${body.scrollHeight}px`;
+  });
+}
+
+function requestArabicExplanation(cacheKey, markdown) {
+  if (arabicExplanationCache.has(cacheKey) || pendingArabicExplanations.has(cacheKey)) return;
+
+  const request = enqueueArabicTranslation(async () => {
+    const html = renderExplanationMarkdown(markdown);
+    const translated = await translateHtmlToArabic(html);
+    return `<div class="explanation-content" dir="rtl">${translated}</div>`;
+  })
+    .then(explanation => {
+      arabicExplanationCache.set(cacheKey, explanation);
+      relatedExplanationCache.set(cacheKey, explanation);
+      applyArabicExplanation(cacheKey, explanation);
+    })
+    .catch(() => {
+      // Keep the English fallback if the translation service is unavailable.
+    })
+    .finally(() => pendingArabicExplanations.delete(cacheKey));
+
+  pendingArabicExplanations.set(cacheKey, request);
 }
 
 function renderContent(filterTopic = 'all', searchKeyword = '') {
@@ -698,6 +738,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         let finalQ = escapeHTML(content.q);
         let finalA = content.a;
         const extraExplanation = getRelatedExplanation(qObj.q, cardLang);
+        const explanationKey = `${qObj.q}::${cardLang}`;
         const explainLabel = isArabic ? 'شرح أكثر' : 'More explanation';
         if (kw) {
           const regex = new RegExp(`(${escapeRegExp(searchKeyword)})`, 'gi');
@@ -726,7 +767,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
               <div class="explanation-tools" ${extraExplanation ? '' : 'hidden'}>
                 <button class="more-explain" type="button" aria-expanded="false"><span>${explainLabel}</span></button>
               </div>
-              <div class="detailed-explanation" hidden>${extraExplanation}</div>
+              <div class="detailed-explanation" data-explanation-key="${escapeHTML(explanationKey)}" hidden>${extraExplanation}</div>
             </div>
           </div>
         `;
