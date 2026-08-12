@@ -442,9 +442,12 @@ Scripts execute after HTML parsing is complete, and deferred scripts maintain th
 
 Simple comparison
 async
-Download ──────────┐
-                   ↓
-                 Execute
+HTML parsing ────────────────┐
+Download ──────────┐         │
+                   ↓         │
+                Execute       │
+                   ↓         │
+HTML parsing pauses, then resumes
 
 defer
 Download ────────────────
