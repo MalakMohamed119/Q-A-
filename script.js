@@ -572,7 +572,8 @@ function markdownToExplanationHtml(markdown) {
     .replace(/\\`/g, '`')
     .replace(/<\\\//g, '</')
     .replace(/\\{2,}/g, '')
-    .replace(/\\(?=[*_#])/g, '');
+    .replace(/\\(?=[*_#])/g, '')
+    .replace(/^\s*---+\s*$/gm, '');
   let html = escapeHTML(normalizedMarkdown)
     .replace(/```(?:[a-z]+)?\n([\s\S]*?)```/gi, (_, code) => `[[[CODE${codeBlocks.push(code) - 1}]]]`)
     .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
