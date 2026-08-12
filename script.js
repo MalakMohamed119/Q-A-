@@ -311,17 +311,6 @@ const pendingArabicTranslations = new Map();
 const arabicTranslationQueue = [];
 let activeArabicTranslations = 0;
 const MAX_CONCURRENT_ARABIC_TRANSLATIONS = 3;
-let aiAvailabilityPromise;
-
-function isAIServiceAvailable() {
-  if (!aiAvailabilityPromise) {
-    aiAvailabilityPromise = fetch('/api/ai')
-      .then(response => response.ok ? response.json() : { enabled: false })
-      .then(result => result.enabled === true)
-      .catch(() => false);
-  }
-  return aiAvailabilityPromise;
-}
 
 function enqueueArabicTranslation(task) {
   return new Promise((resolve, reject) => {
@@ -489,32 +478,26 @@ async function translateHtmlToArabic(html) {
   const text = contentWithProtectedCode.replace(/<[^>]*>/g, tag => `[[[TAG${tags.push(tag) - 1}]]]`);
   if (!text.trim()) return html;
 
-  let translatedText = '';
-  if (await isAIServiceAvailable()) {
-    try {
-    const response = await fetch('/api/ai', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'translate', text })
-    });
-    const result = await response.json();
-    if (response.ok && result.output) translatedText = result.output;
-    } catch (_) {
-      // The standard translator below remains available if AI is temporarily down.
-    }
-  }
-
-  // The AI key is configured per deployment. Until it is added (or if the AI
-  // service is temporarily unavailable), retain the original no-key translator
-  // instead of leaving the card untranslated.
-  if (!translatedText) {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ar&dt=t&q=${encodeURIComponent(text)}`;
-    const fallbackResponse = await fetch(url);
-    if (!fallbackResponse.ok) throw new Error(`Translation request failed (${fallbackResponse.status})`);
-    translatedText = extractTranslatedText(await fallbackResponse.json());
-  }
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ar&dt=t&q=${encodeURIComponent(text)}`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Translation request failed (${response.status})`);
+  const translatedText = normalizeArabicTranslation(extractTranslatedText(await response.json()));
   if (!translatedText) throw new Error('Translation service returned no text');
   return restoreHtmlTags(translatedText, tags, protectedFragments);
+}
+
+function normalizeArabicTranslation(text) {
+  // Keep vocabulary that developers commonly use in English and smooth a few
+  // literal machine-translation patterns into wording suitable for studying.
+  return text
+    .replace(/واجهة برمجة التطبيقات/g, 'API')
+    .replace(/نموذج كائن المستند/g, 'DOM (نموذج كائن المستند)')
+    .replace(/لغة ترميز النص التشعبي/g, 'HTML (لغة ترميز النص التشعبي)')
+    .replace(/جافا سكريبت/g, 'JavaScript')
+    .replace(/ورقة الأنماط المتتالية/g, 'CSS')
+    .replace(/ببساطة/g, 'بشكل مبسّط')
+    .replace(/بشكل أساسي/g, 'ببساطة')
+    .replace(/في الأساس/g, 'ببساطة');
 }
 
 function applyArabicTranslation(qKey, content) {
@@ -654,13 +637,6 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           <div class="q-body">
             <div class="q-body-inner">
               <div class="answer-content">${finalA}</div>
-              <div class="gemini-footer">
-                <button class="gemini-link-btn ai-explain-btn" type="button" data-question="${escapeHTML(qObj.q)}" data-answer="${escapeHTML(qObj.a)}">
-                  <svg class="gemini-sparkle-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>
-                  <span>اشرحها بالعربية مع أمثلة بالذكاء الاصطناعي</span>
-                </button>
-              </div>
-              <div class="ai-explanation" hidden aria-live="polite"></div>
             </div>
           </div>
         `;
@@ -697,7 +673,6 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
   }
   updateVisibleCount(visibleQuestions);
   attachAccordionEvents();
-  attachAIExplanationEvents();
 }
 
 function updateVisibleCount(count) {
@@ -717,59 +692,6 @@ function escapeHTML(value) {
 }
 function escapeRegExp(string) { return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
-function sanitizeAIHtml(value) {
-  const allowedTags = new Set(['P', 'STRONG', 'UL', 'OL', 'LI', 'CODE', 'PRE', 'BR']);
-  const template = document.createElement('template');
-  template.innerHTML = value;
-  template.content.querySelectorAll('*').forEach(element => {
-    if (!allowedTags.has(element.tagName)) {
-      element.replaceWith(document.createTextNode(element.textContent || ''));
-    } else {
-      [...element.attributes].forEach(attribute => element.removeAttribute(attribute.name));
-    }
-  });
-  return template.innerHTML;
-}
-
-function attachAIExplanationEvents() {
-  document.querySelectorAll('.ai-explain-btn').forEach(button => {
-    button.onclick = async function() {
-      const output = this.closest('.q-body-inner').querySelector('.ai-explanation');
-      if (!output.hidden) {
-        output.hidden = true;
-        return;
-      }
-      this.disabled = true;
-      const label = this.querySelector('span');
-      const initialLabel = label.textContent;
-      label.textContent = 'جاري إعداد الشرح…';
-      output.hidden = false;
-      output.className = 'ai-explanation is-loading';
-      output.textContent = 'يفكر المساعد في شرح مناسب…';
-      try {
-        if (!(await isAIServiceAvailable())) {
-          throw new Error('الشرح الذكي غير مُفعّل في هذا الموقع بعد. أضف OPENAI_API_KEY إلى إعدادات Vercel لتفعيله.');
-        }
-        const response = await fetch('/api/ai', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'explain', question: this.dataset.question, answer: this.dataset.answer })
-        });
-        const result = await response.json();
-        if (!response.ok) throw new Error(result.error || 'تعذر إنشاء الشرح.');
-        output.className = 'ai-explanation';
-        output.innerHTML = sanitizeAIHtml(result.output);
-      } catch (error) {
-        output.className = 'ai-explanation is-error';
-        output.textContent = error.message || 'تعذر إنشاء الشرح. حاول مرة أخرى.';
-      } finally {
-        this.disabled = false;
-        label.textContent = initialLabel;
-      }
-    };
-  });
-}
-
 function attachAccordionEvents() {
   document.querySelectorAll('.q-header').forEach(hdr => {
     const toggleCard = function(header, forceOpen = null) {
@@ -787,12 +709,6 @@ function attachAccordionEvents() {
       const card = this.parentElement;
       const key = card.getAttribute('data-key');
 
-      // Stop accordion toggle when clicking external links like Ask Gemini
-      if (e.target.closest('.q-gemini') || e.target.closest('.gemini-link-btn')) {
-        e.stopPropagation();
-        return;
-      }
-      
       // Handle check button click
       if (e.target.closest('.q-check')) {
         e.stopPropagation();
