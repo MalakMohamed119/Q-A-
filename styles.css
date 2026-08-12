@@ -419,6 +419,7 @@ button:focus-visible, input:focus-visible {
 .detailed-explanation { margin-top: 12px; padding: 13px 14px; border-inline-start: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: #f2f7f5; color: var(--text2); }
 .detailed-explanation[hidden] { display: none; }
 .detailed-explanation p:last-child, .detailed-explanation li:last-child { margin-bottom: 0; }
+.explanation-rtl { direction: rtl; text-align: right; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.7; }
 .explanation-status { margin: 0; color: var(--text3); }
 .explanation-status.is-error { color: #b42318; }
 

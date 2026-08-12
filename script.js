@@ -586,7 +586,9 @@ function markdownToExplanationHtml(markdown) {
 function getDetailedSections(language) {
   if (detailedSectionsByLanguage.has(language)) return detailedSectionsByLanguage.get(language);
 
-  const source = window.DETAILED_EXPLANATIONS?.[language] || '';
+  const source = language === 'en'
+    ? `${window.DETAILED_EXPLANATIONS_EN_BASICS || ''}\n${window.DETAILED_EXPLANATIONS?.en || ''}`
+    : window.DETAILED_EXPLANATIONS?.ar || '';
   // Arabic basics use "السؤال 1:" while the rest use Markdown headings.
   // Both formats are converted to the same direct number -> content map.
   const headings = [...source.matchAll(/^(?:#{1,2}\s+|السؤال\s+)(\d+)[.):]\s*(.*)$/gm)];
@@ -607,8 +609,19 @@ function findStaticExplanation(question, language) {
   if (staticExplanationByQuestion.has(cacheKey)) return staticExplanationByQuestion.get(cacheKey);
 
   const questionNumber = questionNumberByText.get(question);
-  const section = getDetailedSections(language).get(questionNumber);
-  const explanation = section ? markdownToExplanationHtml(section) : '';
+  let section = getDetailedSections(language).get(questionNumber);
+  let sourceLanguage = language;
+
+  // The supplied English explanation starts at question 26. For the earlier
+  // questions, use the supplied Arabic explanation rather than hiding it.
+  if (!section && language === 'en') {
+    section = getDetailedSections('ar').get(questionNumber);
+    sourceLanguage = 'ar';
+  }
+
+  const explanation = section
+    ? `${sourceLanguage === 'ar' && language !== 'ar' ? '<div class="explanation-rtl" dir="rtl">' : ''}${markdownToExplanationHtml(section)}${sourceLanguage === 'ar' && language !== 'ar' ? '</div>' : ''}`
+    : '';
   staticExplanationByQuestion.set(cacheKey, explanation);
   return explanation;
 }
