@@ -583,6 +583,18 @@ function markdownToExplanationHtml(markdown) {
   return sanitizeExplanation(html.replace(/\[\[\[CODE(\d+)\]\]\]/g, (_, index) => `<pre><code>${codeBlocks[Number(index)]}</code></pre>`));
 }
 
+function shortenDetailedExplanation(markdown, language) {
+  const maximumLength = 450;
+  if (markdown.length <= maximumLength) return markdown;
+
+  // Stop at a natural paragraph boundary instead of cutting through a code
+  // block or sentence. The full source remains in the static file.
+  const excerpt = markdown.slice(0, maximumLength);
+  const paragraphBreak = excerpt.lastIndexOf('\n\n');
+  const safeExcerpt = excerpt.slice(0, paragraphBreak > 140 ? paragraphBreak : maximumLength).trim();
+  return `${safeExcerpt}\n\n${language === 'ar' ? '… مختصر من الشرح التفصيلي.' : '… A shortened version of the detailed explanation.'}`;
+}
+
 function getDetailedSections(language) {
   if (detailedSectionsByLanguage.has(language)) return detailedSectionsByLanguage.get(language);
 
@@ -620,7 +632,7 @@ function findStaticExplanation(question, language) {
   }
 
   const explanation = section
-    ? `${sourceLanguage === 'ar' && language !== 'ar' ? '<div class="explanation-rtl" dir="rtl">' : ''}${markdownToExplanationHtml(section)}${sourceLanguage === 'ar' && language !== 'ar' ? '</div>' : ''}`
+    ? `${sourceLanguage === 'ar' && language !== 'ar' ? '<div class="explanation-rtl" dir="rtl">' : ''}${markdownToExplanationHtml(shortenDetailedExplanation(section, sourceLanguage))}${sourceLanguage === 'ar' && language !== 'ar' ? '</div>' : ''}`
     : '';
   staticExplanationByQuestion.set(cacheKey, explanation);
   return explanation;
