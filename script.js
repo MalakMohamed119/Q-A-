@@ -1,4 +1,4 @@
-﻿// ═════════════════════════════════════════════════════════════════════════
+// ═════════════════════════════════════════════════════════════════════════
 // THE FULL INTEGRATED SYLLABUS DATASET (EVERY SPECIFIED QUERY SUPPORTED)
 // ═════════════════════════════════════════════════════════════════════════
 const DATA = [
@@ -359,6 +359,7 @@ let totalQuestionsCount = 0;
 const questionNumberByText = new Map();
 DATA.forEach(t => t.levels.forEach(l => l.qs.forEach(qObj => {
   totalQuestionsCount += 1;
+  qObj.globalIndex = totalQuestionsCount;
   questionNumberByText.set(qObj.q, totalQuestionsCount);
 })));
 document.getElementById('stat-total').innerText = totalQuestionsCount;
@@ -509,12 +510,26 @@ function normalizeArabicTranslation(text) {
 }
 
 function applyArabicTranslation(qKey, content) {
+  const kw = searchInput ? searchInput.value.toLowerCase().trim() : '';
   document.querySelectorAll(`.q-card[data-key="${CSS.escape(qKey)}"]`).forEach(card => {
     if (!card.classList.contains('rtl-mode')) return;
     const title = card.querySelector('.q-title');
     const answer = card.querySelector('.answer-content');
-    if (title) title.innerHTML = escapeHTML(content.q);
-    if (answer) answer.innerHTML = content.a;
+    
+    let finalQ = escapeHTML(content.q);
+    let finalA = content.a;
+    if (kw) {
+      const regex = new RegExp(`(${escapeRegExp(searchInput.value)})`, 'gi');
+      finalQ = finalQ.replace(regex, '<span class="highlight">$1</span>');
+      finalA = finalA.replace(regex, '<span class="highlight">$1</span>');
+    }
+    
+    if (title) {
+      const qNum = card.questionData && card.questionData.globalIndex ? `<span class="q-num">${card.questionData.globalIndex}.</span>` : '';
+      title.innerHTML = qNum + finalQ;
+    }
+    if (answer) answer.innerHTML = finalA;
+    
     card.classList.remove('translation-pending');
     const body = card.querySelector('.q-body');
     if (body?.classList.contains('open')) body.style.maxHeight = `${body.scrollHeight}px`;
@@ -746,10 +761,12 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           finalA = finalA.replace(regex, '<span class="highlight">$1</span>');
         }
 
+        const qNum = qObj.globalIndex ? `<span class="q-num">${qObj.globalIndex}.</span>` : '';
+
         card.innerHTML = `
           <div class="q-header" role="button" tabindex="0" aria-expanded="false">
             <button class="q-check ${isChecked ? 'checked' : ''}" type="button" aria-label="Mark question as reviewed" title="${isChecked ? 'Reviewed' : 'Mark as reviewed'}">&#10003;</button>
-            <div class="q-title">${finalQ}</div>
+            <div class="q-title">${qNum}${finalQ}</div>
             <div class="q-actions">
               <button class="q-translate ${isArabic ? 'translated' : ''}" type="button" title="Translate language">
                 <svg class="svg-icon svg-globe" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>

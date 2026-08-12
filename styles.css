@@ -331,6 +331,7 @@ button:focus-visible, input:focus-visible {
 .q-check:hover { border-color: var(--green); box-shadow: 0 0 0 3px rgba(20, 125, 75, .12); }
 .q-check.checked { background: var(--green); border-color: var(--green); color: #fff; }
 .q-title { flex: 1; min-width: 0; font-size: .93rem; font-weight: 600; color: var(--text); text-align: left; overflow-wrap: anywhere; }
+.q-num { color: var(--text3); font-weight: 700; margin-inline-end: 6px; font-variant-numeric: tabular-nums; }
 .q-card.open .q-title { color: var(--accent); }
 
 .q-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
