@@ -311,6 +311,7 @@ const pendingArabicTranslations = new Map();
 const detailedExplanationCache = new Map();
 const pendingDetailedExplanations = new Map();
 const expandedDetailedExplanations = new Set();
+const detailedSectionsByLanguage = new Map();
 const arabicTranslationQueue = [];
 let activeArabicTranslations = 0;
 const MAX_CONCURRENT_ARABIC_TRANSLATIONS = 3;
@@ -582,19 +583,26 @@ function markdownToExplanationHtml(markdown) {
   return sanitizeExplanation(html.replace(/\[\[\[CODE(\d+)\]\]\]/g, (_, index) => `<pre><code>${codeBlocks[Number(index)]}</code></pre>`));
 }
 
+function getDetailedSections(language) {
+  if (detailedSectionsByLanguage.has(language)) return detailedSectionsByLanguage.get(language);
+
+  const source = window.DETAILED_EXPLANATIONS?.[language] || '';
+  const headings = [...source.matchAll(/^#{1,2}\s+(\d+)[.)].*$/gm)];
+  const sections = new Map();
+  headings.forEach((heading, index) => {
+    const sectionStart = heading.index + heading[0].length;
+    const nextHeading = source.indexOf('\n#', sectionStart);
+    const sectionEnd = nextHeading === -1 ? source.length : nextHeading;
+    sections.set(Number(heading[1]), source.slice(sectionStart, sectionEnd).trim());
+  });
+  detailedSectionsByLanguage.set(language, sections);
+  return sections;
+}
+
 function findStaticExplanation(question, language) {
-  const source = window.DETAILED_EXPLANATIONS?.[language];
-  if (!source) return '';
   const questionNumber = questionNumberByText.get(question);
-  const titlePattern = questionNumber
-    ? new RegExp(`^#{1,2}\\s+${questionNumber}[.)].*$`, 'mi')
-    : new RegExp(`^#{1,2}\\s+\\d+[.)]?\\s*${escapeRegExp(question)}\\s*$`, 'mi');
-  const titleMatch = titlePattern.exec(source);
-  if (!titleMatch) return '';
-  const sectionStart = titleMatch.index + titleMatch[0].length;
-  const remainder = source.slice(sectionStart);
-  const nextQuestion = remainder.search(/^#{1,2}\s+\d+[.)]?\s+/m);
-  return markdownToExplanationHtml(remainder.slice(0, nextQuestion === -1 ? undefined : nextQuestion).trim());
+  const section = getDetailedSections(language).get(questionNumber);
+  return section ? markdownToExplanationHtml(section) : '';
 }
 
 function requestDetailedExplanation(qKey, qObj, language) {
