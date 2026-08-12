@@ -478,10 +478,14 @@ async function translateHtmlToArabic(html) {
   const text = contentWithProtectedCode.replace(/<[^>]*>/g, tag => `[[[TAG${tags.push(tag) - 1}]]]`);
   if (!text.trim()) return html;
 
-  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ar&dt=t&q=${encodeURIComponent(text)}`;
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Translation request failed (${response.status})`);
-  const translatedText = extractTranslatedText(await response.json());
+  const response = await fetch('/api/ai', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'translate', text })
+  });
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.error || `Translation request failed (${response.status})`);
+  const translatedText = result.output;
   if (!translatedText) throw new Error('Translation service returned no text');
   return restoreHtmlTags(translatedText, tags, protectedFragments);
 }
@@ -592,7 +596,10 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         card.setAttribute('data-key', qKey);
 
         const cachedArabicContent = arabicContentCache.get(qKey);
-        const content = isArabic ? (cachedArabicContent || getArabicContent(qObj)) : { q: qObj.q, a: qObj.a };
+        // Do not show the legacy dictionary here: it contains stale, wrongly
+        // encoded Arabic strings. Keep the original content visible while the
+        // contextual translation is being requested instead.
+        const content = isArabic ? (cachedArabicContent || { q: qObj.q, a: qObj.a }) : { q: qObj.q, a: qObj.a };
         let finalQ = escapeHTML(content.q);
         let finalA = content.a;
 
@@ -601,9 +608,6 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           finalQ = finalQ.replace(regex, '<span class="highlight">$1</span>');
           finalA = finalA.replace(regex, '<span class="highlight">$1</span>');
         }
-
-        const promptText = `${qObj.q}\n\nPlease explain this frontend developer interview question in detail with practical code examples and best practices.`;
-        const geminiUrl = `https://gemini.google.com/app?q=${encodeURIComponent(promptText)}`;
 
         card.innerHTML = `
           <div class="q-header" role="button" tabindex="0" aria-expanded="false">
@@ -624,11 +628,12 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
             <div class="q-body-inner">
               <div class="answer-content">${finalA}</div>
               <div class="gemini-footer">
-                <a class="gemini-link-btn" href="${geminiUrl}" target="_blank" rel="noopener">
+                <button class="gemini-link-btn ai-explain-btn" type="button" data-question="${escapeHTML(qObj.q)}" data-answer="${escapeHTML(qObj.a)}">
                   <svg class="gemini-sparkle-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>
-                  <span>Ask Gemini for Deep Explanation & Code Examples</span>
-                </a>
+                  <span>اشرحها بالعربية مع أمثلة بالذكاء الاصطناعي</span>
+                </button>
               </div>
+              <div class="ai-explanation" hidden aria-live="polite"></div>
             </div>
           </div>
         `;
@@ -665,6 +670,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
   }
   updateVisibleCount(visibleQuestions);
   attachAccordionEvents();
+  attachAIExplanationEvents();
 }
 
 function updateVisibleCount(count) {
@@ -683,6 +689,56 @@ function escapeHTML(value) {
   })[char]);
 }
 function escapeRegExp(string) { return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+function sanitizeAIHtml(value) {
+  const allowedTags = new Set(['P', 'STRONG', 'UL', 'OL', 'LI', 'CODE', 'PRE', 'BR']);
+  const template = document.createElement('template');
+  template.innerHTML = value;
+  template.content.querySelectorAll('*').forEach(element => {
+    if (!allowedTags.has(element.tagName)) {
+      element.replaceWith(document.createTextNode(element.textContent || ''));
+    } else {
+      [...element.attributes].forEach(attribute => element.removeAttribute(attribute.name));
+    }
+  });
+  return template.innerHTML;
+}
+
+function attachAIExplanationEvents() {
+  document.querySelectorAll('.ai-explain-btn').forEach(button => {
+    button.onclick = async function() {
+      const output = this.closest('.q-body-inner').querySelector('.ai-explanation');
+      if (!output.hidden) {
+        output.hidden = true;
+        return;
+      }
+      this.disabled = true;
+      const label = this.querySelector('span');
+      const initialLabel = label.textContent;
+      label.textContent = 'جاري إعداد الشرح…';
+      output.hidden = false;
+      output.className = 'ai-explanation is-loading';
+      output.textContent = 'يفكر المساعد في شرح مناسب…';
+      try {
+        const response = await fetch('/api/ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'explain', question: this.dataset.question, answer: this.dataset.answer })
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'تعذر إنشاء الشرح.');
+        output.className = 'ai-explanation';
+        output.innerHTML = sanitizeAIHtml(result.output);
+      } catch (error) {
+        output.className = 'ai-explanation is-error';
+        output.textContent = error.message || 'تعذر إنشاء الشرح. حاول مرة أخرى.';
+      } finally {
+        this.disabled = false;
+        label.textContent = initialLabel;
+      }
+    };
+  });
+}
 
 function attachAccordionEvents() {
   document.querySelectorAll('.q-header').forEach(hdr => {
@@ -768,7 +824,7 @@ if (toggleAllLangBtn) {
     cardLanguageOverrides.clear();
     this.classList.toggle('active', isGlobalArabic);
     if (globalLangLbl) {
-      globalLangLbl.innerText = isGlobalArabic ? 'Switch All to English' : 'Translate All to Arabic';
+      globalLangLbl.innerText = isGlobalArabic ? 'عرض الكل بالإنجليزية' : 'ترجمة الكل إلى العربية';
     }
     renderContent(activeTopic, searchInput.value);
   };
