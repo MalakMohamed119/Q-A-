@@ -416,9 +416,18 @@ button:focus-visible, input:focus-visible {
 .more-explain:hover:not(:disabled) { background: var(--surface3); border-color: var(--accent); }
 .more-explain:disabled { cursor: wait; opacity: .72; }
 .more-explain.is-loading::after { content: '…'; margin-inline-start: 3px; animation: translation-pulse 1s ease-in-out infinite; }
-.detailed-explanation { margin-top: 12px; padding: 13px 14px; border-inline-start: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: #f2f7f5; color: var(--text2); }
+.detailed-explanation { margin-top: 12px; padding: 16px; border-inline-start: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: #f2f7f5; color: var(--text2); }
 .detailed-explanation[hidden] { display: none; }
+.explanation-label { display: inline-flex; margin-bottom: 11px; padding: 4px 8px; border-radius: 999px; background: rgba(37, 79, 70, .1); color: var(--accent); font-size: .72rem; font-weight: 850; }
+.explanation-content > :first-child { margin-top: 0; }
 .detailed-explanation p:last-child, .detailed-explanation li:last-child { margin-bottom: 0; }
+.detailed-explanation p { line-height: 1.75; }
+.detailed-explanation h3 { margin: 17px 0 8px; color: var(--text); font-size: .94rem; font-weight: 850; }
+.detailed-explanation h3:first-child { margin-top: 0; }
+.detailed-explanation h4 { margin: 13px 0 6px; color: var(--accent); font-size: .88rem; }
+.detailed-explanation ul, .detailed-explanation ol { margin: 8px 0 12px; }
+.detailed-explanation blockquote { margin: 12px 0; padding: 9px 12px; border-inline-start: 3px solid var(--accent2); background: rgba(255,255,255,.64); color: var(--text); font-weight: 600; }
+.detailed-explanation pre { margin: 10px 0 14px; max-width: 100%; font-size: .8rem; }
 .explanation-rtl { direction: rtl; text-align: right; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.7; }
 .explanation-status { margin: 0; color: var(--text3); }
 .explanation-status.is-error { color: #b42318; }

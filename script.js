@@ -551,7 +551,7 @@ function explanationCacheKey(qKey, language) {
 }
 
 function sanitizeExplanation(html) {
-  const allowedTags = new Set(['P', 'H3', 'H4', 'STRONG', 'UL', 'OL', 'LI', 'CODE', 'PRE', 'BR']);
+  const allowedTags = new Set(['P', 'H3', 'H4', 'STRONG', 'UL', 'OL', 'LI', 'BLOCKQUOTE', 'CODE', 'PRE', 'BR']);
   const template = document.createElement('template');
   template.innerHTML = html;
   template.content.querySelectorAll('*').forEach(element => {
@@ -570,6 +570,8 @@ function markdownToExplanationHtml(markdown) {
     .replace(/```(?:[a-z]+)?\n([\s\S]*?)```/gi, (_, code) => `[[[CODE${codeBlocks.push(code) - 1}]]]`)
     .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
     .replace(/^####\s+(.+)$/gm, '<h4>$1</h4>')
+    .replace(/^(Answer|Explanation|Remember|Important|Interview point|Why is it important|Simple comparison|الإجابة|الشرح|تذكري|مهم|مثال|ليه مهم)\s*:?(?=\n|$)/gmi, '<h3>$1</h3>')
+    .replace(/^&gt;\s?(.+)$/gm, '<blockquote>$1</blockquote>')
     .replace(/^[-*]\s+(.+)$/gm, '<li>$1</li>')
     .replace(/(^|\n)(\d+)\.\s+(.+)/g, '$1<li>$3</li>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
@@ -584,7 +586,7 @@ function markdownToExplanationHtml(markdown) {
 }
 
 function shortenDetailedExplanation(markdown, language) {
-  const maximumLength = 450;
+  const maximumLength = 650;
   if (markdown.length <= maximumLength) return markdown;
 
   // Stop at a natural paragraph boundary instead of cutting through a code
@@ -631,8 +633,10 @@ function findStaticExplanation(question, language) {
     sourceLanguage = 'ar';
   }
 
-  const explanation = section
-    ? `${sourceLanguage === 'ar' && language !== 'ar' ? '<div class="explanation-rtl" dir="rtl">' : ''}${markdownToExplanationHtml(shortenDetailedExplanation(section, sourceLanguage))}${sourceLanguage === 'ar' && language !== 'ar' ? '</div>' : ''}`
+  const rendered = section ? markdownToExplanationHtml(shortenDetailedExplanation(section, sourceLanguage)) : '';
+  const title = sourceLanguage === 'ar' ? 'شرح مبسّط' : 'Quick explanation';
+  const explanation = rendered
+    ? `${sourceLanguage === 'ar' && language !== 'ar' ? '<div class="explanation-rtl" dir="rtl">' : ''}<div class="explanation-label">${title}</div><div class="explanation-content">${rendered}</div>${sourceLanguage === 'ar' && language !== 'ar' ? '</div>' : ''}`
     : '';
   staticExplanationByQuestion.set(cacheKey, explanation);
   return explanation;
