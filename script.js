@@ -566,7 +566,14 @@ function sanitizeExplanation(html) {
 
 function markdownToExplanationHtml(markdown) {
   const codeBlocks = [];
-  let html = escapeHTML(markdown)
+  // The pasted source contains escaped Markdown characters (for example
+  // \` and \<\/script\>). Remove the display-only escaping before rendering.
+  const normalizedMarkdown = markdown
+    .replace(/\\`/g, '`')
+    .replace(/<\\\//g, '</')
+    .replace(/\\{2,}/g, '')
+    .replace(/\\(?=[*_#])/g, '');
+  let html = escapeHTML(normalizedMarkdown)
     .replace(/```(?:[a-z]+)?\n([\s\S]*?)```/gi, (_, code) => `[[[CODE${codeBlocks.push(code) - 1}]]]`)
     .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
     .replace(/^####\s+(.+)$/gm, '<h4>$1</h4>')
