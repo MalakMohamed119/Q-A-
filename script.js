@@ -525,7 +525,7 @@ function applyArabicTranslation(qKey, content) {
     }
     
     if (title) {
-      const qNum = card.questionData && card.questionData.globalIndex ? `<span class="q-num">${card.questionData.globalIndex}.</span>` : '';
+      const qNum = card.questionData && card.questionData.globalIndex ? `<span class="q-num">س ${card.questionData.globalIndex}:</span>` : '';
       title.innerHTML = qNum + finalQ;
     }
     if (answer) answer.innerHTML = finalA;
@@ -742,7 +742,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           finalA = finalA.replace(regex, '<span class="highlight">$1</span>');
         }
 
-        const qNum = qObj.globalIndex ? `<span class="q-num">${qObj.globalIndex}.</span>` : '';
+        const qNum = qObj.globalIndex ? `<span class="q-num">${isArabic ? 'س ' + qObj.globalIndex + ':' : 'Q ' + qObj.globalIndex + '.'}</span>` : '';
 
         card.innerHTML = `
           <div class="q-header" role="button" tabindex="0" aria-expanded="false">
