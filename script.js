@@ -608,44 +608,25 @@ function getDetailedSections(language) {
   return sections;
 }
 
-function getRelatedExplanation(question, language) {
+function getRelatedExplanation(question, language, globalIndex) {
   const cacheKey = `${question}::${language}`;
   if (relatedExplanationCache.has(cacheKey)) {
     return relatedExplanationCache.get(cacheKey);
   }
 
-  const ignored = new Set(['what', 'is', 'are', 'the', 'and', 'how', 'does', 'do', 'difference', 'between', 'with', 'why', 'when', 'in', 'of', 'to', 'a', 'an']);
-  const words = value => new Set((value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').match(/[a-z][a-z0-9-]{2,}/g) || [])
-    .filter(word => !ignored.has(word)));
-  const questionWords = words(question);
-  let best = null;
+  const sections = getDetailedSections(language);
+  const section = sections.get(globalIndex);
 
-  getDetailedSections('en').forEach((section, number) => {
-    const titleWords = words(section.title);
-    const common = [...questionWords].filter(word => titleWords.has(word));
-    const score = common.length / Math.max(1, Math.min(questionWords.size, titleWords.size));
-    if (common.length >= 2 && score >= 0.5 && (!best || score > best.score)) {
-      best = { number, score, section };
-    }
-  });
-
-  if (!best) {
+  if (!section) {
     relatedExplanationCache.set(cacheKey, '');
     return '';
   }
 
-  const localized = language === 'ar' ? getDetailedSections('ar').get(best.number) : best.section;
-  const hasArabicSource = Boolean(localized?.body);
-  const body = localized?.body || best.section.body;
+  const body = section.body;
   const direction = language === 'ar' ? ' dir="rtl"' : '';
   const explanation = `<div class="explanation-content"${direction}>${renderExplanationMarkdown(body)}</div>`;
   relatedExplanationCache.set(cacheKey, explanation);
 
-  // Some supplied Arabic study notes do not yet have a matching section. In
-  // that case, translate the English fallback instead of leaving it visible.
-  if (language === 'ar' && !hasArabicSource) {
-    requestArabicExplanation(cacheKey, best.section.body);
-  }
   return explanation;
 }
 
@@ -752,7 +733,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         const content = isArabic ? (cachedArabicContent || { q: qObj.q, a: qObj.a }) : { q: qObj.q, a: qObj.a };
         let finalQ = escapeHTML(content.q);
         let finalA = content.a;
-        const extraExplanation = getRelatedExplanation(qObj.q, cardLang);
+        const extraExplanation = getRelatedExplanation(qObj.q, cardLang, qObj.globalIndex);
         const explanationKey = `${qObj.q}::${cardLang}`;
         const explainLabel = isArabic ? 'شرح أكثر' : 'More explanation';
         if (kw) {

@@ -2,592 +2,156 @@
 // 1. ENGLISH BASICS (HTML 1 - 25)
 // ==========================================
 window.DETAILED_EXPLANATIONS_EN_BASICS = String.raw`
-1. What is HTML?
-
-Answer:
-HTML stands for HyperText Markup Language. It is the standard markup language used to create and structure the content of web pages.
-
-Explanation:
-HTML is responsible for the structure of a webpage. It tells the browser what each piece of content is, such as a heading, paragraph, image, link, form, or button.
-
-<h1>Welcome</h1>
-<p>This is my website.</p>
-<img src="image.jpg" alt="My image">
-
-Remember:
-HTML = Structure
-
-2. What is the difference between <div> and <span>?
-
-Answer:
-<div> is a block-level element, while <span> is an inline element.
-
-Explanation:
-A <div> normally starts on a new line and takes the available width.
-A <span> stays in the same line and only takes the space needed by its content.
-
-<div>Hello</div>
-<div>World</div>
-
-<span>Hello</span>
-<span>World</span>
-
-The result is roughly:
-Hello
-World
-Hello World
-
-Remember:
-div → block
-span → inline
-
-3. What is Semantic HTML and why is it important?
-
-Answer:
-Semantic HTML means using HTML elements that clearly describe the meaning and purpose of their content.
-
-Examples:
-<header></header>
-<nav></nav>
-<main></main>
-<section></section>
-<article></article>
-<aside></aside>
-<footer></footer>
-
-Why is it important?
-It improves accessibility.
-It helps search engines understand the page.
-It makes the code easier to read and maintain.
-It gives the document a meaningful structure.
-
-Instead of:
-<div class="header"></div>
-<div class="navigation"></div>
-<div class="content"></div>
-
-We can use:
-<header></header>
-<nav></nav>
-<main></main>
-
-Remember:
-Semantic HTML = Meaningful structure
-
-4. Name some new semantic tags in HTML5.
-
-Answer:
-Some important HTML5 semantic elements are:
-<header>
-<nav>
-<main>
-<section>
-<article>
-<aside>
-<footer>
-
-Explanation:
-header → introductory/header content.
-nav → navigation links.
-main → main content of the page.
-section → related group of content.
-article → independent content.
-aside → secondary/side content.
-footer → footer information.
+## 1. What is HTML?
 
-5. What is the difference between <section> and <article>?
-
-Answer:
-A <section> groups related content, while an <article> represents independent, self-contained content.
-
-Section
-Used when content belongs to the same topic.
-<section>
-    <h2>Our Services</h2>
-    <p>Web Development</p>
-    <p>Mobile Development</p>
-</section>
+### Detailed explanation for What is HTML?
 
-Article
-Represents content that could stand on its own.
-<article>
-    <h2>How to Learn JavaScript</h2>
-    <p>JavaScript is...</p>
-</article>
+Answer: HTML (HyperText Markup Language) is the standard structural markup language used to compile and scaffold document nodes for layout rendering on global web viewports.
 
-Remember:
-section → related content
-article → independent content
+## 2. What is the difference between <div> and <span>?
 
-6. What is the DOM?
+### Detailed explanation for What is the difference between <div> and <span>?
 
-Answer:
-DOM stands for Document Object Model. It is a tree-like representation of an HTML document that allows JavaScript to access and manipulate the page.
+Answer: <ul><li><code>&lt;div&gt;</code>: A block-level element that natively consumes 100% width of its parent node container, initiating a structural line break.</li><li><code>&lt;span&gt;</code>: An inline element that wraps text components without line breaks, consuming space absolute to content mass.</li></ul>
 
-For example:
-<body>
-    <h1>Hello</h1>
-    <p>Welcome</p>
-</body>
+## 3. What is Semantic HTML and why is it important?
 
-The browser represents it approximately like:
-Document
-   |
- html
-   |
- body
- /  \
-h1   p
+### Detailed explanation for What is Semantic HTML and why is it important?
 
-JavaScript can then modify these nodes:
-document.querySelector("h1").textContent = "Hello World";
+Answer: Semantic HTML introduces structural elements that explicitly describe their meaningful context to both the client browser, screen-reader accessibility systems (ARIA engines), and search engine web spiders (SEO advantages).
 
-Explanation:
-The DOM is basically the bridge between HTML and JavaScript.
+## 4. Name some new semantic tags in HTML5.
 
-Remember:
-HTML → DOM → JavaScript manipulation
+### Detailed explanation for Name some new semantic tags in HTML5.
 
-7. What is the DOCTYPE?
+Answer: Common layout blocks include: <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;nav&gt;</code>, and <code>&lt;main&gt;</code>.
 
-Answer:
-<!DOCTYPE html> tells the browser that the document uses the modern HTML standard.
+## 5. What is the difference between <section> and <article>?
 
-<!DOCTYPE html>
-<html>
+### Detailed explanation for What is the difference between <section> and <article>?
 
-Why do we use it?
-It tells the browser to render the page using standards mode instead of quirks mode.
+Answer: <ul><li><code>&lt;section&gt;</code>: Represents a broad logical grouping of general thematic content chunks, usually requiring a distinct header marker.</li><li><code>&lt;article&gt;</code>: Defines an independent, decoupled, completely standalone piece of structured information capable of syndication (e.g., product updates, blogs).</li></ul>
 
-Important:
-DOCTYPE is a declaration, not an HTML element.
+## 6. What is the DOM?
 
-8. What is an Attribute?
+### Detailed explanation for What is the DOM?
 
-Answer:
-An attribute provides additional information or configuration for an HTML element.
+Answer: The DOM (Document Object Model) acts as an API mapping of the active document as a node tree branch system, enabling dynamic script access and element layout mutations by execution context programs like JS.
 
-Example:
-<a href="https://example.com" target="_blank">
-    Visit
-</a>
+## 7. What is the DOCTYPE?
 
-Here:
-href is an attribute.
-target is an attribute.
+### Detailed explanation for What is the DOCTYPE?
 
-Another example:
-<input type="text" id="username" class="form-control">
+Answer: The <code>&lt;!DOCTYPE html&gt;</code> declaration acts as a browser engine instruction statement proving the document complies with the W3C HTML5 living specification standard, inhibiting fallback quirks-mode layouts.
 
-Here:
-type
-id
-class
-are attributes.
+## 8. What is an attribute?
 
-Remember:
-Attributes are written inside the opening tag.
+### Detailed explanation for What is an attribute?
 
-9. What is the difference between Block and Inline elements?
+Answer: An attribute sets a technical modifier value pair inside the elemental opening tag node block (e.g., <code>id="root"</code>, <code>href=""</code>), modifying default behaviors.
 
-Answer:
-Block elements normally start on a new line, while inline elements remain in the same line.
+## 9. What is the difference between Block elements and Inline elements?
 
-Block example
-<div>One</div>
-<div>Two</div>
+### Detailed explanation for What is the difference between Block elements and Inline elements?
 
-Result:
-One
-Two
+Answer: <ul><li><b>Block:</b> Flows vertically downwards down the tree, enforcing line breaks and respecting height and margin configurations.</li><li><b>Inline:</b> Flows horizontally on the exact same axis line, ignoring top/bottom custom block margins and explicit height declarations.</li></ul>
 
-Inline example
-<span>One</span>
-<span>Two</span>
+## 10. What is the difference between id and class?
 
-Result:
-One Two
+### Detailed explanation for What is the difference between id and class?
 
-Block elements generally respect width and height, while normal inline elements don't behave like blocks for those dimensions.
+Answer: <ul><li><code>id</code>: A strictly unique component locator token; must only appear once within the active document node mapping.</li><li><code>class</code>: A reusable structural styling or selection handle applied across infinitely repeated nodes.</li></ul>
 
-Remember:
-Block  → new line
-Inline → same line
+## 11. Can an id be repeated?
 
-10. What is the difference between id and class?
+### Detailed explanation for Can an id be repeated?
 
-Answer:
-An id is intended to uniquely identify one element, while a class can be reused across multiple elements.
+Answer: No. Declaring identical duplicate IDs breaks valid validation standards, resulting in erratic script behavior when using document locator operations like <code>getElementById</code>.
 
-Example:
-<div id="header"></div>
+## 12. What are meta tags?
 
-<div class="card"></div>
-<div class="card"></div>
-<div class="card"></div>
+### Detailed explanation for What are meta tags?
 
-CSS:
-#header {
-    background: black;
-}
+Answer: Meta elements capture background documents attributes (such as charsets, SEO descriptions, viewport constraints) inside the <code>&lt;head&gt;</code> sector without active display properties.
 
-.card {
-    padding: 20px;
-}
+## 13. What is the function of <meta viewport>?
 
-Remember:
-id    → unique
-class → reusable
+### Detailed explanation for What is the function of <meta viewport>?
 
-11. Can an ID be repeated?
+Answer: It establishes modern responsive scaling logic across varying screen viewports by setting the page width parameter absolute to the user hardware profile: <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
 
-Answer:
-No. An ID should be unique within an HTML document.
+## 14. What is the difference between <script> in the head and the body?
 
-Wrong:
-<div id="card"></div>
-<div id="card"></div>
+### Detailed explanation for What is the difference between <script> in the head and the body?
 
-Correct:
-<div id="card1"></div>
-<div id="card2"></div>
+Answer: <ul><li><b>In the Head:</b> Intercepts HTML processing immediately to fetch/run scripts, causing critical paint blockages unless flagged with <code>defer</code>/<code>async</code> attributes.</li><li><b>At Body Base:</b> Guarantees complete DOM asset mapping is active prior to processing script triggers, avoiding rendering delays.</li></ul>
 
-If multiple elements need the same styling, use a class:
-<div class="card"></div>
-<div class="card"></div>
+## 15. What is the difference between <img alt=""> and without it?
 
-Interview point:
-Repeating IDs can cause problems with DOM selection and accessibility.
+### Detailed explanation for What is the difference between <img alt=""> and without it?
 
-12. What are Meta Tags?
+Answer: Leaving the <code>alt</code> text completely absent forces screen readers to read out raw asset file URLs instead of meaningful context descriptions, causing severe access failures and negative SEO flags.
 
-Answer:
-Meta tags provide metadata about an HTML document and are usually placed inside the <head>.
+## 16. What is the difference between <link> and <script>?
 
-Example:
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="My website">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-</head>
+### Detailed explanation for What is the difference between <link> and <script>?
 
-They can provide information about:
-Character encoding
-SEO description
-Viewport behavior
-Other document metadata
+Answer: <ul><li><code>&lt;link&gt;</code>: An empty tag referencing non-executable external documents, primarily style sheet layers.</li><li><code>&lt;script&gt;</code>: A wrapper container holding or pointing directly to client-side logic scripts.</li></ul>
 
-Important:
-Meta tags normally don't display visible content on the page.
+## 17. What do defer and async do?
 
-13. What is the viewport meta tag?
+### Detailed explanation for What do defer and async do?
 
-Answer:
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+Answer: Both download scripts without stalling the HTML parsing thread:<ul><li><code>async</code>: Immediately halts parsing to execute the target script block as soon as it concludes loading.</li><li><code>defer</code>: Monitored to execute only after completion of structural DOM analysis, honoring the exact script tag order.</li></ul>
 
-It controls how the webpage is displayed and scaled on different devices.
+## 18. What are localStorage and sessionStorage?
 
-width=device-width
-Makes the viewport width equal to the device's screen width.
+### Detailed explanation for What are localStorage and sessionStorage?
 
-initial-scale=1.0
-Sets the initial zoom level to 100%.
+Answer: Client-side data persistence mechanisms:<ul><li><code>localStorage</code>: Data remains indefinitely until a script or user manually wipes the domain cache storage.</li><li><code>sessionStorage</code>: Wiped instantly whenever the current browser tab instance is closed.</li></ul>
 
-Without this meta tag, websites may not behave correctly on mobile devices.
+## 19. What is the difference between form GET and POST?
 
-Remember:
-viewport → responsive behavior on different screens
+### Detailed explanation for What is the difference between form GET and POST?
 
-14. What is the difference between placing a script in the <head> and at the end of <body>?
+Answer: <ul><li><code>GET</code>: Appends tracking query parameters explicitly to the visible URL route. Has stringent data length thresholds.</li><li><code>POST</code>: Transports data streams cleanly payloaded inside the HTTP transaction request body mass, providing secure overhead capacities.</li></ul>
 
-Answer:
-A normal script placed in the <head> can block HTML parsing while the browser downloads and executes it.
+## 20. What is an iframe?
 
-Example:
-<head>
-    <script src="app.js"><\/script>
-</head>
+### Detailed explanation for What is an iframe?
 
-The browser may:
-Parse HTML
-   ↓
-Stop parsing
-   ↓
-Download JS
-   ↓
-Execute JS
-   ↓
-Continue parsing HTML
+Answer: An iframe (Inline Frame) acts as an isolated sandbox window container embedding a completely foreign secondary HTML document directly inside your existing view layer layout.
 
-If we put it near the end of <body>:
-<body>
-    <!-- page content -->
-    <script src="app.js"><\/script>
-</body>
+## 21. What is the benefit of accessibility (ARIA attributes)?
 
-Most of the HTML has already been parsed before the script executes.
+### Detailed explanation for What is the benefit of accessibility (ARIA attributes)?
 
-Another modern solution is:
-<script src="app.js" defer><\/script>
+Answer: Accessible Rich Internet Applications (ARIA) attributes augment default HTML tags with contextual semantic descriptions, allowing modern assistive reader rigs to cleanly parse complex components.
 
-Remember:
-Normal scripts can block parsing.
+## 22. What is Shadow DOM?
 
-15. What is the alt attribute in an image?
+### Detailed explanation for What is Shadow DOM?
 
-Answer:
-The alt attribute provides alternative text for an image.
+Answer: A core Web Component system that encapsulates a modular subtree DOM separate from the primary global Document flow, blocking unintended outer CSS styling leaks from bleeding into individual components.
 
-<img src="cat.jpg" alt="A white cat">
+## 23. What are Web Components?
 
-It is important for:
+### Detailed explanation for What are Web Components?
 
-Accessibility
-Screen readers can read the alternative text to users who cannot see the image.
+Answer: A suite of standard runtime capabilities (Custom Elements, Shadow DOM, HTML Templates) that empower engineers to generate modular, framework-agnostic platform tags.
 
-Failed image loading
-If the image cannot load, the alternative text can provide context.
+## 24. What is the <template> tag?
 
-SEO
-It can also help search engines understand the image.
+### Detailed explanation for What is the <template> tag?
 
-Good alt:
-<img src="laptop.jpg" alt="Black laptop on a desk">
+Answer: An element structure holding layout blueprints that bypasses page initialization rendering entirely until parsed, cloned, and dynamically attached to the active tree by JavaScript controllers.
 
-Bad alt:
-<img src="laptop.jpg" alt="image">
+## 25. What is the benefit of <picture> and srcset?
 
-16. What is the difference between <link> and <script>?
+### Detailed explanation for What is the benefit of <picture> and srcset?
 
-Answer:
-<link> is commonly used to connect external resources such as CSS files.
-<link rel="stylesheet" href="style.css">
+Answer: Enables native art direction and conditional media responsive image delivery based on varying client hardware device screen dimensions or target pixel ratio resolutions.
 
-<script> is used to load or execute JavaScript.
-<script src="app.js"><\/script>
-
-Remember:
-link   → external resources, commonly CSS
-script → JavaScript
-
-17. What is the difference between async and defer?
-
-Both allow the browser to download JavaScript without blocking HTML parsing during the download.
-
-async
-<script src="a.js" async><\/script>
-The script executes as soon as it finishes downloading.
-Therefore, if you have multiple async scripts, their execution order is not guaranteed.
-
-defer
-<script src="a.js" defer><\/script>
-<script src="b.js" defer><\/script>
-Scripts execute after HTML parsing is complete, and deferred scripts maintain their order.
-
-Simple comparison
-async
-HTML parsing ────────────────┐
-Download ──────────┐         │
-                   ↓         │
-                Execute       │
-                   ↓         │
-HTML parsing pauses, then resumes
-
-defer
-Download ────────────────
-HTML parsing ────────────
-                         ↓
-                      Execute
-
-Remember:
-async → download and execute ASAP
-defer → execute after parsing + preserves order
-
-18. What is the difference between localStorage and sessionStorage?
-
-Both are browser Web Storage APIs.
-
-localStorage
-Data remains after closing the browser/tab until it is explicitly removed.
-localStorage.setItem("username", "Malak");
-
-Retrieve:
-localStorage.getItem("username");
-
-sessionStorage
-Data exists only for the current browser tab/session.
-sessionStorage.setItem("username", "Malak");
-
-When the tab is closed, the data is normally removed.
-
-Remember:
-localStorage   → persists
-sessionStorage → current tab/session
-
-19. What is the difference between GET and POST?
-
-Both are HTTP methods.
-
-GET
-Used mainly for retrieving data.
-Example: /products?id=10
-The parameters are commonly visible in the URL.
-
-POST
-Used mainly for sending data to the server.
-The data is normally placed inside the request body.
-Example:
-fetch("/login", {
-    method: "POST",
-    body: JSON.stringify({
-        username: "Malak",
-        password: "123"
-    })
-});
-
-Remember:
-GET  → retrieve data
-POST → send data
-
-20. What is an iframe?
-
-Answer:
-An iframe allows you to embed another HTML document or webpage inside the current webpage.
-
-Example:
-<iframe
-    src="https://example.com"
-    width="600"
-    height="400">
-</iframe>
-
-The embedded page has its own document context.
-
-Common uses:
-Embedded videos
-Maps
-External pages
-Third-party widgets
-
-Security note:
-For untrusted content, iframe sandboxing can be important.
-
-21. What is ARIA?
-
-Answer:
-ARIA stands for Accessible Rich Internet Applications.
-It provides additional information to assistive technologies such as screen readers.
-
-Example:
-<button aria-label="Close menu">
-    X
-</button>
-The visual X may not be enough for a screen reader, so aria-label gives it a meaningful description.
-
-Another example:
-<div role="button" aria-expanded="false">
-    Menu
-</div>
-
-Important:
-Use semantic HTML first whenever possible. ARIA should supplement it, not unnecessarily replace it.
-
-22. What is Shadow DOM?
-
-Answer:
-Shadow DOM provides an encapsulated DOM tree for a component.
-
-It helps isolate:
-HTML structure
-CSS styles
-component internals
-
-Example concept:
-Normal DOM
-    |
-    └── Custom Element
-            |
-            └── Shadow Root
-                  |
-                  ├── HTML
-                  └── CSS
-
-The styles inside the Shadow DOM are generally isolated from the outside document.
-
-Remember:
-Shadow DOM = Encapsulation
-
-23. What are Web Components?
-
-Answer:
-Web Components are browser-native technologies for creating reusable custom elements without depending on a framework.
-
-The main technologies are:
-Custom Elements
-Shadow DOM
-HTML Templates
-
-Example:
-class MyButton extends HTMLElement {
-    connectedCallback() {
-        this.innerHTML = "<button>Click Me</button>";
-    }
-}
-
-customElements.define("my-button", MyButton);
-
-Then:
-<my-button></my-button>
-
-Remember:
-Web Components = reusable framework-independent components
-
-24. What is the <template> element?
-
-Answer:
-<template> contains HTML that is not rendered immediately.
-
-Example:
-<template id="user-card">
-    <div class="card">
-        <h2>User</h2>
-    </div>
-</template>
-
-JavaScript can later clone the template and add it to the DOM.
-const template = document.querySelector("#user-card");
-const clone = template.content.cloneNode(true);
-document.body.appendChild(clone);
-
-Why use it?
-It is useful for creating reusable HTML structures without displaying them until needed.
-
-25. What are <picture> and srcset?
-
-Answer:
-<picture> and srcset are used to provide responsive images and allow the browser to choose the most appropriate image resource.
-
-srcset
-<img
-    src="small.jpg"
-    srcset="
-        small.jpg 480w,
-        medium.jpg 800w,
-        large.jpg 1200w
-    "
-    alt="Landscape">
-The browser can choose an appropriate image based on the available conditions.
-
-<picture>
-<picture>
-    <source media="(max-width: 600px)"
-            srcset="mobile.jpg">
-    <source media="(min-width: 601px)"
-            srcset="desktop.jpg">
-    <img src="desktop.jpg" alt="Landscape">
-</picture>
 `
   .replace(/^(\d+)\.\s+(?=(?:What|Name|Can)\b)/gm, '## $1. ');
 
@@ -597,49 +161,9 @@ The browser can choose an appropriate image based on the available conditions.
 window.DETAILED_EXPLANATIONS_AR_BASICS = String.raw`
 السؤال 1: What is HTML?
 
-الإجابة الموجودة في الملف:
-HTML (HyperText Markup Language) is the standard structural markup language used to compile and scaffold document nodes for layout rendering on global web viewports.
+### شرح تفصيلي عن What is HTML?
 
-يعني إيه الكلام ده؟
-خلينا نفكها:
-HTML = HyperText Markup Language
-يعني لغة توصيف/ترميز صفحات الويب.
-وظيفتها الأساسية هي إنها بتحدد Structure / Structure of the page، يعني هيكل الصفحة.
-
-مثلاً:
-<h1>My Portfolio</h1>
-<p>I'm a Frontend Developer.</p>
-<button>Contact Me</button>
-
-HTML هنا بتقول للمتصفح:
-ده عنوان → h1
-ده Paragraph → p
-ده Button → button
-
-لكن HTML مش مسؤولة عن شكل العنصر بشكل أساسي.
-يعني:
-<h1>Hello</h1>
-HTML بتحدد إن Hello عنوان.
-
-أما:
-h1 {
-    color: red;
-    font-size: 40px;
-}
-CSS هي اللي بتحدد شكله.
-
-وJavaScript ممكن تغير المحتوى أو السلوك:
-document.querySelector("h1").textContent = "Hello Malak";
-
-🧠 إذن Frontend عنده 3 أساسيات:
-HTML → Structure
-CSS → Style / Appearance
-JavaScript → Behavior / Interaction
-
-🎯 إجابة Interview قصيرة
-لو اتسألتي: What is HTML?
-قولي:
-HTML stands for HyperText Markup Language. It is the standard markup language used to structure the content of web pages.
+الإجابة: HTML (HyperText Markup Language) is the standard structural markup language used to compile and scaffold document nodes for layout rendering on global web viewports.
 
 السؤال 2: What is the difference between <div> and <span>?
 
@@ -686,7 +210,7 @@ div is a block-level element used as a generic container, while span is an inlin
 🎯 Interview
 Semantic HTML means using HTML elements according to their meaning and purpose, such as header, nav, main, article, and footer. It improves accessibility, SEO, and code readability.
 
-السؤال 4: Name some new semantic tags in HTML5
+السؤال 4: Name some new semantic tags in HTML5.
 
 الملف بيذكر: header, footer, section, article, aside, nav, وmain.
 خلينا نفهمهم بدل ما نحفظهم:
@@ -715,44 +239,23 @@ Article = Independent content
 
 السؤال 6: What is the DOM?
 
-الملف بيقول إن الـ DOM يمثل الـ document كشجرة من الـ nodes، ويسمح للـ JavaScript بالوصول للعناصر وتعديلها.
+### شرح تفصيلي عن What is the DOM?
 
-خلينا نبسطها جدًا.
-المتصفح يبني تمثيلًا شجريًا للصفحة (Document -> html -> body -> h1).
-كل عنصر هنا هو Node.
-وبعدين JavaScript تقدر تتعامل مع الشجرة وتغير محتواها.
-
-مهم جدًا:
-HTML ≠ DOM
-HTML هو الـ markup اللي كتبناه.
-DOM هو التمثيل الذي أنشأه المتصفح من الـ document والذي تتعامل معه JavaScript.
-
-🎯 Interview
-The DOM, or Document Object Model, is a tree-like representation of an HTML document that allows JavaScript to access and manipulate elements and content dynamically.
+الإجابة: The DOM (Document Object Model) acts as an API mapping of the active document as a node tree branch system, enabling dynamic script access and element layout mutations by execution context programs like JS.
 
 السؤال 7: What is the DOCTYPE?
 
-<!DOCTYPE html>
-دي declaration بنحطها في بداية ملف HTML.
-وظيفتها الأساسية إنها تخبر المتصفح إن الصفحة تستخدم HTML standard mode بدل الدخول في quirks mode. 
+### شرح تفصيلي عن What is the DOCTYPE?
 
-نقطة مهمة:
-DOCTYPE مش HTML element. ومفيش closing tag.
+الإجابة: The <code>&lt;!DOCTYPE html&gt;</code> declaration acts as a browser engine instruction statement proving the document complies with the W3C HTML5 living specification standard, inhibiting fallback quirks-mode layouts.
 
-🎯 Interview
-DOCTYPE tells the browser to render the document in standards mode. In modern HTML, we use <!DOCTYPE html>.
+السؤال 8: What is an attribute?
 
-السؤال 8: What is an Attribute?
+### شرح تفصيلي عن What is an attribute?
 
-الـ Attribute هو معلومة إضافية بنحطها داخل opening tag للـ element. 
-مثلاً:
-<a href="https://example.com">Visit</a>
-هنا href هو Attribute.
+الإجابة: An attribute sets a technical modifier value pair inside the elemental opening tag node block (e.g., <code>id="root"</code>, <code>href=""</code>), modifying default behaviors.
 
-الشكل العام:
-<tag attribute="value">
-
-السؤال 9: Block vs Inline
+السؤال 9: What is the difference between Block elements and Inline elements?
 
 الملف يوضح أن Block elements تتدفق رأسيًا وتبدأ أسطرًا جديدة، بينما Inline elements تتدفق في نفس السطر ولا تتعامل مع height وtop/bottom margins بنفس طريقة الـ block.
 
@@ -761,21 +264,16 @@ Inline أمثلة: span, a, strong, em
 
 السؤال 10: What is the difference between id and class?
 
-الملف يعتبر id معرفًا فريدًا، بينما class قابلة لإعادة الاستخدام على عدة عناصر.
+### شرح تفصيلي عن What is the difference between id and class?
 
-id: المفروض يكون unique داخل الصفحة.
-class: عادي جدًا تتكرر وتستخدم لتطبيق نفس الستايل على عناصر مختلفة.
-
-احفظي:
-id → unique
-class → reusable
+الإجابة: <ul><li><code>id</code>: A strictly unique component locator token; must only appear once within the active document node mapping.</li><li><code>class</code>: A reusable structural styling or selection handle applied across infinitely repeated nodes.</li></ul>
 
 السؤال 11: Can an id be repeated?
 
 لا.
 المفروض الـ id يكون unique داخل الـ document. تكرار IDs قد يسبب مشاكل في عمليات تحديد العناصر بواسطة JavaScript (مثل getElementById) ويؤثر على الـ Accessibility.
 
-السؤال 12: What are Meta Tags?
+السؤال 12: What are meta tags?
 
 الـ Meta tags بتوفر metadata عن الصفحة داخل <head>، مثل character encoding والـ description والـ viewport، ومش بتظهر كمحتوى عادي للمستخدم.
 
@@ -855,9 +353,9 @@ GET sends form data as query parameters in the URL, while POST sends the data in
 
 السؤال 20: What is an iframe?
 
-iframe = Inline Frame.
-هو container يعرض document HTML آخر (صفحة خارجية) داخل الصفحة الحالية.
-من استخداماته: تضمين خرائط Google، فيديوهات YouTube، أو محتوى من خدمة أخرى.
+### شرح تفصيلي عن What is an iframe?
+
+الإجابة: An iframe (Inline Frame) acts as an isolated sandbox window container embedding a completely foreign secondary HTML document directly inside your existing view layer layout.
 
 السؤال 21: What is the benefit of accessibility (ARIA attributes)?
 
@@ -893,4 +391,6 @@ srcset: بيسمح للمتصفح يختار الحجم المناسب من ال
 🧠 الفرق المهم:
 srcset → choose an appropriate image resource (same image, different sizes)
 picture → provide different image sources/versions based on conditions
+\`;
+
 `;
