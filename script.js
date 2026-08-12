@@ -311,6 +311,7 @@ const pendingArabicTranslations = new Map();
 const detailedExplanationCache = new Map();
 const expandedDetailedExplanations = new Set();
 const detailedSectionsByLanguage = new Map();
+const staticExplanationByQuestion = new Map();
 const arabicTranslationQueue = [];
 let activeArabicTranslations = 0;
 const MAX_CONCURRENT_ARABIC_TRANSLATIONS = 3;
@@ -602,6 +603,9 @@ function explanationTokens(value) {
 }
 
 function findStaticExplanation(question, language) {
+  const cacheKey = explanationCacheKey(question, language);
+  if (staticExplanationByQuestion.has(cacheKey)) return staticExplanationByQuestion.get(cacheKey);
+
   const questionTokens = explanationTokens(question);
   let bestMatch = null;
   let bestScore = 0;
@@ -616,8 +620,16 @@ function findStaticExplanation(question, language) {
     }
   });
 
-  return bestScore >= 0.6 && bestMatch ? markdownToExplanationHtml(bestMatch.content) : '';
+  const explanation = bestScore >= 0.6 && bestMatch ? markdownToExplanationHtml(bestMatch.content) : '';
+  staticExplanationByQuestion.set(cacheKey, explanation);
+  return explanation;
 }
+
+// Resolve every supplied explanation once, at startup. Clicking the button
+// only reads this direct in-memory mapping; it does not search or fetch.
+DATA.forEach(topic => topic.levels.forEach(level => level.qs.forEach(qObj => {
+  ['ar', 'en'].forEach(language => findStaticExplanation(qObj.q, language));
+})));
 
 function requestDetailedExplanation(qKey, qObj, language) {
   const cacheKey = explanationCacheKey(qKey, language);
@@ -625,7 +637,11 @@ function requestDetailedExplanation(qKey, qObj, language) {
 
   const explanation = findStaticExplanation(qObj.q, language);
   if (!explanation) {
-    throw new Error(language === 'ar' ? 'لا يوجد شرح تفصيلي لهذا السؤال في الملف المرفق.' : 'A detailed explanation is not available for this question in the supplied file.');
+    // The supplied files do not contain every syllabus question. Show the
+    // existing static answer instead of leaving the learner with an error.
+    return language === 'ar'
+      ? '<p>الشرح التفصيلي غير موجود في الملف لهذا السؤال، لكن الإجابة الأساسية المعروضة بالأعلى هي المحتوى المتاح.</p>'
+      : '<p>A detailed section was not included for this question; the answer shown above is the available study content.</p>';
   }
   detailedExplanationCache.set(cacheKey, explanation);
   return explanation;
