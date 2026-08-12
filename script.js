@@ -308,6 +308,8 @@ let isGlobalArabic = false;
 // between languages never sends the same request more than once.
 const arabicContentCache = new Map();
 const pendingArabicTranslations = new Map();
+const relatedExplanationCache = new Map();
+const detailedSectionsByLanguage = new Map();
 const arabicTranslationQueue = [];
 let activeArabicTranslations = 0;
 const MAX_CONCURRENT_ARABIC_TRANSLATIONS = 3;
@@ -551,6 +553,76 @@ function requestArabicTranslation(qKey, qObj) {
   pendingArabicTranslations.set(qKey, request);
 }
 
+function renderExplanationMarkdown(markdown) {
+  const codeBlocks = [];
+  let html = escapeHTML(markdown)
+    .replace(/\\`/g, '`')
+    .replace(/```(?:[a-z]+)?\n([\s\S]*?)```/gi, (_, code) => `[[[CODE${codeBlocks.push(code) - 1}]]]`)
+    .replace(/^###?\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/^[-*]\s+(.+)$/gm, '<li>$1</li>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\n{2,}/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+  html = `<p>${html}</p>`
+    .replace(/<p>(\s*<h3>)/g, '$1')
+    .replace(/<\/h3><\/p>/g, '</h3>')
+    .replace(/(?:<li>.*?<\/li>\s*)+/g, list => `<ul>${list}</ul>`);
+  return html.replace(/\[\[\[CODE(\d+)\]\]\]/g, (_, index) => `<pre><code>${codeBlocks[Number(index)]}</code></pre>`);
+}
+
+function getDetailedSections(language) {
+  if (detailedSectionsByLanguage.has(language)) return detailedSectionsByLanguage.get(language);
+  const source = language === 'en'
+    ? `${window.DETAILED_EXPLANATIONS_EN_BASICS || ''}\n${window.DETAILED_EXPLANATIONS?.en || ''}`
+    : window.DETAILED_EXPLANATIONS?.ar || '';
+  const headings = [...source.matchAll(/^(?:#{1,2}\s+|السؤال\s+)(\d+)[.):]\s*(.*)$/gm)];
+  const sections = new Map();
+  headings.forEach(heading => {
+    const start = heading.index + heading[0].length;
+    const remainder = source.slice(start);
+    const nextHeading = remainder.search(/\n(?:#{1,2}\s+|السؤال\s+)\d+[.):]/);
+    sections.set(Number(heading[1]), {
+      title: heading[2].trim(),
+      body: source.slice(start, nextHeading === -1 ? source.length : start + nextHeading).trim()
+    });
+  });
+  detailedSectionsByLanguage.set(language, sections);
+  return sections;
+}
+
+function getRelatedExplanation(question, language) {
+  const cacheKey = `${question}::${language}`;
+  if (relatedExplanationCache.has(cacheKey)) return relatedExplanationCache.get(cacheKey);
+
+  const ignored = new Set(['what', 'is', 'are', 'the', 'and', 'how', 'does', 'do', 'difference', 'between', 'with', 'why', 'when', 'in', 'of', 'to', 'a', 'an']);
+  const words = value => new Set((value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').match(/[a-z][a-z0-9-]{2,}/g) || [])
+    .filter(word => !ignored.has(word)));
+  const questionWords = words(question);
+  let best = null;
+
+  getDetailedSections('en').forEach((section, number) => {
+    const titleWords = words(section.title);
+    const common = [...questionWords].filter(word => titleWords.has(word));
+    const score = common.length / Math.max(1, Math.min(questionWords.size, titleWords.size));
+    if (common.length >= 2 && score >= 0.5 && (!best || score > best.score)) {
+      best = { number, score, section };
+    }
+  });
+
+  if (!best) {
+    relatedExplanationCache.set(cacheKey, '');
+    return '';
+  }
+
+  const localized = language === 'ar' ? getDetailedSections('ar').get(best.number) : best.section;
+  const body = localized?.body || best.section.body;
+  const direction = language === 'ar' ? ' dir="rtl"' : '';
+  const explanation = `<div class="explanation-content"${direction}>${renderExplanationMarkdown(body)}</div>`;
+  relatedExplanationCache.set(cacheKey, explanation);
+  return explanation;
+}
+
 function renderContent(filterTopic = 'all', searchKeyword = '') {
   const container = document.getElementById('qa-content');
   container.innerHTML = '';
@@ -625,7 +697,8 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         const content = isArabic ? (cachedArabicContent || { q: qObj.q, a: qObj.a }) : { q: qObj.q, a: qObj.a };
         let finalQ = escapeHTML(content.q);
         let finalA = content.a;
-        const explainLabel = isArabic ? 'شرح الإجابة' : 'More explanation';
+        const extraExplanation = getRelatedExplanation(qObj.q, cardLang);
+        const explainLabel = isArabic ? 'شرح أكثر' : 'More explanation';
         if (kw) {
           const regex = new RegExp(`(${escapeRegExp(searchKeyword)})`, 'gi');
           finalQ = finalQ.replace(regex, '<span class="highlight">$1</span>');
@@ -650,10 +723,10 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           <div class="q-body">
             <div class="q-body-inner">
               <div class="answer-content">${finalA}</div>
-              <div class="explanation-tools">
+              <div class="explanation-tools" ${extraExplanation ? '' : 'hidden'}>
                 <button class="more-explain" type="button" aria-expanded="false"><span>${explainLabel}</span></button>
               </div>
-              <div class="detailed-explanation" hidden></div>
+              <div class="detailed-explanation" hidden>${extraExplanation}</div>
             </div>
           </div>
         `;
@@ -774,21 +847,17 @@ function attachAccordionEvents() {
     };
   });
 
-  // The button shows the current card answer in a dedicated reading panel.
-  // It deliberately does not use the old, separately numbered source files.
   document.querySelectorAll('.more-explain').forEach(button => {
     button.onclick = function(e) {
       e.stopPropagation();
       const card = this.closest('.q-card');
       const panel = card?.querySelector('.detailed-explanation');
-      const answer = card?.querySelector('.answer-content');
       const body = card?.querySelector('.q-body');
-      if (!panel || !answer || !body) return;
+      if (!panel || !body) return;
 
       const isOpen = !panel.hidden;
       panel.hidden = isOpen;
       this.setAttribute('aria-expanded', String(!isOpen));
-      if (!isOpen) panel.innerHTML = answer.innerHTML;
       body.style.maxHeight = `${body.scrollHeight}px`;
     };
   });
