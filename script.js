@@ -478,14 +478,28 @@ async function translateHtmlToArabic(html) {
   const text = contentWithProtectedCode.replace(/<[^>]*>/g, tag => `[[[TAG${tags.push(tag) - 1}]]]`);
   if (!text.trim()) return html;
 
-  const response = await fetch('/api/ai', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'translate', text })
-  });
-  const result = await response.json();
-  if (!response.ok) throw new Error(result.error || `Translation request failed (${response.status})`);
-  const translatedText = result.output;
+  let translatedText = '';
+  try {
+    const response = await fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'translate', text })
+    });
+    const result = await response.json();
+    if (response.ok && result.output) translatedText = result.output;
+  } catch (_) {
+    // Translation still works for visitors even if the optional AI endpoint is down.
+  }
+
+  // The AI key is configured per deployment. Until it is added (or if the AI
+  // service is temporarily unavailable), retain the original no-key translator
+  // instead of leaving the card untranslated.
+  if (!translatedText) {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ar&dt=t&q=${encodeURIComponent(text)}`;
+    const fallbackResponse = await fetch(url);
+    if (!fallbackResponse.ok) throw new Error(`Translation request failed (${fallbackResponse.status})`);
+    translatedText = extractTranslatedText(await fallbackResponse.json());
+  }
   if (!translatedText) throw new Error('Translation service returned no text');
   return restoreHtmlTags(translatedText, tags, protectedFragments);
 }
