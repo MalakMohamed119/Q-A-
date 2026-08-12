@@ -5,7 +5,603 @@ window.DETAILED_EXPLANATIONS = {
 تمام، نكمل من **HTML Intermediate**، وبنفس الطريقة: **السؤال → معنى السؤال → شرح الإجابة → مثال → إجابة Interview تحفظيها**. وهلتزم بإجابات الملف نفسها في ترتيبها. 
 
 # 🟡 HTML — Intermediate
+السؤال 1: What is HTML?
 
+الإجابة الموجودة في الملف:
+
+HTML (HyperText Markup Language) is the standard structural markup language used to compile and scaffold document nodes for layout rendering on global web viewports.
+
+يعني إيه الكلام ده؟
+
+خلينا نفكها:
+
+HTML = HyperText Markup Language
+
+يعني لغة توصيف/ترميز صفحات الويب.
+
+وظيفتها الأساسية هي إنها بتحدد Structure / Structure of the page، يعني هيكل الصفحة.
+
+مثلاً:
+
+<h1>My Portfolio</h1>
+
+<p>I'm a Frontend Developer.</p>
+
+<button>Contact Me</button>
+
+HTML هنا بتقول للمتصفح:
+
+ده عنوان → h1
+ده Paragraph → p
+ده Button → button
+
+لكن HTML مش مسؤولة عن شكل العنصر بشكل أساسي.
+
+يعني:
+
+<h1>Hello</h1>
+
+HTML بتحدد إن Hello عنوان.
+
+أما:
+
+h1 {
+    color: red;
+    font-size: 40px;
+}
+
+CSS هي اللي بتحدد شكله.
+
+وJavaScript ممكن تغير المحتوى أو السلوك:
+
+document.querySelector("h1").textContent = "Hello Malak";
+🧠 إذن Frontend عنده 3 أساسيات:
+HTML
+ ↓
+Structure
+CSS
+ ↓
+Style / Appearance
+JavaScript
+ ↓
+Behavior / Interaction
+
+مثال:
+
+<button id="btn">Click me</button>
+
+HTML → أنشأت الزرار.
+
+button {
+    background: blue;
+}
+
+CSS → غيرت شكله.
+
+document.querySelector("#btn").onclick = () => {
+    alert("Hello!");
+};
+
+JavaScript → أضافت له تفاعل.
+
+🎯 إجابة Interview قصيرة
+
+لو اتسألتي:
+
+What is HTML?
+
+قولي:
+
+HTML stands for HyperText Markup Language. It is the standard markup language used to structure the content of web pages.
+
+ودي كفاية جدًا كبداية.
+
+السؤال 2: What is the difference between <div> and <span>?
+
+الإجابة في الملف بتقول إن:
+
+<div> Block-level element
+<span> Inline element
+<div>
+
+div عنصر Block.
+
+يعني يبدأ في سطر جديد، وبيأخذ عرض المساحة المتاحة افتراضيًا.
+
+<div>Hello</div>
+<div>World</div>
+
+النتيجة:
+
+Hello
+World
+<span>
+
+span عنصر Inline.
+
+يعني يفضل في نفس السطر وياخد مساحة المحتوى فقط.
+
+<span>Hello</span>
+<span>World</span>
+
+النتيجة:
+
+Hello World
+إمتى أستخدم كل واحد؟
+
+div → لما أكون بعمل container / grouping لعناصر.
+
+<div class="card">
+    <h2>Product</h2>
+    <p>Price: $100</p>
+</div>
+
+span → لما أحتاج أعمل styling أو تحديد جزء صغير داخل النص.
+
+<p>
+    My name is <span class="highlight">Malak</span>.
+</p>
+🎯 Interview
+
+div is a block-level element used as a generic container, while span is an inline element typically used to style or group a small piece of content without creating a new line.
+
+السؤال 3: What is Semantic HTML and why is it important?
+
+الـ Semantic HTML يعني إننا نستخدم HTML elements ليها معنى واضح عن المحتوى اللي بداخلها. الملف يربط أهميتها بالـ structure والـ accessibility والـ SEO.
+
+مثلاً بدل:
+
+<div class="header">
+
+نستخدم:
+
+<header>
+
+بدل:
+
+<div class="navigation">
+
+نستخدم:
+
+<nav>
+
+بدل:
+
+<div class="main-content">
+
+نستخدم:
+
+<main>
+
+المتصفح والـ screen readers ومحركات البحث يقدروا يفهموا دور الجزء ده بشكل أفضل.
+
+مثال:
+<header>
+    <h1>My Website</h1>
+</header>
+
+<nav>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+</nav>
+
+<main>
+    <article>
+        <h2>My First Post</h2>
+        <p>...</p>
+    </article>
+</main>
+
+<footer>
+    Copyright 2026
+</footer>
+
+ده أوضح بكثير من:
+
+<div>
+    <div>
+        <div>
+            ...
+        </div>
+    </div>
+</div>
+ليه مهم؟
+
+1. Accessibility
+
+Screen readers تقدر تفهم structure الصفحة.
+
+2. SEO
+
+Search engines تقدر تفهم محتوى الصفحة بشكل أفضل.
+
+3. Maintainability
+
+الكود بيكون أسهل في القراءة والفهم.
+
+🎯 Interview
+
+Semantic HTML means using HTML elements according to their meaning and purpose, such as header, nav, main, article, and footer. It improves accessibility, SEO, and code readability.
+
+السؤال 4: Name some new semantic tags in HTML5
+
+الملف بيذكر: header, footer, section, article, aside, nav, وmain.
+
+خلينا نفهمهم بدل ما نحفظهم:
+
+Tag	استخدامه
+<header>	مقدمة الصفحة أو section
+<nav>	Navigation links
+<main>	المحتوى الأساسي للصفحة
+<section>	مجموعة محتوى مرتبطة بموضوع
+<article>	محتوى مستقل
+<aside>	محتوى جانبي
+<footer>	الجزء السفلي
+
+مثال:
+
+<header>
+    <h1>My Blog</h1>
+</header>
+
+<nav>
+    <a href="/">Home</a>
+    <a href="/blog">Blog</a>
+</nav>
+
+<main>
+    <section>
+        <h2>Latest Posts</h2>
+
+        <article>
+            <h3>HTML Basics</h3>
+            <p>...</p>
+        </article>
+    </section>
+
+    <aside>
+        Popular Posts
+    </aside>
+</main>
+
+<footer>
+    Copyright 2026
+</footer>
+السؤال 5: What is the difference between <section> and <article>?
+
+الملف يفرق بينهم كالتالي: section مجموعة منطقية لمحتوى مرتبط، بينما article قطعة محتوى مستقلة يمكن أن تكون قائمة بذاتها.
+
+<section>
+
+مجموعة محتوى لها موضوع مشترك.
+
+مثلاً في Portfolio:
+
+<section>
+    <h2>My Skills</h2>
+
+    <p>HTML</p>
+    <p>CSS</p>
+    <p>JavaScript</p>
+</section>
+<article>
+
+محتوى مستقل بذاته.
+
+مثلاً Blog:
+
+<article>
+    <h2>What is Angular?</h2>
+    <p>Angular is...</p>
+</article>
+
+لو أخدنا الـ article وحطيناه في مكان آخر، المفروض يفضل مفهومًا.
+
+🧠 الفرق السريع:
+
+Section = Group of related content
+
+Article = Independent content
+
+السؤال 6: What is the DOM?
+
+الملف بيقول إن الـ DOM يمثل الـ document كشجرة من الـ nodes، ويسمح للـ JavaScript بالوصول للعناصر وتعديلها.
+
+خلينا نبسطها جدًا.
+
+لو HTML:
+
+<html>
+    <body>
+        <h1>Hello</h1>
+        <p>Welcome</p>
+    </body>
+</html>
+
+المتصفح يبني تمثيلًا شجريًا:
+
+Document
+   │
+  html
+   │
+  body
+  ├── h1
+  │    └── Hello
+  │
+  └── p
+       └── Welcome
+
+كل عنصر هنا Node.
+
+وبعدين JavaScript تقدر تتعامل مع الشجرة:
+
+const title = document.querySelector("h1");
+
+title.textContent = "Hello Malak";
+
+يعني JavaScript وصلت للـ h1 وغيرت محتواه.
+
+مهم جدًا:
+
+HTML ≠ DOM
+
+HTML هو الـ markup اللي كتبناه.
+
+DOM هو التمثيل الذي أنشأه المتصفح من الـ document والذي تتعامل معه JavaScript.
+
+🎯 Interview
+
+The DOM, or Document Object Model, is a tree-like representation of an HTML document that allows JavaScript to access and manipulate elements and content dynamically.
+
+السؤال 7: What is the DOCTYPE?
+<!DOCTYPE html>
+
+دي declaration بنحطها في بداية ملف HTML.
+
+وظيفتها الأساسية إنها تخبر المتصفح إن الصفحة تستخدم HTML standard mode بدل الدخول في quirks mode. والملف يربطها بـ HTML5 والمعيار الحديث.
+
+يعني:
+
+<!DOCTYPE html>
+
+<html>
+...
+</html>
+ليه مهمة؟
+
+عشان المتصفح يعرض الصفحة بطريقة standards-compliant.
+
+نقطة مهمة:
+
+DOCTYPE مش HTML element.
+
+ومفيش closing tag:
+
+<!DOCTYPE html>
+
+مش:
+
+</DOCTYPE>
+🎯 Interview
+
+DOCTYPE tells the browser to render the document in standards mode. In modern HTML, we use <!DOCTYPE html>.
+
+السؤال 8: What is an Attribute?
+
+الـ Attribute هو معلومة إضافية بنحطها داخل opening tag للـ element. الملف يعطي أمثلة مثل id وhref.
+
+مثلاً:
+
+<a href="https://example.com">Visit</a>
+
+هنا:
+
+href = "https://example.com"
+
+هو Attribute.
+
+مثال آخر:
+
+<img
+    src="cat.jpg"
+    alt="A cat"
+>
+
+عندنا:
+
+src
+alt
+الشكل العام:
+<tag attribute="value">
+
+مثلاً:
+
+<input type="text" placeholder="Enter your name">
+السؤال 9: Block vs Inline
+
+الملف يوضح أن Block elements تتدفق رأسيًا وتبدأ أسطرًا جديدة، بينما Inline elements تتدفق في نفس السطر ولا تتعامل مع height وtop/bottom margins بنفس طريقة الـ block.
+
+Block
+<div>One</div>
+<div>Two</div>
+One
+Two
+
+أمثلة:
+
+div
+p
+h1
+section
+article
+Inline
+<span>One</span>
+<span>Two</span>
+One Two
+
+أمثلة:
+
+span
+a
+strong
+em
+السؤال 10: What is the difference between id and class?
+
+الملف يعتبر id معرفًا فريدًا، بينما class قابلة لإعادة الاستخدام على عدة عناصر.
+
+id
+<div id="header"></div>
+
+المفروض يكون unique داخل الصفحة.
+
+class
+<div class="card"></div>
+<div class="card"></div>
+<div class="card"></div>
+
+عادي جدًا تتكرر.
+
+CSS:
+.card {
+    padding: 20px;
+}
+
+كل العناصر اللي عندها card هتاخد الـ style.
+
+JavaScript:
+document.getElementById("header");
+
+و:
+
+document.querySelectorAll(".card");
+احفظي:
+
+id → unique
+
+class → reusable
+
+السؤال 11: Can an id be repeated?
+
+لا.
+
+المفروض الـ id يكون unique داخل الـ document. الملف يحذر من تكرار IDs لأنه قد يسبب مشاكل في عمليات تحديد العناصر مثل getElementById.
+
+غلط:
+
+<div id="card"></div>
+<div id="card"></div>
+
+صح:
+
+<div id="card1"></div>
+<div id="card2"></div>
+
+ولو عندك عناصر كتير بنفس الـ styling:
+
+<div class="card"></div>
+<div class="card"></div>
+
+استخدمي class.
+
+السؤال 12: What are Meta Tags?
+
+الـ Meta tags بتوفر metadata عن الصفحة داخل <head>، مثل character encoding والـ description والـ viewport، ومش بتظهر كمحتوى عادي للمستخدم.
+
+مثلاً:
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="description"
+        content="My Portfolio"
+    >
+
+</head>
+أهم أمثلة:
+<meta charset="UTF-8">
+
+→ Character encoding
+
+<meta name="description" content="...">
+
+→ وصف الصفحة
+
+<meta name="viewport" content="...">
+
+→ التحكم في الـ viewport على الأجهزة المختلفة
+
+السؤال 13: What is the function of <meta viewport>?
+
+الكود:
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+الملف يربطه بالـ responsive scaling عبر جعل عرض الـ viewport مساويًا لعرض الجهاز.
+
+width=device-width
+
+يعني:
+
+خلي عرض الـ viewport مساوي لعرض شاشة الجهاز.
+
+لو الموبايل عرضه 390px، الـ viewport يتعامل مع العرض ده.
+
+initial-scale=1.0
+
+يعني:
+
+خلي الـ initial zoom = 100%.
+
+وده مهم جدًا للـ Responsive Design.
+
+السؤال 14: What is the difference between <script> in the head and the body?
+
+الملف يوضح أن script العادي في <head> ممكن يوقف parsing، بينما وضعه أسفل <body> يأتي بعد بناء عناصر HTML السابقة له.
+
+مثلاً:
+
+<head>
+    <script src="app.js"></script>
+</head>
+
+الـ browser ممكن يوقف parsing علشان يحمل وينفذ الـ script.
+
+لكن:
+
+<body>
+
+    <h1>Hello</h1>
+    <button>Click</button>
+
+    <script src="app.js"></script>
+</body>
+
+العناصر الموجودة قبل الـ script تم parsing لها بالفعل.
+
+لكن في Modern HTML غالبًا نستخدم defer مع scripts في <head>:
+
+<head>
+    <script src="app.js" defer></script>
+</head>
+
+وده بيسمح بتحميل الـ script بالتوازي مع parsing، مع تنفيذ مؤجل بعد اكتمال parsing.
+
+🟡 كده خلصنا HTML Basics
+
+وده 14 سؤال بالترتيب الموجود في الملف.
+
+بعدهم ندخل HTML Intermediate، وأول سؤال:
+
+What is the difference between <img alt=""> and without it?
+
+ومن هنا هنكمل بنفس الأسلوب: سؤال → تفكيك الإجابة → مثال → Interview answer → السؤال اللي بعده.
+
+كمل
 ## 15) What is the difference between \`<img alt="">\` and without it?
 
 ### معنى السؤال
