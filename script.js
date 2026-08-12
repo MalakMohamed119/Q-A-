@@ -309,7 +309,6 @@ let isGlobalArabic = false;
 const arabicContentCache = new Map();
 const pendingArabicTranslations = new Map();
 const detailedExplanationCache = new Map();
-const pendingDetailedExplanations = new Map();
 const expandedDetailedExplanations = new Set();
 const detailedSectionsByLanguage = new Map();
 const arabicTranslationQueue = [];
@@ -607,19 +606,14 @@ function findStaticExplanation(question, language) {
 
 function requestDetailedExplanation(qKey, qObj, language) {
   const cacheKey = explanationCacheKey(qKey, language);
-  if (detailedExplanationCache.has(cacheKey)) return Promise.resolve(detailedExplanationCache.get(cacheKey));
-  if (pendingDetailedExplanations.has(cacheKey)) return pendingDetailedExplanations.get(cacheKey);
+  if (detailedExplanationCache.has(cacheKey)) return detailedExplanationCache.get(cacheKey);
 
-  const request = Promise.resolve().then(() => {
-    const explanation = findStaticExplanation(qObj.q, language);
-    if (!explanation) throw new Error(language === 'ar' ? 'لا يوجد شرح تفصيلي لهذا السؤال بعد.' : 'A detailed explanation is not available for this question yet.');
-    detailedExplanationCache.set(cacheKey, explanation);
-    return explanation;
-  })
-    .finally(() => pendingDetailedExplanations.delete(cacheKey));
-
-  pendingDetailedExplanations.set(cacheKey, request);
-  return request;
+  const explanation = findStaticExplanation(qObj.q, language);
+  if (!explanation) {
+    throw new Error(language === 'ar' ? 'لا يوجد شرح تفصيلي لهذا السؤال في الملف المرفق.' : 'A detailed explanation is not available for this question in the supplied file.');
+  }
+  detailedExplanationCache.set(cacheKey, explanation);
+  return explanation;
 }
 
 function renderContent(filterTopic = 'all', searchKeyword = '') {
@@ -865,22 +859,14 @@ function attachAccordionEvents() {
           return;
         }
 
-        explainButton.disabled = true;
-        explainButton.classList.add('is-loading');
-        panel.innerHTML = `<p class="explanation-status">${language === 'ar' ? 'جارٍ تجهيز الشرح…' : 'Preparing a detailed explanation…'}</p>`;
+        try {
+          panel.innerHTML = requestDetailedExplanation(key, card.questionData, language);
+        } catch (error) {
+          panel.innerHTML = `<p class="explanation-status is-error">${escapeHTML(error.message)}</p>`;
+          expandedDetailedExplanations.delete(detailedKey);
+          explainButton.setAttribute('aria-expanded', 'false');
+        }
         body.style.maxHeight = `${body.scrollHeight}px`;
-        requestDetailedExplanation(key, card.questionData, language)
-          .then(explanation => { panel.innerHTML = explanation; })
-          .catch(error => {
-            panel.innerHTML = `<p class="explanation-status is-error">${escapeHTML(error.message)}</p>`;
-            expandedDetailedExplanations.delete(detailedKey);
-            explainButton.setAttribute('aria-expanded', 'false');
-          })
-          .finally(() => {
-            explainButton.disabled = false;
-            explainButton.classList.remove('is-loading');
-            body.style.maxHeight = `${body.scrollHeight}px`;
-          });
         return;
       }
 
