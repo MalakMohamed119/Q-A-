@@ -577,7 +577,7 @@ function getDetailedSections(language) {
   if (detailedSectionsByLanguage.has(language)) return detailedSectionsByLanguage.get(language);
   const source = language === 'en'
     ? `${window.DETAILED_EXPLANATIONS_EN_BASICS || ''}\n${window.DETAILED_EXPLANATIONS?.en || ''}`
-    : window.DETAILED_EXPLANATIONS?.ar || '';
+    : `${window.DETAILED_EXPLANATIONS_AR_BASICS || ''}\n${window.DETAILED_EXPLANATIONS?.ar || ''}`;
   const headings = [...source.matchAll(/^(?:#{1,2}\s+|السؤال\s+)(\d+)[.):]\s*(.*)$/gm)];
   const sections = new Map();
   headings.forEach(heading => {
