@@ -625,6 +625,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         const content = isArabic ? (cachedArabicContent || { q: qObj.q, a: qObj.a }) : { q: qObj.q, a: qObj.a };
         let finalQ = escapeHTML(content.q);
         let finalA = content.a;
+        const explainLabel = isArabic ? 'شرح الإجابة' : 'More explanation';
         if (kw) {
           const regex = new RegExp(`(${escapeRegExp(searchKeyword)})`, 'gi');
           finalQ = finalQ.replace(regex, '<span class="highlight">$1</span>');
@@ -649,6 +650,10 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           <div class="q-body">
             <div class="q-body-inner">
               <div class="answer-content">${finalA}</div>
+              <div class="explanation-tools">
+                <button class="more-explain" type="button" aria-expanded="false"><span>${explainLabel}</span></button>
+              </div>
+              <div class="detailed-explanation" hidden></div>
             </div>
           </div>
         `;
@@ -769,6 +774,24 @@ function attachAccordionEvents() {
     };
   });
 
+  // The button shows the current card answer in a dedicated reading panel.
+  // It deliberately does not use the old, separately numbered source files.
+  document.querySelectorAll('.more-explain').forEach(button => {
+    button.onclick = function(e) {
+      e.stopPropagation();
+      const card = this.closest('.q-card');
+      const panel = card?.querySelector('.detailed-explanation');
+      const answer = card?.querySelector('.answer-content');
+      const body = card?.querySelector('.q-body');
+      if (!panel || !answer || !body) return;
+
+      const isOpen = !panel.hidden;
+      panel.hidden = isOpen;
+      this.setAttribute('aria-expanded', String(!isOpen));
+      if (!isOpen) panel.innerHTML = answer.innerHTML;
+      body.style.maxHeight = `${body.scrollHeight}px`;
+    };
+  });
 }
 
 let activeTopic = 'all';
