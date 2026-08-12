@@ -308,6 +308,9 @@ let isGlobalArabic = false;
 // between languages never sends the same request more than once.
 const arabicContentCache = new Map();
 const pendingArabicTranslations = new Map();
+const detailedExplanationCache = new Map();
+const pendingDetailedExplanations = new Map();
+const expandedDetailedExplanations = new Set();
 const arabicTranslationQueue = [];
 let activeArabicTranslations = 0;
 const MAX_CONCURRENT_ARABIC_TRANSLATIONS = 3;
@@ -352,7 +355,11 @@ function saveState() {
 }
 
 let totalQuestionsCount = 0;
-DATA.forEach(t => t.levels.forEach(l => totalQuestionsCount += l.qs.length));
+const questionNumberByText = new Map();
+DATA.forEach(t => t.levels.forEach(l => l.qs.forEach(qObj => {
+  totalQuestionsCount += 1;
+  questionNumberByText.set(qObj.q, totalQuestionsCount);
+})));
 document.getElementById('stat-total').innerText = totalQuestionsCount;
 document.getElementById('stat-topics').innerText = DATA.length;
 
@@ -538,6 +545,75 @@ function requestArabicTranslation(qKey, qObj) {
   pendingArabicTranslations.set(qKey, request);
 }
 
+function explanationCacheKey(qKey, language) {
+  return `${qKey}::${language}`;
+}
+
+function sanitizeExplanation(html) {
+  const allowedTags = new Set(['P', 'H3', 'H4', 'STRONG', 'UL', 'OL', 'LI', 'CODE', 'PRE', 'BR']);
+  const template = document.createElement('template');
+  template.innerHTML = html;
+  template.content.querySelectorAll('*').forEach(element => {
+    if (!allowedTags.has(element.tagName)) {
+      element.replaceWith(document.createTextNode(element.textContent || ''));
+      return;
+    }
+    [...element.attributes].forEach(attribute => element.removeAttribute(attribute.name));
+  });
+  return template.innerHTML;
+}
+
+function markdownToExplanationHtml(markdown) {
+  const codeBlocks = [];
+  let html = escapeHTML(markdown)
+    .replace(/```(?:[a-z]+)?\n([\s\S]*?)```/gi, (_, code) => `[[[CODE${codeBlocks.push(code) - 1}]]]`)
+    .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/^####\s+(.+)$/gm, '<h4>$1</h4>')
+    .replace(/^[-*]\s+(.+)$/gm, '<li>$1</li>')
+    .replace(/(^|\n)(\d+)\.\s+(.+)/g, '$1<li>$3</li>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\n{2,}/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+  html = `<p>${html}</p>`
+    .replace(/<p>(\s*<h[34]>)/g, '$1')
+    .replace(/<\/h([34])><\/p>/g, '</h$1>')
+    .replace(/(?:<li>.*?<\/li>\s*)+/g, list => `<ul>${list}</ul>`);
+  return sanitizeExplanation(html.replace(/\[\[\[CODE(\d+)\]\]\]/g, (_, index) => `<pre><code>${codeBlocks[Number(index)]}</code></pre>`));
+}
+
+function findStaticExplanation(question, language) {
+  const source = window.DETAILED_EXPLANATIONS?.[language];
+  if (!source) return '';
+  const questionNumber = questionNumberByText.get(question);
+  const titlePattern = questionNumber
+    ? new RegExp(`^#{1,2}\\s+${questionNumber}[.)].*$`, 'mi')
+    : new RegExp(`^#{1,2}\\s+\\d+[.)]?\\s*${escapeRegExp(question)}\\s*$`, 'mi');
+  const titleMatch = titlePattern.exec(source);
+  if (!titleMatch) return '';
+  const sectionStart = titleMatch.index + titleMatch[0].length;
+  const remainder = source.slice(sectionStart);
+  const nextQuestion = remainder.search(/^#{1,2}\s+\d+[.)]?\s+/m);
+  return markdownToExplanationHtml(remainder.slice(0, nextQuestion === -1 ? undefined : nextQuestion).trim());
+}
+
+function requestDetailedExplanation(qKey, qObj, language) {
+  const cacheKey = explanationCacheKey(qKey, language);
+  if (detailedExplanationCache.has(cacheKey)) return Promise.resolve(detailedExplanationCache.get(cacheKey));
+  if (pendingDetailedExplanations.has(cacheKey)) return pendingDetailedExplanations.get(cacheKey);
+
+  const request = Promise.resolve().then(() => {
+    const explanation = findStaticExplanation(qObj.q, language);
+    if (!explanation) throw new Error(language === 'ar' ? 'لا يوجد شرح تفصيلي لهذا السؤال بعد.' : 'A detailed explanation is not available for this question yet.');
+    detailedExplanationCache.set(cacheKey, explanation);
+    return explanation;
+  })
+    .finally(() => pendingDetailedExplanations.delete(cacheKey));
+
+  pendingDetailedExplanations.set(cacheKey, request);
+  return request;
+}
+
 function renderContent(filterTopic = 'all', searchKeyword = '') {
   const container = document.getElementById('qa-content');
   container.innerHTML = '';
@@ -604,6 +680,7 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         const card = document.createElement('div');
         card.className = `q-card ${isChecked ? 'is-done' : ''} ${isBookmarked ? 'is-bookmarked' : ''} ${isArabic ? 'rtl-mode' : ''}`;
         card.setAttribute('data-key', qKey);
+        card.questionData = qObj;
 
         const cachedArabicContent = arabicContentCache.get(qKey);
         // Do not show the legacy dictionary here: it contains stale, wrongly
@@ -612,6 +689,10 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         const content = isArabic ? (cachedArabicContent || { q: qObj.q, a: qObj.a }) : { q: qObj.q, a: qObj.a };
         let finalQ = escapeHTML(content.q);
         let finalA = content.a;
+        const detailedKey = explanationCacheKey(qKey, cardLang);
+        const cachedExplanation = detailedExplanationCache.get(detailedKey);
+        const explanationIsOpen = expandedDetailedExplanations.has(detailedKey);
+        const explainLabel = isArabic ? 'شرح أكثر' : 'More explanation';
 
         if (kw) {
           const regex = new RegExp(`(${escapeRegExp(searchKeyword)})`, 'gi');
@@ -637,6 +718,10 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           <div class="q-body">
             <div class="q-body-inner">
               <div class="answer-content">${finalA}</div>
+              <div class="explanation-tools">
+                <button class="more-explain" type="button" aria-expanded="${String(explanationIsOpen)}"><span>${explainLabel}</span></button>
+              </div>
+              <div class="detailed-explanation" ${explanationIsOpen ? '' : 'hidden'}>${cachedExplanation || ''}</div>
             </div>
           </div>
         `;
@@ -747,6 +832,50 @@ function attachAccordionEvents() {
         return;
       }
 
+      const explainButton = e.target.closest('.more-explain');
+      if (explainButton) {
+        e.stopPropagation();
+        const language = getCardLanguage(key);
+        const detailedKey = explanationCacheKey(key, language);
+        const panel = card.querySelector('.detailed-explanation');
+
+        if (expandedDetailedExplanations.has(detailedKey)) {
+          expandedDetailedExplanations.delete(detailedKey);
+          panel.hidden = true;
+          explainButton.setAttribute('aria-expanded', 'false');
+          body.style.maxHeight = `${body.scrollHeight}px`;
+          return;
+        }
+
+        expandedDetailedExplanations.add(detailedKey);
+        panel.hidden = false;
+        explainButton.setAttribute('aria-expanded', 'true');
+        const cachedExplanation = detailedExplanationCache.get(detailedKey);
+        if (cachedExplanation) {
+          panel.innerHTML = cachedExplanation;
+          body.style.maxHeight = `${body.scrollHeight}px`;
+          return;
+        }
+
+        explainButton.disabled = true;
+        explainButton.classList.add('is-loading');
+        panel.innerHTML = `<p class="explanation-status">${language === 'ar' ? 'جارٍ تجهيز الشرح…' : 'Preparing a detailed explanation…'}</p>`;
+        body.style.maxHeight = `${body.scrollHeight}px`;
+        requestDetailedExplanation(key, card.questionData, language)
+          .then(explanation => { panel.innerHTML = explanation; })
+          .catch(error => {
+            panel.innerHTML = `<p class="explanation-status is-error">${escapeHTML(error.message)}</p>`;
+            expandedDetailedExplanations.delete(detailedKey);
+            explainButton.setAttribute('aria-expanded', 'false');
+          })
+          .finally(() => {
+            explainButton.disabled = false;
+            explainButton.classList.remove('is-loading');
+            body.style.maxHeight = `${body.scrollHeight}px`;
+          });
+        return;
+      }
+
       toggleCard(this);
     };
 
@@ -754,6 +883,15 @@ function attachAccordionEvents() {
       if (e.key !== 'Enter' && e.key !== ' ') return;
       e.preventDefault();
       toggleCard(this);
+    };
+  });
+
+  // The detailed-explanation button sits in the accordion body (not its
+  // header), so route its click through the same card handler explicitly.
+  document.querySelectorAll('.more-explain').forEach(button => {
+    button.onclick = function(e) {
+      const header = this.closest('.q-card')?.querySelector('.q-header');
+      if (header?.onclick) header.onclick.call(header, e);
     };
   });
 }

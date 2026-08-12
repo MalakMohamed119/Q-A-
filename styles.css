@@ -411,6 +411,16 @@ button:focus-visible, input:focus-visible {
 .q-body-inner p, .q-body-inner li { margin-bottom: 8px; }
 .q-body-inner ul, .q-body-inner ol { padding-left: 20px; }
 .q-body-inner li::marker { color: var(--accent); }
+.explanation-tools { display: flex; margin-top: 14px; }
+.more-explain { border: 1px solid var(--line2); background: #fff; color: var(--accent); border-radius: var(--radius-sm); padding: 7px 10px; font: inherit; font-size: .8rem; font-weight: 800; cursor: pointer; transition: all .2s ease; }
+.more-explain:hover:not(:disabled) { background: var(--surface3); border-color: var(--accent); }
+.more-explain:disabled { cursor: wait; opacity: .72; }
+.more-explain.is-loading::after { content: '…'; margin-inline-start: 3px; animation: translation-pulse 1s ease-in-out infinite; }
+.detailed-explanation { margin-top: 12px; padding: 13px 14px; border-inline-start: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: #f2f7f5; color: var(--text2); }
+.detailed-explanation[hidden] { display: none; }
+.detailed-explanation p:last-child, .detailed-explanation li:last-child { margin-bottom: 0; }
+.explanation-status { margin: 0; color: var(--text3); }
+.explanation-status.is-error { color: #b42318; }
 
 /* RTL / Arabic Typography System & Card Layout Flipping */
 .q-card.rtl-mode {
@@ -447,6 +457,7 @@ button:focus-visible, input:focus-visible {
   padding-left: 0;
   padding-right: 22px;
 }
+.q-card.rtl-mode .detailed-explanation { border-inline-start: 0; border-inline-end: 3px solid var(--accent); border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
 
 /* SVG Utilities */
 .svg-icon {
