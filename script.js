@@ -308,10 +308,6 @@ let isGlobalArabic = false;
 // between languages never sends the same request more than once.
 const arabicContentCache = new Map();
 const pendingArabicTranslations = new Map();
-const detailedExplanationCache = new Map();
-const expandedDetailedExplanations = new Set();
-const detailedSectionsByLanguage = new Map();
-const staticExplanationByQuestion = new Map();
 const arabicTranslationQueue = [];
 let activeArabicTranslations = 0;
 const MAX_CONCURRENT_ARABIC_TRANSLATIONS = 3;
@@ -555,132 +551,6 @@ function requestArabicTranslation(qKey, qObj) {
   pendingArabicTranslations.set(qKey, request);
 }
 
-function explanationCacheKey(qKey, language) {
-  return `${qKey}::${language}`;
-}
-
-function sanitizeExplanation(html) {
-  const allowedTags = new Set(['P', 'H3', 'H4', 'STRONG', 'UL', 'OL', 'LI', 'BLOCKQUOTE', 'CODE', 'PRE', 'BR']);
-  const template = document.createElement('template');
-  template.innerHTML = html;
-  template.content.querySelectorAll('*').forEach(element => {
-    if (!allowedTags.has(element.tagName)) {
-      element.replaceWith(document.createTextNode(element.textContent || ''));
-      return;
-    }
-    [...element.attributes].forEach(attribute => element.removeAttribute(attribute.name));
-  });
-  return template.innerHTML;
-}
-
-function markdownToExplanationHtml(markdown) {
-  const codeBlocks = [];
-  // The pasted source contains escaped Markdown characters (for example
-  // \` and \<\/script\>). Remove the display-only escaping before rendering.
-  const normalizedMarkdown = markdown
-    .replace(/\\`/g, '`')
-    .replace(/<\\\//g, '</')
-    .replace(/\\{2,}/g, '')
-    .replace(/\\(?=[*_#])/g, '')
-    .replace(/^\s*---+\s*$/gm, '');
-  let html = escapeHTML(normalizedMarkdown)
-    .replace(/```(?:[a-z]+)?\n([\s\S]*?)```/gi, (_, code) => `[[[CODE${codeBlocks.push(code) - 1}]]]`)
-    .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
-    .replace(/^####\s+(.+)$/gm, '<h4>$1</h4>')
-    .replace(/^(Answer|Explanation|Remember|Important|Interview point|Why is it important|Simple comparison|الإجابة|الشرح|تذكري|مهم|مثال|ليه مهم)\s*:?(?=\n|$)/gmi, '<h3>$1</h3>')
-    .replace(/^&gt;\s?(.+)$/gm, '<blockquote>$1</blockquote>')
-    .replace(/^[-*]\s+(.+)$/gm, '<li>$1</li>')
-    .replace(/(^|\n)(\d+)\.\s+(.+)/g, '$1<li>$3</li>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/\n{2,}/g, '</p><p>')
-    .replace(/\n/g, '<br>');
-  html = `<p>${html}</p>`
-    .replace(/<p>(\s*<h[34]>)/g, '$1')
-    .replace(/<\/h([34])><\/p>/g, '</h$1>')
-    .replace(/(?:<li>.*?<\/li>\s*)+/g, list => `<ul>${list}</ul>`);
-  return sanitizeExplanation(html.replace(/\[\[\[CODE(\d+)\]\]\]/g, (_, index) => `<pre><code>${codeBlocks[Number(index)]}</code></pre>`));
-}
-
-function shortenDetailedExplanation(markdown, language) {
-  const maximumLength = 650;
-  if (markdown.length <= maximumLength) return markdown;
-
-  // Stop at a natural paragraph boundary instead of cutting through a code
-  // block or sentence. The full source remains in the static file.
-  const excerpt = markdown.slice(0, maximumLength);
-  const paragraphBreak = excerpt.lastIndexOf('\n\n');
-  const safeExcerpt = excerpt.slice(0, paragraphBreak > 140 ? paragraphBreak : maximumLength).trim();
-  return safeExcerpt;
-}
-
-function getDetailedSections(language) {
-  if (detailedSectionsByLanguage.has(language)) return detailedSectionsByLanguage.get(language);
-
-  const source = language === 'en'
-    ? `${window.DETAILED_EXPLANATIONS_EN_BASICS || ''}\n${window.DETAILED_EXPLANATIONS?.en || ''}`
-    : window.DETAILED_EXPLANATIONS?.ar || '';
-  // Arabic basics use "السؤال 1:" while the rest use Markdown headings.
-  // Both formats are converted to the same direct number -> content map.
-  const headings = [...source.matchAll(/^(?:#{1,2}\s+|السؤال\s+)(\d+)[.):]\s*(.*)$/gm)];
-  const sections = new Map();
-  headings.forEach(heading => {
-    const sectionStart = heading.index + heading[0].length;
-    const remainder = source.slice(sectionStart);
-    const nextHeading = remainder.search(/\n(?:#{1,2}\s+|السؤال\s+)\d+[.):]/);
-    const sectionEnd = nextHeading === -1 ? source.length : sectionStart + nextHeading;
-    sections.set(Number(heading[1]), source.slice(sectionStart, sectionEnd).trim());
-  });
-  detailedSectionsByLanguage.set(language, sections);
-  return sections;
-}
-
-function findStaticExplanation(question, language) {
-  const cacheKey = explanationCacheKey(question, language);
-  if (staticExplanationByQuestion.has(cacheKey)) return staticExplanationByQuestion.get(cacheKey);
-
-  const questionNumber = questionNumberByText.get(question);
-  let section = getDetailedSections(language).get(questionNumber);
-  let sourceLanguage = language;
-
-  // The supplied English explanation starts at question 26. For the earlier
-  // questions, use the supplied Arabic explanation rather than hiding it.
-  if (!section && language === 'en') {
-    section = getDetailedSections('ar').get(questionNumber);
-    sourceLanguage = 'ar';
-  }
-
-  const rendered = section ? markdownToExplanationHtml(shortenDetailedExplanation(section, sourceLanguage)) : '';
-  const title = sourceLanguage === 'ar' ? 'شرح مبسّط' : 'Quick explanation';
-  const explanation = rendered
-    ? `${sourceLanguage === 'ar' && language !== 'ar' ? '<div class="explanation-rtl" dir="rtl">' : ''}<div class="explanation-label">${title}</div><div class="explanation-content">${rendered}</div>${sourceLanguage === 'ar' && language !== 'ar' ? '</div>' : ''}`
-    : '';
-  staticExplanationByQuestion.set(cacheKey, explanation);
-  return explanation;
-}
-
-// Resolve every supplied explanation once, at startup. Clicking the button
-// only reads this direct in-memory mapping; it does not search or fetch.
-DATA.forEach(topic => topic.levels.forEach(level => level.qs.forEach(qObj => {
-  ['ar', 'en'].forEach(language => findStaticExplanation(qObj.q, language));
-})));
-
-function requestDetailedExplanation(qKey, qObj, language) {
-  const cacheKey = explanationCacheKey(qKey, language);
-  if (detailedExplanationCache.has(cacheKey)) return detailedExplanationCache.get(cacheKey);
-
-  const explanation = findStaticExplanation(qObj.q, language);
-  if (!explanation) {
-    // The supplied files do not contain every syllabus question. Show the
-    // existing static answer instead of leaving the learner with an error.
-    return language === 'ar'
-      ? '<p>الشرح التفصيلي غير موجود في الملف لهذا السؤال، لكن الإجابة الأساسية المعروضة بالأعلى هي المحتوى المتاح.</p>'
-      : '<p>A detailed section was not included for this question; the answer shown above is the available study content.</p>';
-  }
-  detailedExplanationCache.set(cacheKey, explanation);
-  return explanation;
-}
-
 function renderContent(filterTopic = 'all', searchKeyword = '') {
   const container = document.getElementById('qa-content');
   container.innerHTML = '';
@@ -755,11 +625,6 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
         const content = isArabic ? (cachedArabicContent || { q: qObj.q, a: qObj.a }) : { q: qObj.q, a: qObj.a };
         let finalQ = escapeHTML(content.q);
         let finalA = content.a;
-        const detailedKey = explanationCacheKey(qKey, cardLang);
-        const cachedExplanation = detailedExplanationCache.get(detailedKey);
-        const explanationIsOpen = expandedDetailedExplanations.has(detailedKey);
-        const explainLabel = isArabic ? 'شرح أكثر' : 'More explanation';
-
         if (kw) {
           const regex = new RegExp(`(${escapeRegExp(searchKeyword)})`, 'gi');
           finalQ = finalQ.replace(regex, '<span class="highlight">$1</span>');
@@ -784,10 +649,6 @@ function renderContent(filterTopic = 'all', searchKeyword = '') {
           <div class="q-body">
             <div class="q-body-inner">
               <div class="answer-content">${finalA}</div>
-              <div class="explanation-tools">
-                <button class="more-explain" type="button" aria-expanded="${String(explanationIsOpen)}"><span>${explainLabel}</span></button>
-              </div>
-              <div class="detailed-explanation" ${explanationIsOpen ? '' : 'hidden'}>${cachedExplanation || ''}</div>
             </div>
           </div>
         `;
@@ -898,42 +759,6 @@ function attachAccordionEvents() {
         return;
       }
 
-      const explainButton = e.target.closest('.more-explain');
-      if (explainButton) {
-        e.stopPropagation();
-        const language = getCardLanguage(key);
-        const detailedKey = explanationCacheKey(key, language);
-        const panel = card.querySelector('.detailed-explanation');
-
-        if (expandedDetailedExplanations.has(detailedKey)) {
-          expandedDetailedExplanations.delete(detailedKey);
-          panel.hidden = true;
-          explainButton.setAttribute('aria-expanded', 'false');
-          body.style.maxHeight = `${body.scrollHeight}px`;
-          return;
-        }
-
-        expandedDetailedExplanations.add(detailedKey);
-        panel.hidden = false;
-        explainButton.setAttribute('aria-expanded', 'true');
-        const cachedExplanation = detailedExplanationCache.get(detailedKey);
-        if (cachedExplanation) {
-          panel.innerHTML = cachedExplanation;
-          body.style.maxHeight = `${body.scrollHeight}px`;
-          return;
-        }
-
-        try {
-          panel.innerHTML = requestDetailedExplanation(key, card.questionData, language);
-        } catch (error) {
-          panel.innerHTML = `<p class="explanation-status is-error">${escapeHTML(error.message)}</p>`;
-          expandedDetailedExplanations.delete(detailedKey);
-          explainButton.setAttribute('aria-expanded', 'false');
-        }
-        body.style.maxHeight = `${body.scrollHeight}px`;
-        return;
-      }
-
       toggleCard(this);
     };
 
@@ -944,14 +769,6 @@ function attachAccordionEvents() {
     };
   });
 
-  // The detailed-explanation button sits in the accordion body (not its
-  // header), so route its click through the same card handler explicitly.
-  document.querySelectorAll('.more-explain').forEach(button => {
-    button.onclick = function(e) {
-      const header = this.closest('.q-card')?.querySelector('.q-header');
-      if (header?.onclick) header.onclick.call(header, e);
-    };
-  });
 }
 
 let activeTopic = 'all';
