@@ -5617,6 +5617,235 @@ SSR / Hydration
 
 **For interview practice, the next best step is to turn these into a real Q&A session: I ask you one question in English, you answer, and then I correct your answer and give you the ideal interview answer.**
 
+---
+
+## 40. What is minmax()?
+
+\`minmax()\` sets the minimum and maximum size of a CSS Grid track. It lets a column stay usable on small screens while growing when space is available.
+
+\`\`\`css
+grid-template-columns: minmax(200px, 1fr) 1fr;
+\`\`\`
+
+The first column is never smaller than \`200px\`, but it may grow up to one fraction of the free space. **Interview answer:** \`minmax(min, max)\` defines a flexible grid track with safe size limits.
+
+---
+
+## 41. What is the difference between repeat(), auto-fit, and auto-fill?
+
+\`repeat()\` avoids repeating the same track definition: \`repeat(3, 1fr)\` creates three equal columns.
+
+\`\`\`css
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+\`\`\`
+
+\`auto-fill\` keeps as many possible tracks as fit, including empty ones. \`auto-fit\` collapses empty tracks, allowing populated columns to expand. The \`auto-fit\` pattern above is a common responsive-card layout.
+
+---
+
+## 42. What is specificity hierarchy?
+
+Specificity decides which selector wins when rules target the same element. A simplified hierarchy is: inline styles, IDs, classes/attributes/pseudo-classes, then elements/pseudo-elements.
+
+\`\`\`css
+p { color: blue; }
+.text { color: green; }
+#title { color: red; }
+\`\`\`
+
+For \`<p id="title" class="text">\`, the text is red. Importance and origin are considered before specificity; source order breaks a tie.
+
+---
+
+## 43. What is the Stacking Context and why does it affect z-index?
+
+A stacking context is an isolated layer-management environment on the Z-axis. Its children are layered against one another inside that context, not globally against every element on the page.
+
+That is why a child with \`z-index: 999999\` can still appear below an element in another, higher parent stacking context. **Key point:** \`z-index\` only makes sense together with stacking contexts.
+
+---
+
+## 44. How can you explicitly trigger or create a new Stacking Context?
+
+Common triggers include a positioned element with a non-auto \`z-index\`, \`position: fixed\` or \`sticky\`, \`opacity\` below \`1\`, a non-\`none\` \`transform\`, \`filter\`, and \`isolation: isolate\`.
+
+\`\`\`css
+.layer { position: relative; z-index: 1; }
+.isolated { isolation: isolate; }
+\`\`\`
+
+\`position: relative\` by itself does not always create a stacking context.
+
+---
+
+## 45. What is the complete layout Stacking Order?
+
+Within one stacking context, a practical simplified order is: background and borders, negative \`z-index\` children, normal-flow content, positioned elements with \`z-index: auto\` or \`0\`, then positive \`z-index\` children.
+
+\`\`\`css
+.box1 { position: relative; z-index: 1; }
+.box2 { position: relative; z-index: 2; }
+\`\`\`
+
+If both belong to the same stacking context, \`box2\` appears above \`box1\`.
+
+---
+
+## 46. What is the difference between ::before and ::after?
+
+They are pseudo-elements that generate content before or after an element's actual content.
+
+\`\`\`css
+.title::before { content: "★ "; }
+.title::after { content: " ✓"; }
+\`\`\`
+
+They are useful for decorative icons, overlays, badges, lines, and shapes. Generated pseudo-elements normally need \`content\`. \`::before\` is a pseudo-element; \`:hover\` is a pseudo-class.
+
+---
+
+## 47. What is calc()?
+
+\`calc()\` performs CSS calculations with compatible values, including different units.
+
+\`\`\`css
+.container { width: calc(100% - 40px); }
+.page { height: calc(100vh - 80px); }
+\`\`\`
+
+It is useful when a dimension must combine values such as \`%\` and \`px\`. **Interview answer:** \`calc()\` evaluates a CSS value at layout time.
+
+---
+
+## 48. What is clip-path?
+
+\`clip-path\` defines the visible region of an element, letting it appear as a custom shape.
+
+\`\`\`css
+.circle { clip-path: circle(50%); }
+.triangle { clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
+\`\`\`
+
+It is useful for creative image shapes, diagonal sections, and decorative UI. It changes what is visible, not the element's original layout dimensions.
+
+---
+
+## 49. What is the difference between transitions and animations?
+
+A transition smoothly changes a property between states, usually after an interaction such as \`:hover\`. An animation uses \`@keyframes\`, can have multiple stages, and can run automatically or repeat.
+
+\`\`\`css
+.button { transition: background .3s; }
+.button:hover { background: red; }
+.box { animation: move 2s infinite; }
+\`\`\`
+
+**Interview answer:** a transition connects states; an animation is a controlled keyframe sequence.
+
+---
+
+## 50. What is Bootstrap and why do we use it?
+
+Bootstrap is a frontend CSS framework with ready-made responsive components and utility classes, including a grid, buttons, forms, cards, navbars, modals, alerts, and breakpoints.
+
+\`\`\`html
+<button class="btn btn-primary">Submit</button>
+\`\`\`
+
+It speeds up consistent UI development without writing every style from scratch.
+
+---
+
+## 51. What is the Bootstrap grid system?
+
+Bootstrap uses a responsive 12-column grid. A typical structure is \`container\` → \`row\` → columns.
+
+\`\`\`html
+<div class="row">
+  <div class="col-6">Left</div>
+  <div class="col-6">Right</div>
+</div>
+\`\`\`
+
+Here, \`6 + 6 = 12\`, so each column takes half the row.
+
+---
+
+## 52. What is the difference between col / col-sm / col-md / col-lg?
+
+These classes set a column's behavior at responsive breakpoints. \`col\` distributes available space automatically, while classes such as \`col-md-6\` mean six of twelve columns from the \`md\` breakpoint upward.
+
+\`\`\`html
+<div class="row">
+  <div class="col-12 col-md-6">Card</div>
+  <div class="col-12 col-md-6">Card</div>
+</div>
+\`\`\`
+
+The cards stack on small screens and sit side by side from \`md\` upward.
+
+---
+
+## 53. What are the Bootstrap breakpoints?
+
+Bootstrap 5 is mobile-first. Its main breakpoints are \`xs\` below \`576px\`, then \`sm\` at \`576px\`, \`md\` at \`768px\`, \`lg\` at \`992px\`, \`xl\` at \`1200px\`, and \`xxl\` at \`1400px\`.
+
+For example, \`col-12 col-md-6 col-lg-4\` uses a full row on small screens, half a row at medium widths, and one third at large widths.
+
+---
+
+## 54. What is the difference between container and container-fluid?
+
+\`.container\` has responsive maximum widths that change at Bootstrap breakpoints. \`.container-fluid\` always uses the full available width.
+
+\`\`\`html
+<div class="container">Centered content</div>
+<div class="container-fluid">Full-width content</div>
+\`\`\`
+
+---
+
+## 55. How does the Modal work?
+
+A Bootstrap Modal is a dialog shown above the current page with a backdrop. It is commonly used for logins, confirmations, forms, warnings, and detail views. Bootstrap supplies the required markup, accessibility behavior, and JavaScript to open, close, and manage focus in the dialog.
+
+---
+
+## 56. How does the navbar work?
+
+A Bootstrap Navbar is a responsive navigation component with a brand, links, and an optional toggle button for a collapsed mobile menu.
+
+\`\`\`html
+<nav class="navbar navbar-expand-lg">...</nav>
+\`\`\`
+
+\`navbar-expand-lg\` keeps it expanded at the large breakpoint and above; below that it can collapse into the toggle menu.
+
+---
+
+## 57. What is the spacing system (m-1, p-3...)
+
+Bootstrap spacing utilities apply margin and padding without custom CSS. \`m-3\` means margin, \`p-3\` means padding; directional variants include \`mt\`, \`mb\`, \`ms\`, \`me\`, \`mx\`, and \`my\`.
+
+\`\`\`html
+<div class="px-4 py-2">Content</div>
+\`\`\`
+
+This applies horizontal padding of scale \`4\` and vertical padding of scale \`2\`.
+
+---
+
+## 58. What are the text and background colors (bg-primary, text-danger)
+
+Bootstrap offers theme color utilities for text and backgrounds.
+
+\`\`\`html
+<p class="text-primary">Hello</p>
+<div class="bg-danger text-white">Warning</div>
+\`\`\`
+
+Examples include \`text-success\`, \`text-danger\`, \`text-warning\`, \`bg-primary\`, \`bg-success\`, \`bg-dark\`, and \`bg-light\`. These classes apply predefined theme colors quickly and consistently.
+
 
 `
 };
