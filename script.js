@@ -602,7 +602,7 @@ function shortenDetailedExplanation(markdown, language) {
   const excerpt = markdown.slice(0, maximumLength);
   const paragraphBreak = excerpt.lastIndexOf('\n\n');
   const safeExcerpt = excerpt.slice(0, paragraphBreak > 140 ? paragraphBreak : maximumLength).trim();
-  return `${safeExcerpt}\n\n${language === 'ar' ? '… مختصر من الشرح التفصيلي.' : '… A shortened version of the detailed explanation.'}`;
+  return safeExcerpt;
 }
 
 function getDetailedSections(language) {
